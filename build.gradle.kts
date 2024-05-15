@@ -33,6 +33,7 @@ dependencies {
     implementation(libs.bundles.ktor.server)
     implementation(libs.logback)
     implementation(libs.kotlinx.serialization)
+    implementation(libs.bundles.koin)
 
     detektPlugins(libs.detekt.formatting)
 

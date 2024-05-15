@@ -15,6 +15,7 @@ fun main() {
 }
 
 fun Application.module() {
+    configureKoin()
     configureHTTP()
     configureMonitoring()
     configureSerialization()

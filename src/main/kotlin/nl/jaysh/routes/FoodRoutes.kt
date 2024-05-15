@@ -2,31 +2,49 @@ package nl.jaysh.routes
 
 import io.ktor.http.*
 import io.ktor.server.application.*
+import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
+import nl.jaysh.models.Food
+import nl.jaysh.services.FoodService
+import org.koin.ktor.ext.inject
 
 fun Route.food() {
+
+    val foodService by inject<FoodService>()
+
     route("/food") {
         get {
-            call.respond("GET ALL FOOD")
+            val foods = foodService.getAllFood();
+            call.respond(HttpStatusCode.OK, foods)
         }
 
         get("/{id}") {
-            val id = call.parameters["id"]?.toInt() ?: throw IllegalStateException("Must provide id")
-            call.respond("GET FOOD BY ID $id")
+            val id = call.parameters["id"]?.toLong() ?: throw IllegalStateException("Must provide id")
+            val food = foodService.getFoodById(id = id)
+
+            if (food == null)
+                call.respond(HttpStatusCode.NotFound)
+            else
+                call.respond(HttpStatusCode.OK, food)
         }
 
         post {
-            call.respond(HttpStatusCode.Created, "CREATED FOOD")
+            val food = call.receive<Food>()
+            val createdFood = foodService.createFood(food = food)
+            call.respond(HttpStatusCode.Created, createdFood)
         }
 
         put {
-            call.respond(HttpStatusCode.OK, "UPDATED FOOD")
+            val food = call.receive<Food>()
+            val createdFood = foodService.updateFood(food = food)
+            call.respond(HttpStatusCode.OK, createdFood)
         }
 
-        delete("{id}") {
-            val id = call.parameters["id"]?.toInt() ?: throw IllegalStateException("Must provide id")
-            call.respond(HttpStatusCode.NoContent, "DELETED FOOD")
+        delete("/{id}") {
+            val id = call.parameters["id"]?.toLong() ?: throw IllegalStateException("Must provide id")
+            foodService.deleteFood(id = id)
+            call.respond(HttpStatusCode.NoContent)
         }
     }
 }
