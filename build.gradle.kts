@@ -1,12 +1,11 @@
-
-val ktor_version: String by project
-val kotlin_version: String by project
-val logback_version: String by project
+import io.gitlab.arturbosch.detekt.*
 
 plugins {
-    kotlin("jvm") version "1.9.24"
-    id("io.ktor.plugin") version "2.3.11"
-    id("org.jetbrains.kotlin.plugin.serialization") version "1.9.24"
+    alias(libs.plugins.kotlinJvm)
+    alias(libs.plugins.ktor)
+    alias(libs.plugins.serialization)
+    alias(libs.plugins.detekt)
+    application
 }
 
 group = "nl.jaysh"
@@ -23,17 +22,48 @@ repositories {
     mavenCentral()
 }
 
+detekt {
+    source.from(files(rootProject.rootDir))
+    parallel = true
+    autoCorrect = true
+    buildUponDefaultConfig = true
+}
+
 dependencies {
-    implementation("io.ktor:ktor-server-core-jvm")
-    implementation("io.ktor:ktor-server-host-common-jvm")
-    implementation("io.ktor:ktor-server-status-pages-jvm")
-    implementation("io.ktor:ktor-server-openapi")
-    implementation("io.ktor:ktor-server-swagger-jvm")
-    implementation("io.ktor:ktor-server-call-logging-jvm")
-    implementation("io.ktor:ktor-server-content-negotiation-jvm")
-    implementation("io.ktor:ktor-serialization-kotlinx-json-jvm")
-    implementation("io.ktor:ktor-server-cio-jvm")
-    implementation("ch.qos.logback:logback-classic:$logback_version")
-    testImplementation("io.ktor:ktor-server-tests-jvm")
-    testImplementation("org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version")
+    implementation(libs.bundles.ktor.server)
+    implementation(libs.logback)
+    implementation(libs.kotlinx.serialization)
+
+    detektPlugins(libs.detekt.formatting)
+
+    testImplementation(libs.ktor.server.tests.jvm)
+    testImplementation(libs.kotlin.test.junit)
+}
+
+tasks {
+    fun SourceTask.config() {
+        include("**/*.kt")
+        exclude("**/*.kts")
+        exclude("**/resources/**")
+        exclude("**/generated/**")
+        exclude("**/build/**")
+    }
+
+    withType<Detekt>().configureEach {
+        reports {
+            html.required.set(true)
+            xml.required.set(true)
+            txt.required.set(true)
+            sarif.required.set(true)
+            md.required.set(true)
+        }
+    }
+
+    withType<Detekt>().configureEach {
+        jvmTarget = "11"
+    }
+
+    withType<DetektCreateBaselineTask>().configureEach {
+        jvmTarget = "11"
+    }
 }
