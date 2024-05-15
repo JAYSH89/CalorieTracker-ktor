@@ -4,6 +4,7 @@ ktor = "2.3.11"
 logback = "1.5.6"
 serialization = "1.6.3"
 detekt = "1.23.6"
+koin = "3.5.6"
 
 [libraries]
 ktor-server-core-jvm = { group = "io.ktor", name = "ktor-server-core-jvm" }
@@ -19,10 +20,15 @@ ktor-server-cio-jvm = { group = "io.ktor", name = "ktor-server-cio-jvm" }
 logback = { group = "ch.qos.logback", name = "logback-classic", version.ref = "logback" }
 detekt-formatting = { group = "io.gitlab.arturbosch.detekt", name = "detekt-formatting", version.ref = "detekt" }
 
-ktor-server-tests-jvm = { group = "io.ktor", name = "ktor-server-tests-jvm" }
-kotlin-test-junit = { group = "org.jetbrains.kotlin", name = "kotlin-test-junit", version.ref = "kotlin" }
+ktor-server-test-host = { group = "io.ktor", name = "ktor-server-test-host" }
+kotlin-test = { group = "org.jetbrains.kotlin", name = "kotlin-test" }
+koin-test = { group = "io.insert-koin", name = "koin-test", version.ref = "koin" }
+koin-test-junit = { group = "io.insert-koin", name = "koin-test-junit4", version.ref = "koin" }
 
 kotlinx-serialization = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "serialization" }
+
+koin-ktor = { group = "io.insert-koin", name = "koin-ktor", version.ref = "koin" }
+koin-logger = { group = "io.insert-koin", name = "koin-logger-slf4j", version.ref = "koin" }
 
 [bundles]
 ktor-server = [
@@ -35,6 +41,11 @@ ktor-server = [
     "ktor-server-content-negotiation-jvm",
     "ktor-serialization-kotlinx-json-jvm",
     "ktor-server-cio-jvm",
+]
+
+koin = [
+    "koin-ktor",
+    "koin-logger",
 ]
 
 [plugins]

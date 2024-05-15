@@ -33,11 +33,14 @@ dependencies {
     implementation(libs.bundles.ktor.server)
     implementation(libs.logback)
     implementation(libs.kotlinx.serialization)
+    implementation(libs.bundles.koin)
 
     detektPlugins(libs.detekt.formatting)
 
-    testImplementation(libs.ktor.server.tests.jvm)
-    testImplementation(libs.kotlin.test.junit)
+    testImplementation(libs.ktor.server.test.host)
+    testImplementation(libs.kotlin.test)
+    testImplementation(libs.koin.test)
+    testImplementation(libs.koin.test.junit)
 }
 
 tasks {
