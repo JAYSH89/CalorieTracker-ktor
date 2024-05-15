@@ -37,8 +37,10 @@ dependencies {
 
     detektPlugins(libs.detekt.formatting)
 
-    testImplementation(libs.ktor.server.tests.jvm)
-    testImplementation(libs.kotlin.test.junit)
+    testImplementation(libs.ktor.server.test.host)
+    testImplementation(libs.kotlin.test)
+    testImplementation(libs.koin.test)
+    testImplementation(libs.koin.test.junit)
 }
 
 tasks {
