@@ -1,0 +1,8 @@
+openapi: "3.1.0"
+info:
+  title: "CalorieTracker API"
+  description: "CalorieTracker API"
+  version: "1.0.0"
+servers:
+- url: "https://CalorieTracker"
+paths: {}
