@@ -7,7 +7,7 @@ import nl.jaysh.core.config.DbConfig
 import nl.jaysh.plugins.*
 
 fun main() {
-    DbConfig.setup()
+    DbConfig.setup
     embeddedServer(
         CIO,
         port = 8080,

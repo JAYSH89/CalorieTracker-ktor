@@ -6,19 +6,20 @@ import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
 import kotlinx.serialization.descriptors.SerialDescriptor
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
-import java.util.*
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
-object UUIDSerializer : KSerializer<UUID> {
+object LocalDateTimeSerializer : KSerializer<LocalDateTime> {
     override val descriptor: SerialDescriptor = PrimitiveSerialDescriptor(
-        serialName = "UUID",
+        serialName = "LocalDateTime",
         kind = PrimitiveKind.STRING,
     )
 
-    override fun serialize(encoder: Encoder, value: UUID) {
+    override fun serialize(encoder: Encoder, value: LocalDateTime) {
         encoder.encodeString(value.toString())
     }
 
-    override fun deserialize(decoder: Decoder): UUID {
-        return UUID.fromString(decoder.decodeString())
+    override fun deserialize(decoder: Decoder): LocalDateTime {
+        return LocalDateTime.parse(decoder.decodeString(), DateTimeFormatter.ISO_LOCAL_DATE_TIME)
     }
 }

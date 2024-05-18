@@ -2,16 +2,21 @@ package nl.jaysh.data.repositories
 
 import nl.jaysh.data.db.FoodTable
 import nl.jaysh.data.db.delete
+import nl.jaysh.data.db.findById
 import nl.jaysh.data.db.getAll
 import nl.jaysh.data.db.insert
-import nl.jaysh.data.db.toFood
 import nl.jaysh.data.db.update
 import nl.jaysh.models.Food
-import org.jetbrains.exposed.sql.selectAll
+import org.jetbrains.exposed.sql.SchemaUtils
 import org.jetbrains.exposed.sql.transactions.transaction
 import java.util.*
 
 class FoodRepository {
+
+    init {
+        transaction { SchemaUtils.create(FoodTable) }
+    }
+
     fun getAll(): List<Food> = transaction {
         FoodTable.getAll()
     }
@@ -21,11 +26,7 @@ class FoodRepository {
     }
 
     fun findById(id: UUID): Food? = transaction {
-        FoodTable
-            .selectAll()
-            .where { FoodTable.id eq id }
-            .map { entity -> entity.toFood() }
-            .singleOrNull()
+        FoodTable.findById(id = id)
     }
 
     fun update(food: Food): Food = transaction {

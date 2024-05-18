@@ -35,6 +35,7 @@ dependencies {
     implementation(libs.bundles.koin)
 
     implementation(libs.logback)
+    implementation(libs.bcrypt)
     implementation(libs.kotlinx.serialization)
     implementation(libs.kotlinx.coroutines)
 

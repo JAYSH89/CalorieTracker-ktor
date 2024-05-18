@@ -16,38 +16,32 @@ import java.util.*
 
 object FoodTable : UUIDTable() {
     val name: Column<String> = varchar(name = "name", length = 100)
-    val carbs: Column<Double> = double("carbs")
-    val proteins: Column<Double> = double("proteins")
-    val fats: Column<Double> = double("fats")
-    val amount: Column<Double> = double("amount")
+    val carbs: Column<Double> = double(name = "carbs")
+    val proteins: Column<Double> = double(name = "proteins")
+    val fats: Column<Double> = double(name = "fats")
+    val amount: Column<Double> = double(name = "amount")
     val amountType: Column<String> = varchar(name = "amount_type", length = 50)
-    val createdAt: Column<LocalDateTime?> = datetime("createdAt").nullable()
-    val updatedAt: Column<LocalDateTime?> = datetime("updatedAt").nullable()
+    val createdAt: Column<LocalDateTime?> = datetime(name = "created_at").nullable()
+    val updatedAt: Column<LocalDateTime?> = datetime(name = "updated_at").nullable()
 }
 
-fun ResultRow.toFood(): Food {
-    val id = this[FoodTable.id]
-    val name = this[FoodTable.name]
-    val carbs = this[FoodTable.carbs]
-    val proteins = this[FoodTable.proteins]
-    val fats = this[FoodTable.fats]
-    val amount = this[FoodTable.amount]
-    val amountType = this[FoodTable.amountType]
+fun ResultRow.toFood() = Food(
+    id = this[FoodTable.id].value,
+    name = this[FoodTable.name],
+    carbs = this[FoodTable.carbs],
+    proteins = this[FoodTable.proteins],
+    fats = this[FoodTable.fats],
+    amount = this[FoodTable.amount],
+    amountType = AmountType.fromString(this[FoodTable.amountType]),
+)
 
-    return Food(
-        id = id.value,
-        name = name,
-        carbs = carbs,
-        proteins = proteins,
-        fats = fats,
-        amount = amount,
-        amountType = AmountType.fromString(amountType),
-    )
-}
+fun FoodTable.getAll(): List<Food> = selectAll()
+    .map { entity -> entity.toFood() }
 
-fun FoodTable.getAll(): List<Food> = selectAll().map { entity ->
-    entity.toFood()
-}
+fun FoodTable.findById(id: UUID): Food? = selectAll()
+    .where { FoodTable.id eq id }
+    .map { entity -> entity.toFood() }
+    .singleOrNull()
 
 fun FoodTable.insert(food: Food): Food {
     val id = insertAndGetId {
@@ -61,14 +55,15 @@ fun FoodTable.insert(food: Food): Food {
         it[updatedAt] = LocalDateTime.now()
     }.value
 
-    return FoodTable
-        .selectAll()
-        .where { FoodTable.id eq id }
-        .single()
-        .toFood()
+    val newFood = findById(id = id)
+    requireNotNull(newFood)
+
+    return newFood
 }
 
 fun FoodTable.update(food: Food): Food {
+    requireNotNull(food.id)
+
     val rowsChanged = update({ FoodTable.id eq food.id }) {
         it[name] = food.name
         it[carbs] = food.carbs
@@ -80,11 +75,10 @@ fun FoodTable.update(food: Food): Food {
     }
     check(rowsChanged == 1)
 
-    return FoodTable
-        .selectAll()
-        .where { FoodTable.id eq food.id!! }
-        .single()
-        .toFood()
+    val updatedFood = findById(food.id)
+    requireNotNull(updatedFood)
+
+    return updatedFood
 }
 
 fun FoodTable.delete(id: UUID) {

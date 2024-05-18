@@ -8,7 +8,7 @@ class FoodService(private val foodRepository: FoodRepository) {
 
     fun getAllFood(): List<Food> = foodRepository.getAll()
 
-    fun getFoodById(id: UUID): Food? = foodRepository.findById(id = id)
+    fun findById(id: UUID): Food? = foodRepository.findById(id = id)
 
     fun createFood(food: Food): Food = foodRepository.add(food = food)
 
