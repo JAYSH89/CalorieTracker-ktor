@@ -41,11 +41,11 @@ fun ResultRow.toUser() = User(
 )
 
 fun UserTable.getAll(): List<User> = selectAll()
-    .map { entity -> entity.toUser() }
+    .map(ResultRow::toUser)
 
 fun UserTable.findById(id: UUID): User? = selectAll()
     .where { UserTable.id eq id }
-    .map { entity -> entity.toUser() }
+    .map(ResultRow::toUser)
     .singleOrNull()
 
 fun UserTable.insert(user: User): User {

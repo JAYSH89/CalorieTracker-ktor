@@ -9,11 +9,11 @@ class UserService(private val userRepository: UserRepository) {
 
     fun getAll(): List<UserResponse> = userRepository
         .getAll()
-        .map { user -> UserResponse.fromUser(user) }
+        .map(UserResponse::fromUser)
 
     fun findById(id: UUID): UserResponse? {
         val user = userRepository.findById(id = id)
-        return user?.let { UserResponse.fromUser(user = it) }
+        return user?.let(UserResponse::fromUser)
     }
 
     fun createUser(user: User): UserResponse {
