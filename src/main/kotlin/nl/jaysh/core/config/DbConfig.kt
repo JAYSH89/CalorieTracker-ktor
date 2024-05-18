@@ -4,15 +4,11 @@ import org.jetbrains.exposed.sql.Database
 import org.postgresql.ds.PGSimpleDataSource
 
 object DbConfig {
-    fun setup(
-        dbUser: String = "postgres",
-        dbPassword: String = "postgres",
-        dbName: String = "calorietracker",
-    ) {
+    val setup by lazy {
         val dataSource = PGSimpleDataSource().apply {
-            user = dbUser
-            password = dbPassword
-            databaseName = dbName
+            user = "postgres"
+            password = "postgres"
+            databaseName = "calorietracker"
         }
 
         Database.connect(datasource = dataSource)

@@ -1,5 +1,6 @@
 package nl.jaysh.data.db
 
+import nl.jaysh.models.Gender
 import nl.jaysh.models.User
 import org.jetbrains.exposed.dao.id.UUIDTable
 import org.jetbrains.exposed.sql.Column
@@ -22,6 +23,11 @@ object UserTable : UUIDTable() {
     val gender: Column<String?> = varchar(name = "gender", length = 50).nullable()
     val createdAt: Column<LocalDateTime?> = datetime(name = "created_at").nullable()
     val updatedAt: Column<LocalDateTime?> = datetime(name = "updated_at").nullable()
+
+    init {
+        check(name = "email_not_empty") { email neq "" }
+        check(name = "password_not_empty") { password neq "" }
+    }
 }
 
 fun ResultRow.toUser() = User(
@@ -31,7 +37,7 @@ fun ResultRow.toUser() = User(
     firstName = this[UserTable.firstName],
     lastName = this[UserTable.lastName],
     birthday = this[UserTable.birthday],
-    gender = this[UserTable.gender],
+    gender = this[UserTable.gender]?.let { Gender.fromString(it) },
 )
 
 fun UserTable.getAll(): List<User> = selectAll()
@@ -49,7 +55,7 @@ fun UserTable.insert(user: User): User {
         it[firstName] = user.firstName
         it[lastName] = user.lastName
         it[birthday] = user.birthday
-        it[gender] = user.gender
+        it[gender] = user.gender.toString()
         it[createdAt] = LocalDateTime.now()
         it[updatedAt] = LocalDateTime.now()
     }.value
@@ -69,7 +75,7 @@ fun UserTable.update(user: User): User {
         it[firstName] = user.firstName
         it[lastName] = user.lastName
         it[birthday] = user.birthday
-        it[gender] = user.gender
+        it[gender] = user.gender.toString()
         it[updatedAt] = LocalDateTime.now()
     }
     check(rowsChanged == 1)

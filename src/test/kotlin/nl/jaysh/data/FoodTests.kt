@@ -43,18 +43,6 @@ class FoodTests {
     }
 
     @Test
-    fun `add food`() {
-        transaction(db = database) {
-            assertEquals(foodRepository.getAll().size, 0)
-        }
-
-        transaction(db = database) {
-            foodRepository.add(testFood)
-            assertEquals(FoodTable.getAll().size, 1)
-        }
-    }
-
-    @Test
     fun findById() {
         transaction(db = database) {
             FoodTable.insert(testFood)
@@ -69,11 +57,19 @@ class FoodTests {
     @Test
     fun `findById not found`() {
         transaction(db = database) {
-            FoodTable.insert(testFood)
+            assertNull(foodRepository.findById(UUID.randomUUID()))
+        }
+    }
+
+    @Test
+    fun `create food`() {
+        transaction(db = database) {
+            assertEquals(foodRepository.getAll().size, 0)
         }
 
         transaction(db = database) {
-            assertNull(foodRepository.findById(UUID.randomUUID()))
+            foodRepository.add(testFood)
+            assertEquals(FoodTable.getAll().size, 1)
         }
     }
 
@@ -99,15 +95,7 @@ class FoodTests {
     @Test
     fun `update invalid id`() {
         transaction(db = database) {
-            FoodTable.insert(testFood)
-        }
-
-        transaction(db = database) {
-            val invalidFood = FoodTable
-                .getAll()
-                .first()
-                .copy(id = UUID.randomUUID())
-
+            val invalidFood = testFood.copy(id = UUID.randomUUID())
             assertFailsWith<IllegalStateException> {
                 foodRepository.update(invalidFood)
             }
@@ -133,12 +121,10 @@ class FoodTests {
 
     @Test
     fun `delete with invalid id`() {
-        val foods = FoodRepository()
-
         transaction(db = database) {
             val invalidId = UUID.randomUUID()
             assertFailsWith<IllegalStateException> {
-                foods.delete(id = invalidId)
+                foodRepository.delete(id = invalidId)
             }
         }
     }

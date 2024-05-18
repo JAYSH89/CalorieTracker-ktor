@@ -7,10 +7,15 @@ import nl.jaysh.data.db.getAll
 import nl.jaysh.data.db.insert
 import nl.jaysh.data.db.update
 import nl.jaysh.models.User
+import org.jetbrains.exposed.sql.SchemaUtils
 import org.jetbrains.exposed.sql.transactions.transaction
 import java.util.UUID
 
 class UserRepository {
+
+    init {
+        transaction { SchemaUtils.create(UserTable) }
+    }
 
     fun getAll(): List<User> = transaction {
         UserTable.getAll()

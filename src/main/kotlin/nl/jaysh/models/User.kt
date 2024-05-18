@@ -10,5 +10,5 @@ data class User(
     val firstName: String? = null,
     val lastName: String? = null,
     val birthday: LocalDateTime? = null,
-    val gender: String? = null,
+    val gender: Gender? = null,
 )

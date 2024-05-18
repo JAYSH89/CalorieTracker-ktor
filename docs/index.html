@@ -1837,7 +1837,7 @@ except ApiException as e:
                           <div class="tab-pane active" id="examples-Default-foodPost-0-curl">
                            <pre class="prettyprint"><code class="language-bsh">curl -X POST\
 -H "Accept: text/plain,*/*"\
--H "Content-Type: application/json"\
+-H "Content-Type: */*"\
 "https://CalorieTracker/food"</code></pre>
                           </div>
                           <div class="tab-pane" id="examples-Default-foodPost-0-java">
@@ -2027,7 +2027,7 @@ except ApiException as e:
                                 $(document).ready(function() {
                                   var schemaWrapper = {
   "content" : {
-    "application/json" : {
+    "*/*" : {
       "schema" : {
         "$ref" : "#/components/schemas/Food"
       }
@@ -2035,7 +2035,7 @@ except ApiException as e:
   },
   "required" : true
 };
-                                  var schema = schemaWrapper.content["application/json"].schema;
+                                  var schema = schemaWrapper.content["*/*"].schema;
                                   if (schema.$ref != null) {
                                     schema = defsParser.$refs.get(schema.$ref);
                                   } else {
@@ -2198,7 +2198,7 @@ except ApiException as e:
                           <div class="tab-pane active" id="examples-Default-foodPut-0-curl">
                            <pre class="prettyprint"><code class="language-bsh">curl -X PUT\
 -H "Accept: text/plain,*/*"\
--H "Content-Type: application/json"\
+-H "Content-Type: */*"\
 "https://CalorieTracker/food"</code></pre>
                           </div>
                           <div class="tab-pane" id="examples-Default-foodPut-0-java">
@@ -2388,7 +2388,7 @@ except ApiException as e:
                                 $(document).ready(function() {
                                   var schemaWrapper = {
   "content" : {
-    "application/json" : {
+    "*/*" : {
       "schema" : {
         "$ref" : "#/components/schemas/Food"
       }
@@ -2396,7 +2396,7 @@ except ApiException as e:
   },
   "required" : true
 };
-                                  var schema = schemaWrapper.content["application/json"].schema;
+                                  var schema = schemaWrapper.content["*/*"].schema;
                                   if (schema.$ref != null) {
                                     schema = defsParser.$refs.get(schema.$ref);
                                   } else {
