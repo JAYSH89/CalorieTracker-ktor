@@ -6,7 +6,7 @@ info:
 servers:
 - url: "https://CalorieTracker"
 paths:
-  /food:
+  /api/food:
     get:
       description: ""
       responses:
@@ -75,7 +75,7 @@ paths:
             '*/*':
               schema:
                 $ref: "#/components/schemas/Food"
-  /food/{id}:
+  /api/food/{id}:
     delete:
       description: ""
       parameters:
@@ -132,6 +132,132 @@ paths:
             '*/*':
               schema:
                 $ref: "#/components/schemas/Food"
+  /api/user:
+    get:
+      description: ""
+      responses:
+        "500":
+          description: "Internal Server Error"
+          content:
+            text/plain:
+              schema:
+                type: "string"
+              examples:
+                Example#1:
+                  value: ""
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                type: "array"
+                items:
+                  $ref: "#/components/schemas/UserResponse"
+    post:
+      description: ""
+      requestBody:
+        content:
+          '*/*':
+            schema:
+              $ref: "#/components/schemas/UserRequest"
+        required: true
+      responses:
+        "500":
+          description: "Internal Server Error"
+          content:
+            text/plain:
+              schema:
+                type: "string"
+              examples:
+                Example#1:
+                  value: ""
+        "201":
+          description: "Created"
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/UserResponse"
+    put:
+      description: ""
+      requestBody:
+        content:
+          '*/*':
+            schema:
+              $ref: "#/components/schemas/UserRequest"
+        required: true
+      responses:
+        "500":
+          description: "Internal Server Error"
+          content:
+            text/plain:
+              schema:
+                type: "string"
+              examples:
+                Example#1:
+                  value: ""
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/UserResponse"
+  /api/user/{id}:
+    delete:
+      description: ""
+      parameters:
+      - name: "id"
+        in: "path"
+        required: true
+        schema:
+          type: "string"
+      responses:
+        "500":
+          description: "Internal Server Error"
+          content:
+            text/plain:
+              schema:
+                type: "string"
+              examples:
+                Example#1:
+                  value: ""
+        "204":
+          description: "No Content"
+          content:
+            '*/*':
+              schema:
+                type: "object"
+    get:
+      description: ""
+      parameters:
+      - name: "id"
+        in: "path"
+        required: true
+        schema:
+          type: "string"
+      responses:
+        "500":
+          description: "Internal Server Error"
+          content:
+            text/plain:
+              schema:
+                type: "string"
+              examples:
+                Example#1:
+                  value: ""
+                Example#2:
+                  value: ""
+        "404":
+          description: "Not Found"
+          content:
+            '*/*':
+              schema:
+                type: "object"
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/UserResponse"
   /json/kotlinx-serialization:
     get:
       description: ""
@@ -172,6 +298,54 @@ components:
       required:
       - "name"
       - "amountType"
+    UserResponse:
+      type: "object"
+      properties:
+        id:
+          type: "string"
+          format: "uuid"
+        email:
+          type: "string"
+        firstName:
+          type: "string"
+        lastName:
+          type: "string"
+        birthday:
+          type: "string"
+          format: "date-time"
+        gender:
+          type: "string"
+          enum:
+          - "MALE"
+          - "FEMALE"
+      required:
+      - "id"
+      - "email"
+    UserRequest:
+      type: "object"
+      properties:
+        id:
+          type: "string"
+          format: "uuid"
+        email:
+          type: "string"
+        password:
+          type: "string"
+        firstName:
+          type: "string"
+        lastName:
+          type: "string"
+        birthday:
+          type: "string"
+          format: "date-time"
+        gender:
+          type: "string"
+          enum:
+          - "MALE"
+          - "FEMALE"
+      required:
+      - "email"
+      - "password"
     Map:
       type: "object"
       properties: {}

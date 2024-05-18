@@ -6,6 +6,7 @@ import io.ktor.server.plugins.statuspages.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import nl.jaysh.routes.food
+import nl.jaysh.routes.user
 
 fun Application.configureRouting() {
     install(StatusPages) {
@@ -19,5 +20,6 @@ fun Application.configureRouting() {
 
     routing {
         food()
+        user()
     }
 }
