@@ -14,7 +14,7 @@ fun Route.food() {
 
     val foodService by inject<FoodService>()
 
-    route("/food") {
+    route("/api/food") {
         get {
             val foods = foodService.getAllFood();
             call.respond(HttpStatusCode.OK, foods)
@@ -26,7 +26,7 @@ fun Route.food() {
                 ?: throw IllegalStateException("Invalid id")
 
             val uuid = UUID.fromString(id)
-            val food = foodService.getFoodById(id = uuid)
+            val food = foodService.findById(id = uuid)
 
             if (food == null)
                 call.respond(HttpStatusCode.NotFound)
@@ -42,8 +42,8 @@ fun Route.food() {
 
         put {
             val food = call.receive<Food>()
-            val createdFood = foodService.updateFood(food = food)
-            call.respond(HttpStatusCode.OK, createdFood)
+            val updatedFood = foodService.updateFood(food = food)
+            call.respond(HttpStatusCode.OK, updatedFood)
         }
 
         delete("/{id}") {
