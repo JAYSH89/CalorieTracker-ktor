@@ -8,6 +8,7 @@ import io.ktor.server.routing.*
 import nl.jaysh.models.Food
 import nl.jaysh.services.FoodService
 import org.koin.ktor.ext.inject
+import java.util.*
 
 fun Route.food() {
 
@@ -20,8 +21,12 @@ fun Route.food() {
         }
 
         get("/{id}") {
-            val id = call.parameters["id"]?.toLong() ?: throw IllegalStateException("Must provide id")
-            val food = foodService.getFoodById(id = id)
+            val id = call.parameters["id"]
+                ?.toString()
+                ?: throw IllegalStateException("Invalid id")
+
+            val uuid = UUID.fromString(id)
+            val food = foodService.getFoodById(id = uuid)
 
             if (food == null)
                 call.respond(HttpStatusCode.NotFound)
@@ -42,8 +47,12 @@ fun Route.food() {
         }
 
         delete("/{id}") {
-            val id = call.parameters["id"]?.toLong() ?: throw IllegalStateException("Must provide id")
-            foodService.deleteFood(id = id)
+            val id = call.parameters["id"]
+                ?.toString()
+                ?: throw IllegalStateException("Must provide id")
+
+            val uuid = UUID.fromString(id)
+            foodService.deleteFood(id = uuid)
             call.respond(HttpStatusCode.NoContent)
         }
     }

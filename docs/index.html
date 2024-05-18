@@ -691,44 +691,32 @@
     var defs = {}
             defs["Food"] = {
   "required" : [ "amountType", "name" ],
-  "type" : "object",
   "properties" : {
     "id" : {
-      "type" : "integer",
-      "format" : "int64"
+      "format" : "uuid"
     },
-    "name" : {
-      "type" : "string"
-    },
+    "name" : { },
     "carbs" : {
-      "type" : "number",
       "format" : "double"
     },
     "proteins" : {
-      "type" : "number",
       "format" : "double"
     },
     "fats" : {
-      "type" : "number",
       "format" : "double"
     },
     "amount" : {
-      "type" : "number",
       "format" : "double"
     },
     "amountType" : {
-      "type" : "string",
       "enum" : [ "UNIT", "METRIC" ]
     }
   }
 };
             defs["Map"] = {
-  "type" : "object",
   "properties" : { }
 };
-            defs["Map_String"] = {
-  "type" : "string"
-};
+            defs["Map_String"] = { };
   </script>
 
   <div class="container-fluid">
@@ -836,8 +824,7 @@ public class DefaultApiExample {
         
         DefaultApi apiInstance = new DefaultApi();
         try {
-            array[Food] result = apiInstance.foodGet();
-            System.out.println(result);
+            apiInstance.foodGet();
         } catch (ApiException e) {
             System.err.println("Exception when calling DefaultApi#foodGet");
             e.printStackTrace();
@@ -854,8 +841,7 @@ public class DefaultApiExample {
     public static void main(String[] args) {
         DefaultApi apiInstance = new DefaultApi();
         try {
-            array[Food] result = apiInstance.foodGet();
-            System.out.println(result);
+            apiInstance.foodGet();
         } catch (ApiException e) {
             System.err.println("Exception when calling DefaultApi#foodGet");
             e.printStackTrace();
@@ -872,10 +858,7 @@ public class DefaultApiExample {
 DefaultApi *apiInstance = [[DefaultApi alloc] init];
 
 [apiInstance foodGetWithCompletionHandler: 
-              ^(array[Food] output, NSError* error) {
-                            if (output) {
-                                NSLog(@"%@", output);
-                            }
+              ^(NSError* error) {
                             if (error) {
                                 NSLog(@"Error: %@", error);
                             }
@@ -891,7 +874,7 @@ var callback = function(error, data, response) {
   if (error) {
     console.error(error);
   } else {
-    console.log('API called successfully. Returned data: ' + data);
+    console.log('API called successfully.');
   }
 };
 api.foodGet(callback);
@@ -919,8 +902,7 @@ namespace Example
 
             try
             {
-                array[Food] result = apiInstance.foodGet();
-                Debug.WriteLine(result);
+                apiInstance.foodGet();
             }
             catch (Exception e)
             {
@@ -939,8 +921,7 @@ require_once(__DIR__ . '/vendor/autoload.php');
 $api_instance = new Swagger\Client\ApiDefaultApi();
 
 try {
-    $result = $api_instance->foodGet();
-    print_r($result);
+    $api_instance->foodGet();
 } catch (Exception $e) {
     echo 'Exception when calling DefaultApi->foodGet: ', $e->getMessage(), PHP_EOL;
 }
@@ -955,8 +936,7 @@ use WWW::SwaggerClient::DefaultApi;
 my $api_instance = WWW::SwaggerClient::DefaultApi->new();
 
 eval { 
-    my $result = $api_instance->foodGet();
-    print Dumper($result);
+    $api_instance->foodGet();
 };
 if ($@) {
     warn "Exception when calling DefaultApi->foodGet: $@\n";
@@ -974,8 +954,7 @@ from pprint import pprint
 api_instance = swagger_client.DefaultApi()
 
 try: 
-    api_response = api_instance.food_get()
-    pprint(api_response)
+    api_instance.food_get()
 except ApiException as e:
     print("Exception when calling DefaultApi->foodGet: %s\n" % e)</code></pre>
                             </div>
@@ -1008,7 +987,6 @@ except ApiException as e:
   "content" : {
     "*/*" : {
       "schema" : {
-        "type" : "array",
         "items" : {
           "$ref" : "#/components/schemas/Food"
         },
@@ -1094,10 +1072,9 @@ public class DefaultApiExample {
     public static void main(String[] args) {
         
         DefaultApi apiInstance = new DefaultApi();
-        BigDecimal id = 1.2; // BigDecimal | 
+         id = ; //  | 
         try {
-            Object result = apiInstance.foodIdDelete(id);
-            System.out.println(result);
+            apiInstance.foodIdDelete(id);
         } catch (ApiException e) {
             System.err.println("Exception when calling DefaultApi#foodIdDelete");
             e.printStackTrace();
@@ -1113,10 +1090,9 @@ public class DefaultApiExample {
 
     public static void main(String[] args) {
         DefaultApi apiInstance = new DefaultApi();
-        BigDecimal id = 1.2; // BigDecimal | 
+         id = ; //  | 
         try {
-            Object result = apiInstance.foodIdDelete(id);
-            System.out.println(result);
+            apiInstance.foodIdDelete(id);
         } catch (ApiException e) {
             System.err.println("Exception when calling DefaultApi#foodIdDelete");
             e.printStackTrace();
@@ -1129,15 +1105,12 @@ public class DefaultApiExample {
   <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
   </div> -->
                             <div class="tab-pane" id="examples-Default-foodIdDelete-0-objc">
-                              <pre class="prettyprint"><code class="language-cpp">BigDecimal *id = 1.2; // 
+                              <pre class="prettyprint"><code class="language-cpp"> *id = ; // 
 
 DefaultApi *apiInstance = [[DefaultApi alloc] init];
 
 [apiInstance foodIdDeleteWith:id
-              completionHandler: ^(Object output, NSError* error) {
-                            if (output) {
-                                NSLog(@"%@", output);
-                            }
+              completionHandler: ^(NSError* error) {
                             if (error) {
                                 NSLog(@"Error: %@", error);
                             }
@@ -1149,13 +1122,13 @@ DefaultApi *apiInstance = [[DefaultApi alloc] init];
                               <pre class="prettyprint"><code class="language-js">var CalorieTrackerApi = require('calorie_tracker_api');
 
 var api = new CalorieTrackerApi.DefaultApi()
-var id = 1.2; // {{BigDecimal}} 
+var id = ; // {{}} 
 
 var callback = function(error, data, response) {
   if (error) {
     console.error(error);
   } else {
-    console.log('API called successfully. Returned data: ' + data);
+    console.log('API called successfully.');
   }
 };
 api.foodIdDelete(id, callback);
@@ -1180,12 +1153,11 @@ namespace Example
         {
 
             var apiInstance = new DefaultApi();
-            var id = 1.2;  // BigDecimal | 
+            var id = new (); //  | 
 
             try
             {
-                Object result = apiInstance.foodIdDelete(id);
-                Debug.WriteLine(result);
+                apiInstance.foodIdDelete(id);
             }
             catch (Exception e)
             {
@@ -1202,11 +1174,10 @@ namespace Example
 require_once(__DIR__ . '/vendor/autoload.php');
 
 $api_instance = new Swagger\Client\ApiDefaultApi();
-$id = 1.2; // BigDecimal | 
+$id = ; //  | 
 
 try {
-    $result = $api_instance->foodIdDelete($id);
-    print_r($result);
+    $api_instance->foodIdDelete($id);
 } catch (Exception $e) {
     echo 'Exception when calling DefaultApi->foodIdDelete: ', $e->getMessage(), PHP_EOL;
 }
@@ -1219,11 +1190,10 @@ use WWW::SwaggerClient::Configuration;
 use WWW::SwaggerClient::DefaultApi;
 
 my $api_instance = WWW::SwaggerClient::DefaultApi->new();
-my $id = 1.2; # BigDecimal | 
+my $id = ; #  | 
 
 eval { 
-    my $result = $api_instance->foodIdDelete(id => $id);
-    print Dumper($result);
+    $api_instance->foodIdDelete(id => $id);
 };
 if ($@) {
     warn "Exception when calling DefaultApi->foodIdDelete: $@\n";
@@ -1239,11 +1209,10 @@ from pprint import pprint
 
 # create an instance of the API class
 api_instance = swagger_client.DefaultApi()
-id = 1.2 # BigDecimal | 
+id =  #  | 
 
 try: 
-    api_response = api_instance.food_id_delete(id)
-    pprint(api_response)
+    api_instance.food_id_delete(id)
 except ApiException as e:
     print("Exception when calling DefaultApi->foodIdDelete: %s\n" % e)</code></pre>
                             </div>
@@ -1265,7 +1234,7 @@ except ApiException as e:
                                           <div class="json-schema-view">
                                               <div class="primitive">
                                                   <span class="type">
-                                                      BigDecimal
+                                                      
                                                   </span>
                                   
                                               </div>
@@ -1302,7 +1271,6 @@ except ApiException as e:
   "content" : {
     "text/plain" : {
       "schema" : {
-        "type" : "string",
         "x-content-type" : "text/plain"
       },
       "examples" : {
@@ -1359,7 +1327,6 @@ except ApiException as e:
   "content" : {
     "*/*" : {
       "schema" : {
-        "type" : "object",
         "x-content-type" : "*/*"
       }
     }
@@ -1442,7 +1409,7 @@ public class DefaultApiExample {
     public static void main(String[] args) {
         
         DefaultApi apiInstance = new DefaultApi();
-        BigDecimal id = 1.2; // BigDecimal | 
+         id = ; //  | 
         try {
             Food result = apiInstance.foodIdGet(id);
             System.out.println(result);
@@ -1461,7 +1428,7 @@ public class DefaultApiExample {
 
     public static void main(String[] args) {
         DefaultApi apiInstance = new DefaultApi();
-        BigDecimal id = 1.2; // BigDecimal | 
+         id = ; //  | 
         try {
             Food result = apiInstance.foodIdGet(id);
             System.out.println(result);
@@ -1477,7 +1444,7 @@ public class DefaultApiExample {
   <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
   </div> -->
                             <div class="tab-pane" id="examples-Default-foodIdGet-0-objc">
-                              <pre class="prettyprint"><code class="language-cpp">BigDecimal *id = 1.2; // 
+                              <pre class="prettyprint"><code class="language-cpp"> *id = ; // 
 
 DefaultApi *apiInstance = [[DefaultApi alloc] init];
 
@@ -1497,7 +1464,7 @@ DefaultApi *apiInstance = [[DefaultApi alloc] init];
                               <pre class="prettyprint"><code class="language-js">var CalorieTrackerApi = require('calorie_tracker_api');
 
 var api = new CalorieTrackerApi.DefaultApi()
-var id = 1.2; // {{BigDecimal}} 
+var id = ; // {{}} 
 
 var callback = function(error, data, response) {
   if (error) {
@@ -1528,7 +1495,7 @@ namespace Example
         {
 
             var apiInstance = new DefaultApi();
-            var id = 1.2;  // BigDecimal | 
+            var id = new (); //  | 
 
             try
             {
@@ -1550,7 +1517,7 @@ namespace Example
 require_once(__DIR__ . '/vendor/autoload.php');
 
 $api_instance = new Swagger\Client\ApiDefaultApi();
-$id = 1.2; // BigDecimal | 
+$id = ; //  | 
 
 try {
     $result = $api_instance->foodIdGet($id);
@@ -1567,7 +1534,7 @@ use WWW::SwaggerClient::Configuration;
 use WWW::SwaggerClient::DefaultApi;
 
 my $api_instance = WWW::SwaggerClient::DefaultApi->new();
-my $id = 1.2; # BigDecimal | 
+my $id = ; #  | 
 
 eval { 
     my $result = $api_instance->foodIdGet(id => $id);
@@ -1587,7 +1554,7 @@ from pprint import pprint
 
 # create an instance of the API class
 api_instance = swagger_client.DefaultApi()
-id = 1.2 # BigDecimal | 
+id =  #  | 
 
 try: 
     api_response = api_instance.food_id_get(id)
@@ -1613,7 +1580,7 @@ except ApiException as e:
                                           <div class="json-schema-view">
                                               <div class="primitive">
                                                   <span class="type">
-                                                      BigDecimal
+                                                      
                                                   </span>
                                   
                                               </div>
@@ -1650,7 +1617,6 @@ except ApiException as e:
   "content" : {
     "text/plain" : {
       "schema" : {
-        "type" : "string",
         "x-content-type" : "text/plain"
       },
       "examples" : {
@@ -1704,7 +1670,6 @@ except ApiException as e:
   "content" : {
     "*/*" : {
       "schema" : {
-        "type" : "object",
         "x-content-type" : "*/*"
       }
     }
@@ -1819,7 +1784,7 @@ except ApiException as e:
                           <div class="tab-pane active" id="examples-Default-foodPost-0-curl">
                            <pre class="prettyprint"><code class="language-bsh">curl -X POST\
 -H "Accept: */*"\
--H "Content-Type: application/json"\
+-H "Content-Type: */*"\
 "https://CalorieTracker/food"</code></pre>
                           </div>
                           <div class="tab-pane" id="examples-Default-foodPost-0-java">
@@ -2009,7 +1974,7 @@ except ApiException as e:
                                 $(document).ready(function() {
                                   var schemaWrapper = {
   "content" : {
-    "application/json" : {
+    "*/*" : {
       "schema" : {
         "$ref" : "#/components/schemas/Food"
       }
@@ -2017,7 +1982,7 @@ except ApiException as e:
   },
   "required" : true
 };
-                                  var schema = schemaWrapper.content["application/json"].schema;
+                                  var schema = schemaWrapper.content["*/*"].schema;
                                   if (schema.$ref != null) {
                                     schema = defsParser.$refs.get(schema.$ref);
                                   } else {
@@ -2127,7 +2092,7 @@ except ApiException as e:
                           <div class="tab-pane active" id="examples-Default-foodPut-0-curl">
                            <pre class="prettyprint"><code class="language-bsh">curl -X PUT\
 -H "Accept: text/plain,*/*"\
--H "Content-Type: application/json"\
+-H "Content-Type: */*"\
 "https://CalorieTracker/food"</code></pre>
                           </div>
                           <div class="tab-pane" id="examples-Default-foodPut-0-java">
@@ -2317,7 +2282,7 @@ except ApiException as e:
                                 $(document).ready(function() {
                                   var schemaWrapper = {
   "content" : {
-    "application/json" : {
+    "*/*" : {
       "schema" : {
         "$ref" : "#/components/schemas/Food"
       }
@@ -2325,7 +2290,7 @@ except ApiException as e:
   },
   "required" : true
 };
-                                  var schema = schemaWrapper.content["application/json"].schema;
+                                  var schema = schemaWrapper.content["*/*"].schema;
                                   if (schema.$ref != null) {
                                     schema = defsParser.$refs.get(schema.$ref);
                                   } else {
@@ -2369,11 +2334,13 @@ except ApiException as e:
   "content" : {
     "text/plain" : {
       "schema" : {
-        "type" : "string",
         "x-content-type" : "text/plain"
       },
       "examples" : {
         "Example#1" : {
+          "value" : ""
+        },
+        "Example#2" : {
           "value" : ""
         }
       }

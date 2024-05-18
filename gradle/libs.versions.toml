@@ -1,12 +1,18 @@
 [versions]
 kotlin = "1.9.24"
+coroutines = "1.8.1"
 ktor = "2.3.11"
 logback = "1.5.6"
 serialization = "1.6.3"
 detekt = "1.23.6"
 koin = "3.5.6"
+exposed = "0.50.1"
+postgresql = "42.7.3"
+hikari = "5.1.0"
 
 [libraries]
+
+# KTOR
 ktor-server-core-jvm = { group = "io.ktor", name = "ktor-server-core-jvm" }
 ktor-server-host-common-jvm = { group = "io.ktor", name = "ktor-server-host-common-jvm" }
 ktor-server-status-pages-jvm = { group = "io.ktor", name = "ktor-server-status-pages-jvm" }
@@ -17,18 +23,30 @@ ktor-server-content-negotiation-jvm = { group = "io.ktor", name = "ktor-server-c
 ktor-serialization-kotlinx-json-jvm = { group = "io.ktor", name = "ktor-serialization-kotlinx-json-jvm" }
 ktor-server-cio-jvm = { group = "io.ktor", name = "ktor-server-cio-jvm" }
 
+# OTHER
 logback = { group = "ch.qos.logback", name = "logback-classic", version.ref = "logback" }
 detekt-formatting = { group = "io.gitlab.arturbosch.detekt", name = "detekt-formatting", version.ref = "detekt" }
 
+# TEST
 ktor-server-test-host = { group = "io.ktor", name = "ktor-server-test-host" }
 kotlin-test = { group = "org.jetbrains.kotlin", name = "kotlin-test" }
 koin-test = { group = "io.insert-koin", name = "koin-test", version.ref = "koin" }
 koin-test-junit = { group = "io.insert-koin", name = "koin-test-junit4", version.ref = "koin" }
 
+# SERIALIZATION
 kotlinx-serialization = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "serialization" }
+kotlinx-coroutines = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version.ref = "coroutines" }
 
+# KOIN
 koin-ktor = { group = "io.insert-koin", name = "koin-ktor", version.ref = "koin" }
 koin-logger = { group = "io.insert-koin", name = "koin-logger-slf4j", version.ref = "koin" }
+
+# PERSISTENCE
+exposed-core = { group = "org.jetbrains.exposed", name = "exposed-core", version.ref = "exposed" }
+exposed-jdbc = { group = "org.jetbrains.exposed", name = "exposed-jdbc", version.ref = "exposed" }
+exposed-java-time = { group = "org.jetbrains.exposed", name = "exposed-java-time", version.ref = "exposed" }
+postgresql = { group = "org.postgresql", name = "postgresql", version.ref = "postgresql" }
+hikari = { group = "com.zaxxer", name = "HikariCP", version.ref = "hikari" }
 
 [bundles]
 ktor-server = [
@@ -46,6 +64,14 @@ ktor-server = [
 koin = [
     "koin-ktor",
     "koin-logger",
+]
+
+persistence = [
+    "exposed-core",
+    "exposed-jdbc",
+    "exposed-java-time",
+    "postgresql",
+    "hikari",
 ]
 
 [plugins]

@@ -1,7 +1,7 @@
 package nl.jaysh.plugins
 
 import io.ktor.server.application.*
-import nl.jaysh.di.appModule
+import nl.jaysh.core.di.appModule
 import org.koin.ktor.plugin.Koin
 import org.koin.logger.slf4jLogger
 

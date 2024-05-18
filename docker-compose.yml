@@ -1,0 +1,22 @@
+version: '3'
+
+services:
+  local-database:
+    image: "postgres:latest"
+    env_file:
+      - postgres.env
+    ports:
+      - "5432:5432"
+    volumes:
+      - pg-volume:/var/lib/postgresql/data/
+
+  test-database:
+    image: "postgres:latest"
+    env_file:
+      - postgres.env
+    ports:
+      - "5433:5432"
+    # No volumes for test
+
+volumes:
+  pg-volume: { }
