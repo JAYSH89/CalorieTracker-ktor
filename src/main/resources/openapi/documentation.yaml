@@ -10,6 +10,15 @@ paths:
     get:
       description: ""
       responses:
+        "500":
+          description: "Internal Server Error"
+          content:
+            text/plain:
+              schema:
+                type: "string"
+              examples:
+                Example#1:
+                  value: ""
         "200":
           description: "OK"
           content:
@@ -22,22 +31,7 @@ paths:
       description: ""
       requestBody:
         content:
-          '*/*':
-            schema:
-              $ref: "#/components/schemas/Food"
-        required: true
-      responses:
-        "201":
-          description: "Created"
-          content:
-            '*/*':
-              schema:
-                $ref: "#/components/schemas/Food"
-    put:
-      description: ""
-      requestBody:
-        content:
-          '*/*':
+          application/json:
             schema:
               $ref: "#/components/schemas/Food"
         required: true
@@ -51,7 +45,29 @@ paths:
               examples:
                 Example#1:
                   value: ""
-                Example#2:
+        "201":
+          description: "Created"
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/Food"
+    put:
+      description: ""
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Food"
+        required: true
+      responses:
+        "500":
+          description: "Internal Server Error"
+          content:
+            text/plain:
+              schema:
+                type: "string"
+              examples:
+                Example#1:
                   value: ""
         "200":
           description: "OK"
@@ -78,8 +94,6 @@ paths:
               examples:
                 Example#1:
                   value: ""
-                Example#2:
-                  value: ""
         "204":
           description: "No Content"
           content:
@@ -103,6 +117,8 @@ paths:
                 type: "string"
               examples:
                 Example#1:
+                  value: ""
+                Example#2:
                   value: ""
         "404":
           description: "Not Found"

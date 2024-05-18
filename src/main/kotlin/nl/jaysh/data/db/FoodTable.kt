@@ -6,9 +6,8 @@ import org.jetbrains.exposed.dao.id.UUIDTable
 import org.jetbrains.exposed.sql.Column
 import org.jetbrains.exposed.sql.ResultRow
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
-import org.jetbrains.exposed.sql.deleteAll
 import org.jetbrains.exposed.sql.deleteWhere
-import org.jetbrains.exposed.sql.insert
+import org.jetbrains.exposed.sql.insertAndGetId
 import org.jetbrains.exposed.sql.javatime.datetime
 import org.jetbrains.exposed.sql.selectAll
 import org.jetbrains.exposed.sql.update
@@ -50,8 +49,8 @@ fun FoodTable.getAll(): List<Food> = selectAll().map { entity ->
     entity.toFood()
 }
 
-fun FoodTable.insert(food: Food) {
-    insert {
+fun FoodTable.insert(food: Food): Food {
+    val id = insertAndGetId {
         it[name] = food.name
         it[carbs] = food.carbs
         it[proteins] = food.proteins
@@ -60,10 +59,16 @@ fun FoodTable.insert(food: Food) {
         it[amountType] = food.amountType.toString()
         it[createdAt] = LocalDateTime.now()
         it[updatedAt] = LocalDateTime.now()
-    }
+    }.value
+
+    return FoodTable
+        .selectAll()
+        .where { FoodTable.id eq id }
+        .single()
+        .toFood()
 }
 
-fun FoodTable.update(food: Food) {
+fun FoodTable.update(food: Food): Food {
     val rowsChanged = update({ FoodTable.id eq food.id }) {
         it[name] = food.name
         it[carbs] = food.carbs
@@ -74,9 +79,15 @@ fun FoodTable.update(food: Food) {
         it[updatedAt] = LocalDateTime.now()
     }
     check(rowsChanged == 1)
+
+    return FoodTable
+        .selectAll()
+        .where { FoodTable.id eq food.id!! }
+        .single()
+        .toFood()
 }
 
 fun FoodTable.delete(id: UUID) {
-    val rowsChanged = FoodTable.deleteWhere { FoodTable.id eq id }
+    val rowsChanged = deleteWhere { FoodTable.id eq id }
     check(rowsChanged == 1)
 }

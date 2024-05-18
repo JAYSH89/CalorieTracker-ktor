@@ -8,29 +8,31 @@ import nl.jaysh.data.db.toFood
 import nl.jaysh.data.db.update
 import nl.jaysh.models.Food
 import org.jetbrains.exposed.sql.selectAll
+import org.jetbrains.exposed.sql.transactions.transaction
 import java.util.*
 
 class FoodRepository {
-    fun getAll(): List<Food> = FoodTable.getAll()
+    fun getAll(): List<Food> = transaction {
+        FoodTable.getAll()
+    }
 
-    fun add(food: Food) {
+    fun add(food: Food): Food = transaction {
         FoodTable.insert(food)
     }
 
-    fun findById(id: UUID): Food? = FoodTable
-        .selectAll()
-        .where { FoodTable.id eq id }
-        .map { entity -> entity.toFood() }
-        .singleOrNull()
+    fun findById(id: UUID): Food? = transaction {
+        FoodTable
+            .selectAll()
+            .where { FoodTable.id eq id }
+            .map { entity -> entity.toFood() }
+            .singleOrNull()
+    }
 
-    fun update(food: Food) {
+    fun update(food: Food): Food = transaction {
         FoodTable.update(food = food)
     }
 
-    fun delete(id: UUID) {
+    fun delete(id: UUID) = transaction {
         FoodTable.delete(id = id)
     }
 }
-
-
-
