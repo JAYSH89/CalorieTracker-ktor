@@ -9,6 +9,7 @@ koin = "3.5.6"
 exposed = "0.50.1"
 postgresql = "42.7.3"
 hikari = "5.1.0"
+bcrypt = "0.10.2"
 
 [libraries]
 
@@ -47,6 +48,9 @@ exposed-jdbc = { group = "org.jetbrains.exposed", name = "exposed-jdbc", version
 exposed-java-time = { group = "org.jetbrains.exposed", name = "exposed-java-time", version.ref = "exposed" }
 postgresql = { group = "org.postgresql", name = "postgresql", version.ref = "postgresql" }
 hikari = { group = "com.zaxxer", name = "HikariCP", version.ref = "hikari" }
+
+# CRYPTOGRAPHY
+bcrypt = { group = "at.favre.lib", name = "bcrypt", version.ref = "bcrypt" }
 
 [bundles]
 ktor-server = [
