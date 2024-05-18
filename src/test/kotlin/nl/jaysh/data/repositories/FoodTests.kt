@@ -1,11 +1,10 @@
-package nl.jaysh.data
+package nl.jaysh.data.repositories
 
 import junit.framework.TestCase.assertNotNull
 import nl.jaysh.data.db.FoodTable
 import nl.jaysh.data.db.getAll
 import nl.jaysh.data.db.insert
 import nl.jaysh.data.db.toFood
-import nl.jaysh.data.repositories.FoodRepository
 import nl.jaysh.helpers.objects.testFood
 import org.jetbrains.exposed.sql.Database
 import org.jetbrains.exposed.sql.SchemaUtils

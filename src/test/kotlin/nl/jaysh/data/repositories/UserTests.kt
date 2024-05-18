@@ -1,10 +1,9 @@
-package nl.jaysh.data
+package nl.jaysh.data.repositories
 
 import nl.jaysh.data.db.UserTable
 import nl.jaysh.data.db.getAll
 import nl.jaysh.data.db.insert
 import nl.jaysh.data.db.toUser
-import nl.jaysh.data.repositories.UserRepository
 import nl.jaysh.helpers.objects.testUser
 import org.jetbrains.exposed.exceptions.ExposedSQLException
 import org.jetbrains.exposed.sql.Database
