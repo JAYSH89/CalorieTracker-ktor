@@ -1,32 +1,27 @@
 package nl.jaysh.services
 
 import nl.jaysh.models.Food
+import java.util.*
 
 class FoodService {
 
     private val foods = mutableListOf<Food>()
 
-    fun getAllFood(): List<Food> {
-        return foods.toList()
-    }
+    fun getAllFood(): List<Food> = foods.toList()
 
-    fun getFoodById(id: Long): Food? {
-        return foods.find { food -> food.id == id }
+    fun getFoodById(id: UUID): Food? = foods.find { food ->
+        food.id == id
     }
 
     fun createFood(food: Food): Food {
-        val id = foods.maxOfOrNull { it.id ?: 1 }
-        val incrementedId = id?.plus(1) ?: 1
-
-        val newFood = food.copy(id = incrementedId)
+        val newFood = food.copy(id = UUID.randomUUID())
         foods.add(newFood)
-
         return newFood
     }
 
     fun updateFood(food: Food): Food {
-        val id = food.id ?: 0
-        val savedFood = getFoodById(id = id) ?: throw IllegalArgumentException("Food not found $id")
+        val id = food.id ?: throw IllegalArgumentException("invalid id")
+        val savedFood = getFoodById(id = id) ?: throw IllegalArgumentException("food not found $id")
         foods.remove(savedFood)
 
         val updatedFood = savedFood.copy(
@@ -38,11 +33,10 @@ class FoodService {
             amountType = food.amountType,
         )
         foods.add(updatedFood)
-
         return updatedFood
     }
 
-    fun deleteFood(id: Long) {
+    fun deleteFood(id: UUID) {
         val foodToDelete = getFoodById(id = id) ?: throw IllegalArgumentException("No food with id $id")
         foods.remove(foodToDelete)
     }

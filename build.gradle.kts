@@ -31,9 +31,12 @@ detekt {
 
 dependencies {
     implementation(libs.bundles.ktor.server)
+    implementation(libs.bundles.persistence)
+    implementation(libs.bundles.koin)
+
     implementation(libs.logback)
     implementation(libs.kotlinx.serialization)
-    implementation(libs.bundles.koin)
+    implementation(libs.kotlinx.coroutines)
 
     detektPlugins(libs.detekt.formatting)
 

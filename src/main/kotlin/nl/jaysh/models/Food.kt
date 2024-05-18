@@ -1,14 +1,17 @@
 package nl.jaysh.models
 
+import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
+import nl.jaysh.core.utils.UUIDSerializer
+import java.util.UUID
 
 @Serializable
 data class Food(
-    val id: Long? = null,
+    @Serializable(with = UUIDSerializer::class) val id: UUID? = null,
     val name: String,
     val carbs: Double,
     val proteins: Double,
     val fats: Double,
     val amount: Double,
-    val amountType: AmountType,
+    @SerialName("amount_type") val amountType: AmountType,
 )

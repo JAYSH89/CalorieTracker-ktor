@@ -6,7 +6,7 @@ import io.ktor.serialization.kotlinx.json.*
 import io.ktor.server.plugins.contentnegotiation.*
 import io.ktor.server.testing.*
 import kotlinx.coroutines.runBlocking
-import nl.jaysh.di.appModule
+import nl.jaysh.core.di.appModule
 import nl.jaysh.models.AmountType
 import nl.jaysh.models.Food
 import nl.jaysh.plugins.configureRouting
