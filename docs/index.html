@@ -717,6 +717,41 @@
   "properties" : { }
 };
             defs["Map_String"] = { };
+            defs["UserRequest"] = {
+  "required" : [ "email", "password" ],
+  "properties" : {
+    "id" : {
+      "format" : "uuid"
+    },
+    "email" : { },
+    "password" : { },
+    "firstName" : { },
+    "lastName" : { },
+    "birthday" : {
+      "format" : "date-time"
+    },
+    "gender" : {
+      "enum" : [ "MALE", "FEMALE" ]
+    }
+  }
+};
+            defs["UserResponse"] = {
+  "required" : [ "email", "id" ],
+  "properties" : {
+    "id" : {
+      "format" : "uuid"
+    },
+    "email" : { },
+    "firstName" : { },
+    "lastName" : { },
+    "birthday" : {
+      "format" : "date-time"
+    },
+    "gender" : {
+      "enum" : [ "MALE", "FEMALE" ]
+    }
+  }
+};
   </script>
 
   <div class="container-fluid">
@@ -734,20 +769,35 @@
             <li class="nav-fixed nav-header active" data-group="_"><a href="#api-_">API Summary</a></li>
 
                   <li class="nav-header" data-group="Default"><a href="#api-Default">API Methods - Default</a></li>
-                    <li data-group="Default" data-name="foodGet" class="">
-                      <a href="#api-Default-foodGet">foodGet</a>
+                    <li data-group="Default" data-name="apiFoodGet" class="">
+                      <a href="#api-Default-apiFoodGet">apiFoodGet</a>
                     </li>
-                    <li data-group="Default" data-name="foodIdDelete" class="">
-                      <a href="#api-Default-foodIdDelete">foodIdDelete</a>
+                    <li data-group="Default" data-name="apiFoodIdDelete" class="">
+                      <a href="#api-Default-apiFoodIdDelete">apiFoodIdDelete</a>
                     </li>
-                    <li data-group="Default" data-name="foodIdGet" class="">
-                      <a href="#api-Default-foodIdGet">foodIdGet</a>
+                    <li data-group="Default" data-name="apiFoodIdGet" class="">
+                      <a href="#api-Default-apiFoodIdGet">apiFoodIdGet</a>
                     </li>
-                    <li data-group="Default" data-name="foodPost" class="">
-                      <a href="#api-Default-foodPost">foodPost</a>
+                    <li data-group="Default" data-name="apiFoodPost" class="">
+                      <a href="#api-Default-apiFoodPost">apiFoodPost</a>
                     </li>
-                    <li data-group="Default" data-name="foodPut" class="">
-                      <a href="#api-Default-foodPut">foodPut</a>
+                    <li data-group="Default" data-name="apiFoodPut" class="">
+                      <a href="#api-Default-apiFoodPut">apiFoodPut</a>
+                    </li>
+                    <li data-group="Default" data-name="apiUserGet" class="">
+                      <a href="#api-Default-apiUserGet">apiUserGet</a>
+                    </li>
+                    <li data-group="Default" data-name="apiUserIdDelete" class="">
+                      <a href="#api-Default-apiUserIdDelete">apiUserIdDelete</a>
+                    </li>
+                    <li data-group="Default" data-name="apiUserIdGet" class="">
+                      <a href="#api-Default-apiUserIdGet">apiUserIdGet</a>
+                    </li>
+                    <li data-group="Default" data-name="apiUserPost" class="">
+                      <a href="#api-Default-apiUserPost">apiUserPost</a>
+                    </li>
+                    <li data-group="Default" data-name="apiUserPut" class="">
+                      <a href="#api-Default-apiUserPut">apiUserPut</a>
                     </li>
                     <li data-group="Default" data-name="jsonKotlinxSerializationGet" class="">
                       <a href="#api-Default-jsonKotlinxSerializationGet">jsonKotlinxSerializationGet</a>
@@ -773,10 +823,10 @@
         <div id="sections">
                 <section id="api-Default">
                   <h1>Default</h1>
-                    <div id="api-Default-foodGet">
-                      <article id="api-Default-foodGet-0" data-group="User" data-name="foodGet" data-version="0">
+                    <div id="api-Default-apiFoodGet">
+                      <article id="api-Default-apiFoodGet-0" data-group="User" data-name="apiFoodGet" data-version="0">
                         <div class="pull-left">
-                          <h1>foodGet</h1>
+                          <h1>apiFoodGet</h1>
                           <p></p>
                         </div>
                         <div class="pull-right"></div>
@@ -785,31 +835,31 @@
                         <p class="marked"></p>
                         <p></p>
                         <br />
-                        <pre class="prettyprint language-html prettyprinted" data-type="get"><code><span class="pln">/food</span></code></pre>
+                        <pre class="prettyprint language-html prettyprinted" data-type="get"><code><span class="pln">/api/food</span></code></pre>
                         <p>
                           <h3>Usage and SDK Samples</h3>
                         </p>
                         <ul class="nav nav-tabs nav-tabs-examples">
-                          <li class="active"><a href="#examples-Default-foodGet-0-curl">Curl</a></li>
-                          <li class=""><a href="#examples-Default-foodGet-0-java">Java</a></li>
-                          <li class=""><a href="#examples-Default-foodGet-0-android">Android</a></li>
-                          <!--<li class=""><a href="#examples-Default-foodGet-0-groovy">Groovy</a></li>-->
-                          <li class=""><a href="#examples-Default-foodGet-0-objc">Obj-C</a></li>
-                          <li class=""><a href="#examples-Default-foodGet-0-javascript">JavaScript</a></li>
-                          <!--<li class=""><a href="#examples-Default-foodGet-0-angular">Angular</a></li>-->
-                          <li class=""><a href="#examples-Default-foodGet-0-csharp">C#</a></li>
-                          <li class=""><a href="#examples-Default-foodGet-0-php">PHP</a></li>
-                          <li class=""><a href="#examples-Default-foodGet-0-perl">Perl</a></li>
-                          <li class=""><a href="#examples-Default-foodGet-0-python">Python</a></li>
+                          <li class="active"><a href="#examples-Default-apiFoodGet-0-curl">Curl</a></li>
+                          <li class=""><a href="#examples-Default-apiFoodGet-0-java">Java</a></li>
+                          <li class=""><a href="#examples-Default-apiFoodGet-0-android">Android</a></li>
+                          <!--<li class=""><a href="#examples-Default-apiFoodGet-0-groovy">Groovy</a></li>-->
+                          <li class=""><a href="#examples-Default-apiFoodGet-0-objc">Obj-C</a></li>
+                          <li class=""><a href="#examples-Default-apiFoodGet-0-javascript">JavaScript</a></li>
+                          <!--<li class=""><a href="#examples-Default-apiFoodGet-0-angular">Angular</a></li>-->
+                          <li class=""><a href="#examples-Default-apiFoodGet-0-csharp">C#</a></li>
+                          <li class=""><a href="#examples-Default-apiFoodGet-0-php">PHP</a></li>
+                          <li class=""><a href="#examples-Default-apiFoodGet-0-perl">Perl</a></li>
+                          <li class=""><a href="#examples-Default-apiFoodGet-0-python">Python</a></li>
                         </ul>
 
                         <div class="tab-content">
-                          <div class="tab-pane active" id="examples-Default-foodGet-0-curl">
+                          <div class="tab-pane active" id="examples-Default-apiFoodGet-0-curl">
                            <pre class="prettyprint"><code class="language-bsh">curl -X GET\
 -H "Accept: text/plain,*/*"\
-"https://CalorieTracker/food"</code></pre>
+"https://CalorieTracker/api/food"</code></pre>
                           </div>
-                          <div class="tab-pane" id="examples-Default-foodGet-0-java">
+                          <div class="tab-pane" id="examples-Default-apiFoodGet-0-java">
                             <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
 import io.swagger.client.auth.*;
 import io.swagger.client.model.*;
@@ -824,16 +874,16 @@ public class DefaultApiExample {
         
         DefaultApi apiInstance = new DefaultApi();
         try {
-            apiInstance.foodGet();
+            apiInstance.apiFoodGet();
         } catch (ApiException e) {
-            System.err.println("Exception when calling DefaultApi#foodGet");
+            System.err.println("Exception when calling DefaultApi#apiFoodGet");
             e.printStackTrace();
         }
     }
 }</code></pre>
                           </div>
 
-                          <div class="tab-pane" id="examples-Default-foodGet-0-android">
+                          <div class="tab-pane" id="examples-Default-apiFoodGet-0-android">
                             <pre class="prettyprint"><code class="language-java">import io.swagger.client.api.DefaultApi;
 
 public class DefaultApiExample {
@@ -841,23 +891,23 @@ public class DefaultApiExample {
     public static void main(String[] args) {
         DefaultApi apiInstance = new DefaultApi();
         try {
-            apiInstance.foodGet();
+            apiInstance.apiFoodGet();
         } catch (ApiException e) {
-            System.err.println("Exception when calling DefaultApi#foodGet");
+            System.err.println("Exception when calling DefaultApi#apiFoodGet");
             e.printStackTrace();
         }
     }
 }</code></pre>
                           </div>
   <!--
-  <div class="tab-pane" id="examples-Default-foodGet-0-groovy">
+  <div class="tab-pane" id="examples-Default-apiFoodGet-0-groovy">
   <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
   </div> -->
-                            <div class="tab-pane" id="examples-Default-foodGet-0-objc">
+                            <div class="tab-pane" id="examples-Default-apiFoodGet-0-objc">
                               <pre class="prettyprint"><code class="language-cpp">
 DefaultApi *apiInstance = [[DefaultApi alloc] init];
 
-[apiInstance foodGetWithCompletionHandler: 
+[apiInstance apiFoodGetWithCompletionHandler: 
               ^(NSError* error) {
                             if (error) {
                                 NSLog(@"Error: %@", error);
@@ -866,7 +916,7 @@ DefaultApi *apiInstance = [[DefaultApi alloc] init];
 </code></pre>
                             </div>
 
-                            <div class="tab-pane" id="examples-Default-foodGet-0-javascript">
+                            <div class="tab-pane" id="examples-Default-apiFoodGet-0-javascript">
                               <pre class="prettyprint"><code class="language-js">var CalorieTrackerApi = require('calorie_tracker_api');
 
 var api = new CalorieTrackerApi.DefaultApi()
@@ -877,14 +927,14 @@ var callback = function(error, data, response) {
     console.log('API called successfully.');
   }
 };
-api.foodGet(callback);
+api.apiFoodGet(callback);
 </code></pre>
                             </div>
 
-                            <!--<div class="tab-pane" id="examples-Default-foodGet-0-angular">
+                            <!--<div class="tab-pane" id="examples-Default-apiFoodGet-0-angular">
               <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
             </div>-->
-                            <div class="tab-pane" id="examples-Default-foodGet-0-csharp">
+                            <div class="tab-pane" id="examples-Default-apiFoodGet-0-csharp">
                               <pre class="prettyprint"><code class="language-cs">using System;
 using System.Diagnostics;
 using IO.Swagger.Api;
@@ -893,7 +943,7 @@ using IO.Swagger.Model;
 
 namespace Example
 {
-    public class foodGetExample
+    public class apiFoodGetExample
     {
         public void main()
         {
@@ -902,11 +952,11 @@ namespace Example
 
             try
             {
-                apiInstance.foodGet();
+                apiInstance.apiFoodGet();
             }
             catch (Exception e)
             {
-                Debug.Print("Exception when calling DefaultApi.foodGet: " + e.Message );
+                Debug.Print("Exception when calling DefaultApi.apiFoodGet: " + e.Message );
             }
         }
     }
@@ -914,21 +964,21 @@ namespace Example
 </code></pre>
                             </div>
 
-                            <div class="tab-pane" id="examples-Default-foodGet-0-php">
+                            <div class="tab-pane" id="examples-Default-apiFoodGet-0-php">
                               <pre class="prettyprint"><code class="language-php"><&#63;php
 require_once(__DIR__ . '/vendor/autoload.php');
 
 $api_instance = new Swagger\Client\ApiDefaultApi();
 
 try {
-    $api_instance->foodGet();
+    $api_instance->apiFoodGet();
 } catch (Exception $e) {
-    echo 'Exception when calling DefaultApi->foodGet: ', $e->getMessage(), PHP_EOL;
+    echo 'Exception when calling DefaultApi->apiFoodGet: ', $e->getMessage(), PHP_EOL;
 }
 ?></code></pre>
                             </div>
 
-                            <div class="tab-pane" id="examples-Default-foodGet-0-perl">
+                            <div class="tab-pane" id="examples-Default-apiFoodGet-0-perl">
                               <pre class="prettyprint"><code class="language-perl">use Data::Dumper;
 use WWW::SwaggerClient::Configuration;
 use WWW::SwaggerClient::DefaultApi;
@@ -936,14 +986,14 @@ use WWW::SwaggerClient::DefaultApi;
 my $api_instance = WWW::SwaggerClient::DefaultApi->new();
 
 eval { 
-    $api_instance->foodGet();
+    $api_instance->apiFoodGet();
 };
 if ($@) {
-    warn "Exception when calling DefaultApi->foodGet: $@\n";
+    warn "Exception when calling DefaultApi->apiFoodGet: $@\n";
 }</code></pre>
                             </div>
 
-                            <div class="tab-pane" id="examples-Default-foodGet-0-python">
+                            <div class="tab-pane" id="examples-Default-apiFoodGet-0-python">
                               <pre class="prettyprint"><code class="language-python">from __future__ import print_statement
 import time
 import swagger_client
@@ -954,9 +1004,9 @@ from pprint import pprint
 api_instance = swagger_client.DefaultApi()
 
 try: 
-    api_instance.food_get()
+    api_instance.api_food_get()
 except ApiException as e:
-    print("Exception when calling DefaultApi->foodGet: %s\n" % e)</code></pre>
+    print("Exception when calling DefaultApi->apiFoodGet: %s\n" % e)</code></pre>
                             </div>
                           </div>
 
@@ -972,14 +1022,14 @@ except ApiException as e:
 
                             <ul class="nav nav-tabs nav-tabs-examples" >
                                 <li class="active">
-                                  <a data-toggle="tab" href="#responses-foodGet-500-schema">Schema</a>
+                                  <a data-toggle="tab" href="#responses-apiFoodGet-500-schema">Schema</a>
                                 </li>
 
                             </ul>
 
                             <div class="tab-content" style='margin-bottom: 10px;'>
-                                <div class="tab-pane active" id="responses-foodGet-500-schema">
-                                  <div id='responses-foodGet-500-schema-500' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
+                                <div class="tab-pane active" id="responses-apiFoodGet-500-schema">
+                                  <div id='responses-apiFoodGet-500-schema-500' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
                                     <script>
                                       $(document).ready(function() {
                                         var schemaWrapper = {
@@ -1010,14 +1060,14 @@ except ApiException as e:
 
                                         //console.log(JSON.stringify(schema));
                                         var view = new JSONSchemaView(schema, 3);
-                                        $('#responses-foodGet-500-schema-data').val(stringify(schema));
-                                        var result = $('#responses-foodGet-500-schema-500');
+                                        $('#responses-apiFoodGet-500-schema-data').val(stringify(schema));
+                                        var result = $('#responses-apiFoodGet-500-schema-500');
                                         result.empty();
                                         result.append(view.render());
                                       });
                                     </script>
                                   </div>
-                                  <input id='responses-foodGet-500-schema-data' type='hidden' value=''></input>
+                                  <input id='responses-apiFoodGet-500-schema-data' type='hidden' value=''></input>
                                 </div>
                             </div>
 
@@ -1025,14 +1075,14 @@ except ApiException as e:
 
                             <ul class="nav nav-tabs nav-tabs-examples" >
                                 <li class="active">
-                                  <a data-toggle="tab" href="#responses-foodGet-200-schema">Schema</a>
+                                  <a data-toggle="tab" href="#responses-apiFoodGet-200-schema">Schema</a>
                                 </li>
 
                             </ul>
 
                             <div class="tab-content" style='margin-bottom: 10px;'>
-                                <div class="tab-pane active" id="responses-foodGet-200-schema">
-                                  <div id='responses-foodGet-200-schema-200' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
+                                <div class="tab-pane active" id="responses-apiFoodGet-200-schema">
+                                  <div id='responses-apiFoodGet-200-schema-200' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
                                     <script>
                                       $(document).ready(function() {
                                         var schemaWrapper = {
@@ -1061,24 +1111,24 @@ except ApiException as e:
 
                                         //console.log(JSON.stringify(schema));
                                         var view = new JSONSchemaView(schema, 3);
-                                        $('#responses-foodGet-200-schema-data').val(stringify(schema));
-                                        var result = $('#responses-foodGet-200-schema-200');
+                                        $('#responses-apiFoodGet-200-schema-data').val(stringify(schema));
+                                        var result = $('#responses-apiFoodGet-200-schema-200');
                                         result.empty();
                                         result.append(view.render());
                                       });
                                     </script>
                                   </div>
-                                  <input id='responses-foodGet-200-schema-data' type='hidden' value=''></input>
+                                  <input id='responses-apiFoodGet-200-schema-data' type='hidden' value=''></input>
                                 </div>
                             </div>
 
                         </article>
                       </div>
                       <hr>
-                    <div id="api-Default-foodIdDelete">
-                      <article id="api-Default-foodIdDelete-0" data-group="User" data-name="foodIdDelete" data-version="0">
+                    <div id="api-Default-apiFoodIdDelete">
+                      <article id="api-Default-apiFoodIdDelete-0" data-group="User" data-name="apiFoodIdDelete" data-version="0">
                         <div class="pull-left">
-                          <h1>foodIdDelete</h1>
+                          <h1>apiFoodIdDelete</h1>
                           <p></p>
                         </div>
                         <div class="pull-right"></div>
@@ -1087,31 +1137,31 @@ except ApiException as e:
                         <p class="marked"></p>
                         <p></p>
                         <br />
-                        <pre class="prettyprint language-html prettyprinted" data-type="delete"><code><span class="pln">/food/{id}</span></code></pre>
+                        <pre class="prettyprint language-html prettyprinted" data-type="delete"><code><span class="pln">/api/food/{id}</span></code></pre>
                         <p>
                           <h3>Usage and SDK Samples</h3>
                         </p>
                         <ul class="nav nav-tabs nav-tabs-examples">
-                          <li class="active"><a href="#examples-Default-foodIdDelete-0-curl">Curl</a></li>
-                          <li class=""><a href="#examples-Default-foodIdDelete-0-java">Java</a></li>
-                          <li class=""><a href="#examples-Default-foodIdDelete-0-android">Android</a></li>
-                          <!--<li class=""><a href="#examples-Default-foodIdDelete-0-groovy">Groovy</a></li>-->
-                          <li class=""><a href="#examples-Default-foodIdDelete-0-objc">Obj-C</a></li>
-                          <li class=""><a href="#examples-Default-foodIdDelete-0-javascript">JavaScript</a></li>
-                          <!--<li class=""><a href="#examples-Default-foodIdDelete-0-angular">Angular</a></li>-->
-                          <li class=""><a href="#examples-Default-foodIdDelete-0-csharp">C#</a></li>
-                          <li class=""><a href="#examples-Default-foodIdDelete-0-php">PHP</a></li>
-                          <li class=""><a href="#examples-Default-foodIdDelete-0-perl">Perl</a></li>
-                          <li class=""><a href="#examples-Default-foodIdDelete-0-python">Python</a></li>
+                          <li class="active"><a href="#examples-Default-apiFoodIdDelete-0-curl">Curl</a></li>
+                          <li class=""><a href="#examples-Default-apiFoodIdDelete-0-java">Java</a></li>
+                          <li class=""><a href="#examples-Default-apiFoodIdDelete-0-android">Android</a></li>
+                          <!--<li class=""><a href="#examples-Default-apiFoodIdDelete-0-groovy">Groovy</a></li>-->
+                          <li class=""><a href="#examples-Default-apiFoodIdDelete-0-objc">Obj-C</a></li>
+                          <li class=""><a href="#examples-Default-apiFoodIdDelete-0-javascript">JavaScript</a></li>
+                          <!--<li class=""><a href="#examples-Default-apiFoodIdDelete-0-angular">Angular</a></li>-->
+                          <li class=""><a href="#examples-Default-apiFoodIdDelete-0-csharp">C#</a></li>
+                          <li class=""><a href="#examples-Default-apiFoodIdDelete-0-php">PHP</a></li>
+                          <li class=""><a href="#examples-Default-apiFoodIdDelete-0-perl">Perl</a></li>
+                          <li class=""><a href="#examples-Default-apiFoodIdDelete-0-python">Python</a></li>
                         </ul>
 
                         <div class="tab-content">
-                          <div class="tab-pane active" id="examples-Default-foodIdDelete-0-curl">
+                          <div class="tab-pane active" id="examples-Default-apiFoodIdDelete-0-curl">
                            <pre class="prettyprint"><code class="language-bsh">curl -X DELETE\
 -H "Accept: text/plain,*/*"\
-"https://CalorieTracker/food/{id}"</code></pre>
+"https://CalorieTracker/api/food/{id}"</code></pre>
                           </div>
-                          <div class="tab-pane" id="examples-Default-foodIdDelete-0-java">
+                          <div class="tab-pane" id="examples-Default-apiFoodIdDelete-0-java">
                             <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
 import io.swagger.client.auth.*;
 import io.swagger.client.model.*;
@@ -1127,16 +1177,16 @@ public class DefaultApiExample {
         DefaultApi apiInstance = new DefaultApi();
          id = ; //  | 
         try {
-            apiInstance.foodIdDelete(id);
+            apiInstance.apiFoodIdDelete(id);
         } catch (ApiException e) {
-            System.err.println("Exception when calling DefaultApi#foodIdDelete");
+            System.err.println("Exception when calling DefaultApi#apiFoodIdDelete");
             e.printStackTrace();
         }
     }
 }</code></pre>
                           </div>
 
-                          <div class="tab-pane" id="examples-Default-foodIdDelete-0-android">
+                          <div class="tab-pane" id="examples-Default-apiFoodIdDelete-0-android">
                             <pre class="prettyprint"><code class="language-java">import io.swagger.client.api.DefaultApi;
 
 public class DefaultApiExample {
@@ -1145,24 +1195,24 @@ public class DefaultApiExample {
         DefaultApi apiInstance = new DefaultApi();
          id = ; //  | 
         try {
-            apiInstance.foodIdDelete(id);
+            apiInstance.apiFoodIdDelete(id);
         } catch (ApiException e) {
-            System.err.println("Exception when calling DefaultApi#foodIdDelete");
+            System.err.println("Exception when calling DefaultApi#apiFoodIdDelete");
             e.printStackTrace();
         }
     }
 }</code></pre>
                           </div>
   <!--
-  <div class="tab-pane" id="examples-Default-foodIdDelete-0-groovy">
+  <div class="tab-pane" id="examples-Default-apiFoodIdDelete-0-groovy">
   <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
   </div> -->
-                            <div class="tab-pane" id="examples-Default-foodIdDelete-0-objc">
+                            <div class="tab-pane" id="examples-Default-apiFoodIdDelete-0-objc">
                               <pre class="prettyprint"><code class="language-cpp"> *id = ; // 
 
 DefaultApi *apiInstance = [[DefaultApi alloc] init];
 
-[apiInstance foodIdDeleteWith:id
+[apiInstance apiFoodIdDeleteWith:id
               completionHandler: ^(NSError* error) {
                             if (error) {
                                 NSLog(@"Error: %@", error);
@@ -1171,7 +1221,7 @@ DefaultApi *apiInstance = [[DefaultApi alloc] init];
 </code></pre>
                             </div>
 
-                            <div class="tab-pane" id="examples-Default-foodIdDelete-0-javascript">
+                            <div class="tab-pane" id="examples-Default-apiFoodIdDelete-0-javascript">
                               <pre class="prettyprint"><code class="language-js">var CalorieTrackerApi = require('calorie_tracker_api');
 
 var api = new CalorieTrackerApi.DefaultApi()
@@ -1184,14 +1234,14 @@ var callback = function(error, data, response) {
     console.log('API called successfully.');
   }
 };
-api.foodIdDelete(id, callback);
+api.apiFoodIdDelete(id, callback);
 </code></pre>
                             </div>
 
-                            <!--<div class="tab-pane" id="examples-Default-foodIdDelete-0-angular">
+                            <!--<div class="tab-pane" id="examples-Default-apiFoodIdDelete-0-angular">
               <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
             </div>-->
-                            <div class="tab-pane" id="examples-Default-foodIdDelete-0-csharp">
+                            <div class="tab-pane" id="examples-Default-apiFoodIdDelete-0-csharp">
                               <pre class="prettyprint"><code class="language-cs">using System;
 using System.Diagnostics;
 using IO.Swagger.Api;
@@ -1200,7 +1250,7 @@ using IO.Swagger.Model;
 
 namespace Example
 {
-    public class foodIdDeleteExample
+    public class apiFoodIdDeleteExample
     {
         public void main()
         {
@@ -1210,11 +1260,11 @@ namespace Example
 
             try
             {
-                apiInstance.foodIdDelete(id);
+                apiInstance.apiFoodIdDelete(id);
             }
             catch (Exception e)
             {
-                Debug.Print("Exception when calling DefaultApi.foodIdDelete: " + e.Message );
+                Debug.Print("Exception when calling DefaultApi.apiFoodIdDelete: " + e.Message );
             }
         }
     }
@@ -1222,7 +1272,7 @@ namespace Example
 </code></pre>
                             </div>
 
-                            <div class="tab-pane" id="examples-Default-foodIdDelete-0-php">
+                            <div class="tab-pane" id="examples-Default-apiFoodIdDelete-0-php">
                               <pre class="prettyprint"><code class="language-php"><&#63;php
 require_once(__DIR__ . '/vendor/autoload.php');
 
@@ -1230,14 +1280,14 @@ $api_instance = new Swagger\Client\ApiDefaultApi();
 $id = ; //  | 
 
 try {
-    $api_instance->foodIdDelete($id);
+    $api_instance->apiFoodIdDelete($id);
 } catch (Exception $e) {
-    echo 'Exception when calling DefaultApi->foodIdDelete: ', $e->getMessage(), PHP_EOL;
+    echo 'Exception when calling DefaultApi->apiFoodIdDelete: ', $e->getMessage(), PHP_EOL;
 }
 ?></code></pre>
                             </div>
 
-                            <div class="tab-pane" id="examples-Default-foodIdDelete-0-perl">
+                            <div class="tab-pane" id="examples-Default-apiFoodIdDelete-0-perl">
                               <pre class="prettyprint"><code class="language-perl">use Data::Dumper;
 use WWW::SwaggerClient::Configuration;
 use WWW::SwaggerClient::DefaultApi;
@@ -1246,14 +1296,14 @@ my $api_instance = WWW::SwaggerClient::DefaultApi->new();
 my $id = ; #  | 
 
 eval { 
-    $api_instance->foodIdDelete(id => $id);
+    $api_instance->apiFoodIdDelete(id => $id);
 };
 if ($@) {
-    warn "Exception when calling DefaultApi->foodIdDelete: $@\n";
+    warn "Exception when calling DefaultApi->apiFoodIdDelete: $@\n";
 }</code></pre>
                             </div>
 
-                            <div class="tab-pane" id="examples-Default-foodIdDelete-0-python">
+                            <div class="tab-pane" id="examples-Default-apiFoodIdDelete-0-python">
                               <pre class="prettyprint"><code class="language-python">from __future__ import print_statement
 import time
 import swagger_client
@@ -1265,9 +1315,9 @@ api_instance = swagger_client.DefaultApi()
 id =  #  | 
 
 try: 
-    api_instance.food_id_delete(id)
+    api_instance.api_food_id_delete(id)
 except ApiException as e:
-    print("Exception when calling DefaultApi->foodIdDelete: %s\n" % e)</code></pre>
+    print("Exception when calling DefaultApi->apiFoodIdDelete: %s\n" % e)</code></pre>
                             </div>
                           </div>
 
@@ -1283,7 +1333,7 @@ except ApiException as e:
                                   <td>
                                   
                                   
-                                      <div id="d2e199_foodIdDelete_id">
+                                      <div id="d2e199_apiFoodIdDelete_id">
                                           <div class="json-schema-view">
                                               <div class="primitive">
                                                   <span class="type">
@@ -1309,14 +1359,14 @@ except ApiException as e:
 
                             <ul class="nav nav-tabs nav-tabs-examples" >
                                 <li class="active">
-                                  <a data-toggle="tab" href="#responses-foodIdDelete-500-schema">Schema</a>
+                                  <a data-toggle="tab" href="#responses-apiFoodIdDelete-500-schema">Schema</a>
                                 </li>
 
                             </ul>
 
                             <div class="tab-content" style='margin-bottom: 10px;'>
-                                <div class="tab-pane active" id="responses-foodIdDelete-500-schema">
-                                  <div id='responses-foodIdDelete-500-schema-500' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
+                                <div class="tab-pane active" id="responses-apiFoodIdDelete-500-schema">
+                                  <div id='responses-apiFoodIdDelete-500-schema-500' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
                                     <script>
                                       $(document).ready(function() {
                                         var schemaWrapper = {
@@ -1347,14 +1397,14 @@ except ApiException as e:
 
                                         //console.log(JSON.stringify(schema));
                                         var view = new JSONSchemaView(schema, 3);
-                                        $('#responses-foodIdDelete-500-schema-data').val(stringify(schema));
-                                        var result = $('#responses-foodIdDelete-500-schema-500');
+                                        $('#responses-apiFoodIdDelete-500-schema-data').val(stringify(schema));
+                                        var result = $('#responses-apiFoodIdDelete-500-schema-500');
                                         result.empty();
                                         result.append(view.render());
                                       });
                                     </script>
                                   </div>
-                                  <input id='responses-foodIdDelete-500-schema-data' type='hidden' value=''></input>
+                                  <input id='responses-apiFoodIdDelete-500-schema-data' type='hidden' value=''></input>
                                 </div>
                             </div>
 
@@ -1362,14 +1412,14 @@ except ApiException as e:
 
                             <ul class="nav nav-tabs nav-tabs-examples" >
                                 <li class="active">
-                                  <a data-toggle="tab" href="#responses-foodIdDelete-204-schema">Schema</a>
+                                  <a data-toggle="tab" href="#responses-apiFoodIdDelete-204-schema">Schema</a>
                                 </li>
 
                             </ul>
 
                             <div class="tab-content" style='margin-bottom: 10px;'>
-                                <div class="tab-pane active" id="responses-foodIdDelete-204-schema">
-                                  <div id='responses-foodIdDelete-204-schema-204' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
+                                <div class="tab-pane active" id="responses-apiFoodIdDelete-204-schema">
+                                  <div id='responses-apiFoodIdDelete-204-schema-204' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
                                     <script>
                                       $(document).ready(function() {
                                         var schemaWrapper = {
@@ -1395,24 +1445,24 @@ except ApiException as e:
 
                                         //console.log(JSON.stringify(schema));
                                         var view = new JSONSchemaView(schema, 3);
-                                        $('#responses-foodIdDelete-204-schema-data').val(stringify(schema));
-                                        var result = $('#responses-foodIdDelete-204-schema-204');
+                                        $('#responses-apiFoodIdDelete-204-schema-data').val(stringify(schema));
+                                        var result = $('#responses-apiFoodIdDelete-204-schema-204');
                                         result.empty();
                                         result.append(view.render());
                                       });
                                     </script>
                                   </div>
-                                  <input id='responses-foodIdDelete-204-schema-data' type='hidden' value=''></input>
+                                  <input id='responses-apiFoodIdDelete-204-schema-data' type='hidden' value=''></input>
                                 </div>
                             </div>
 
                         </article>
                       </div>
                       <hr>
-                    <div id="api-Default-foodIdGet">
-                      <article id="api-Default-foodIdGet-0" data-group="User" data-name="foodIdGet" data-version="0">
+                    <div id="api-Default-apiFoodIdGet">
+                      <article id="api-Default-apiFoodIdGet-0" data-group="User" data-name="apiFoodIdGet" data-version="0">
                         <div class="pull-left">
-                          <h1>foodIdGet</h1>
+                          <h1>apiFoodIdGet</h1>
                           <p></p>
                         </div>
                         <div class="pull-right"></div>
@@ -1421,31 +1471,31 @@ except ApiException as e:
                         <p class="marked"></p>
                         <p></p>
                         <br />
-                        <pre class="prettyprint language-html prettyprinted" data-type="get"><code><span class="pln">/food/{id}</span></code></pre>
+                        <pre class="prettyprint language-html prettyprinted" data-type="get"><code><span class="pln">/api/food/{id}</span></code></pre>
                         <p>
                           <h3>Usage and SDK Samples</h3>
                         </p>
                         <ul class="nav nav-tabs nav-tabs-examples">
-                          <li class="active"><a href="#examples-Default-foodIdGet-0-curl">Curl</a></li>
-                          <li class=""><a href="#examples-Default-foodIdGet-0-java">Java</a></li>
-                          <li class=""><a href="#examples-Default-foodIdGet-0-android">Android</a></li>
-                          <!--<li class=""><a href="#examples-Default-foodIdGet-0-groovy">Groovy</a></li>-->
-                          <li class=""><a href="#examples-Default-foodIdGet-0-objc">Obj-C</a></li>
-                          <li class=""><a href="#examples-Default-foodIdGet-0-javascript">JavaScript</a></li>
-                          <!--<li class=""><a href="#examples-Default-foodIdGet-0-angular">Angular</a></li>-->
-                          <li class=""><a href="#examples-Default-foodIdGet-0-csharp">C#</a></li>
-                          <li class=""><a href="#examples-Default-foodIdGet-0-php">PHP</a></li>
-                          <li class=""><a href="#examples-Default-foodIdGet-0-perl">Perl</a></li>
-                          <li class=""><a href="#examples-Default-foodIdGet-0-python">Python</a></li>
+                          <li class="active"><a href="#examples-Default-apiFoodIdGet-0-curl">Curl</a></li>
+                          <li class=""><a href="#examples-Default-apiFoodIdGet-0-java">Java</a></li>
+                          <li class=""><a href="#examples-Default-apiFoodIdGet-0-android">Android</a></li>
+                          <!--<li class=""><a href="#examples-Default-apiFoodIdGet-0-groovy">Groovy</a></li>-->
+                          <li class=""><a href="#examples-Default-apiFoodIdGet-0-objc">Obj-C</a></li>
+                          <li class=""><a href="#examples-Default-apiFoodIdGet-0-javascript">JavaScript</a></li>
+                          <!--<li class=""><a href="#examples-Default-apiFoodIdGet-0-angular">Angular</a></li>-->
+                          <li class=""><a href="#examples-Default-apiFoodIdGet-0-csharp">C#</a></li>
+                          <li class=""><a href="#examples-Default-apiFoodIdGet-0-php">PHP</a></li>
+                          <li class=""><a href="#examples-Default-apiFoodIdGet-0-perl">Perl</a></li>
+                          <li class=""><a href="#examples-Default-apiFoodIdGet-0-python">Python</a></li>
                         </ul>
 
                         <div class="tab-content">
-                          <div class="tab-pane active" id="examples-Default-foodIdGet-0-curl">
+                          <div class="tab-pane active" id="examples-Default-apiFoodIdGet-0-curl">
                            <pre class="prettyprint"><code class="language-bsh">curl -X GET\
 -H "Accept: text/plain,*/*"\
-"https://CalorieTracker/food/{id}"</code></pre>
+"https://CalorieTracker/api/food/{id}"</code></pre>
                           </div>
-                          <div class="tab-pane" id="examples-Default-foodIdGet-0-java">
+                          <div class="tab-pane" id="examples-Default-apiFoodIdGet-0-java">
                             <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
 import io.swagger.client.auth.*;
 import io.swagger.client.model.*;
@@ -1461,17 +1511,17 @@ public class DefaultApiExample {
         DefaultApi apiInstance = new DefaultApi();
          id = ; //  | 
         try {
-            Food result = apiInstance.foodIdGet(id);
+            Food result = apiInstance.apiFoodIdGet(id);
             System.out.println(result);
         } catch (ApiException e) {
-            System.err.println("Exception when calling DefaultApi#foodIdGet");
+            System.err.println("Exception when calling DefaultApi#apiFoodIdGet");
             e.printStackTrace();
         }
     }
 }</code></pre>
                           </div>
 
-                          <div class="tab-pane" id="examples-Default-foodIdGet-0-android">
+                          <div class="tab-pane" id="examples-Default-apiFoodIdGet-0-android">
                             <pre class="prettyprint"><code class="language-java">import io.swagger.client.api.DefaultApi;
 
 public class DefaultApiExample {
@@ -1480,25 +1530,25 @@ public class DefaultApiExample {
         DefaultApi apiInstance = new DefaultApi();
          id = ; //  | 
         try {
-            Food result = apiInstance.foodIdGet(id);
+            Food result = apiInstance.apiFoodIdGet(id);
             System.out.println(result);
         } catch (ApiException e) {
-            System.err.println("Exception when calling DefaultApi#foodIdGet");
+            System.err.println("Exception when calling DefaultApi#apiFoodIdGet");
             e.printStackTrace();
         }
     }
 }</code></pre>
                           </div>
   <!--
-  <div class="tab-pane" id="examples-Default-foodIdGet-0-groovy">
+  <div class="tab-pane" id="examples-Default-apiFoodIdGet-0-groovy">
   <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
   </div> -->
-                            <div class="tab-pane" id="examples-Default-foodIdGet-0-objc">
+                            <div class="tab-pane" id="examples-Default-apiFoodIdGet-0-objc">
                               <pre class="prettyprint"><code class="language-cpp"> *id = ; // 
 
 DefaultApi *apiInstance = [[DefaultApi alloc] init];
 
-[apiInstance foodIdGetWith:id
+[apiInstance apiFoodIdGetWith:id
               completionHandler: ^(Food output, NSError* error) {
                             if (output) {
                                 NSLog(@"%@", output);
@@ -1510,7 +1560,7 @@ DefaultApi *apiInstance = [[DefaultApi alloc] init];
 </code></pre>
                             </div>
 
-                            <div class="tab-pane" id="examples-Default-foodIdGet-0-javascript">
+                            <div class="tab-pane" id="examples-Default-apiFoodIdGet-0-javascript">
                               <pre class="prettyprint"><code class="language-js">var CalorieTrackerApi = require('calorie_tracker_api');
 
 var api = new CalorieTrackerApi.DefaultApi()
@@ -1523,14 +1573,14 @@ var callback = function(error, data, response) {
     console.log('API called successfully. Returned data: ' + data);
   }
 };
-api.foodIdGet(id, callback);
+api.apiFoodIdGet(id, callback);
 </code></pre>
                             </div>
 
-                            <!--<div class="tab-pane" id="examples-Default-foodIdGet-0-angular">
+                            <!--<div class="tab-pane" id="examples-Default-apiFoodIdGet-0-angular">
               <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
             </div>-->
-                            <div class="tab-pane" id="examples-Default-foodIdGet-0-csharp">
+                            <div class="tab-pane" id="examples-Default-apiFoodIdGet-0-csharp">
                               <pre class="prettyprint"><code class="language-cs">using System;
 using System.Diagnostics;
 using IO.Swagger.Api;
@@ -1539,7 +1589,7 @@ using IO.Swagger.Model;
 
 namespace Example
 {
-    public class foodIdGetExample
+    public class apiFoodIdGetExample
     {
         public void main()
         {
@@ -1549,12 +1599,12 @@ namespace Example
 
             try
             {
-                Food result = apiInstance.foodIdGet(id);
+                Food result = apiInstance.apiFoodIdGet(id);
                 Debug.WriteLine(result);
             }
             catch (Exception e)
             {
-                Debug.Print("Exception when calling DefaultApi.foodIdGet: " + e.Message );
+                Debug.Print("Exception when calling DefaultApi.apiFoodIdGet: " + e.Message );
             }
         }
     }
@@ -1562,7 +1612,7 @@ namespace Example
 </code></pre>
                             </div>
 
-                            <div class="tab-pane" id="examples-Default-foodIdGet-0-php">
+                            <div class="tab-pane" id="examples-Default-apiFoodIdGet-0-php">
                               <pre class="prettyprint"><code class="language-php"><&#63;php
 require_once(__DIR__ . '/vendor/autoload.php');
 
@@ -1570,15 +1620,15 @@ $api_instance = new Swagger\Client\ApiDefaultApi();
 $id = ; //  | 
 
 try {
-    $result = $api_instance->foodIdGet($id);
+    $result = $api_instance->apiFoodIdGet($id);
     print_r($result);
 } catch (Exception $e) {
-    echo 'Exception when calling DefaultApi->foodIdGet: ', $e->getMessage(), PHP_EOL;
+    echo 'Exception when calling DefaultApi->apiFoodIdGet: ', $e->getMessage(), PHP_EOL;
 }
 ?></code></pre>
                             </div>
 
-                            <div class="tab-pane" id="examples-Default-foodIdGet-0-perl">
+                            <div class="tab-pane" id="examples-Default-apiFoodIdGet-0-perl">
                               <pre class="prettyprint"><code class="language-perl">use Data::Dumper;
 use WWW::SwaggerClient::Configuration;
 use WWW::SwaggerClient::DefaultApi;
@@ -1587,15 +1637,15 @@ my $api_instance = WWW::SwaggerClient::DefaultApi->new();
 my $id = ; #  | 
 
 eval { 
-    my $result = $api_instance->foodIdGet(id => $id);
+    my $result = $api_instance->apiFoodIdGet(id => $id);
     print Dumper($result);
 };
 if ($@) {
-    warn "Exception when calling DefaultApi->foodIdGet: $@\n";
+    warn "Exception when calling DefaultApi->apiFoodIdGet: $@\n";
 }</code></pre>
                             </div>
 
-                            <div class="tab-pane" id="examples-Default-foodIdGet-0-python">
+                            <div class="tab-pane" id="examples-Default-apiFoodIdGet-0-python">
                               <pre class="prettyprint"><code class="language-python">from __future__ import print_statement
 import time
 import swagger_client
@@ -1607,10 +1657,10 @@ api_instance = swagger_client.DefaultApi()
 id =  #  | 
 
 try: 
-    api_response = api_instance.food_id_get(id)
+    api_response = api_instance.api_food_id_get(id)
     pprint(api_response)
 except ApiException as e:
-    print("Exception when calling DefaultApi->foodIdGet: %s\n" % e)</code></pre>
+    print("Exception when calling DefaultApi->apiFoodIdGet: %s\n" % e)</code></pre>
                             </div>
                           </div>
 
@@ -1626,7 +1676,7 @@ except ApiException as e:
                                   <td>
                                   
                                   
-                                      <div id="d2e199_foodIdGet_id">
+                                      <div id="d2e199_apiFoodIdGet_id">
                                           <div class="json-schema-view">
                                               <div class="primitive">
                                                   <span class="type">
@@ -1652,14 +1702,14 @@ except ApiException as e:
 
                             <ul class="nav nav-tabs nav-tabs-examples" >
                                 <li class="active">
-                                  <a data-toggle="tab" href="#responses-foodIdGet-500-schema">Schema</a>
+                                  <a data-toggle="tab" href="#responses-apiFoodIdGet-500-schema">Schema</a>
                                 </li>
 
                             </ul>
 
                             <div class="tab-content" style='margin-bottom: 10px;'>
-                                <div class="tab-pane active" id="responses-foodIdGet-500-schema">
-                                  <div id='responses-foodIdGet-500-schema-500' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
+                                <div class="tab-pane active" id="responses-apiFoodIdGet-500-schema">
+                                  <div id='responses-apiFoodIdGet-500-schema-500' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
                                     <script>
                                       $(document).ready(function() {
                                         var schemaWrapper = {
@@ -1693,14 +1743,14 @@ except ApiException as e:
 
                                         //console.log(JSON.stringify(schema));
                                         var view = new JSONSchemaView(schema, 3);
-                                        $('#responses-foodIdGet-500-schema-data').val(stringify(schema));
-                                        var result = $('#responses-foodIdGet-500-schema-500');
+                                        $('#responses-apiFoodIdGet-500-schema-data').val(stringify(schema));
+                                        var result = $('#responses-apiFoodIdGet-500-schema-500');
                                         result.empty();
                                         result.append(view.render());
                                       });
                                     </script>
                                   </div>
-                                  <input id='responses-foodIdGet-500-schema-data' type='hidden' value=''></input>
+                                  <input id='responses-apiFoodIdGet-500-schema-data' type='hidden' value=''></input>
                                 </div>
                             </div>
 
@@ -1708,14 +1758,14 @@ except ApiException as e:
 
                             <ul class="nav nav-tabs nav-tabs-examples" >
                                 <li class="active">
-                                  <a data-toggle="tab" href="#responses-foodIdGet-404-schema">Schema</a>
+                                  <a data-toggle="tab" href="#responses-apiFoodIdGet-404-schema">Schema</a>
                                 </li>
 
                             </ul>
 
                             <div class="tab-content" style='margin-bottom: 10px;'>
-                                <div class="tab-pane active" id="responses-foodIdGet-404-schema">
-                                  <div id='responses-foodIdGet-404-schema-404' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
+                                <div class="tab-pane active" id="responses-apiFoodIdGet-404-schema">
+                                  <div id='responses-apiFoodIdGet-404-schema-404' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
                                     <script>
                                       $(document).ready(function() {
                                         var schemaWrapper = {
@@ -1741,14 +1791,14 @@ except ApiException as e:
 
                                         //console.log(JSON.stringify(schema));
                                         var view = new JSONSchemaView(schema, 3);
-                                        $('#responses-foodIdGet-404-schema-data').val(stringify(schema));
-                                        var result = $('#responses-foodIdGet-404-schema-404');
+                                        $('#responses-apiFoodIdGet-404-schema-data').val(stringify(schema));
+                                        var result = $('#responses-apiFoodIdGet-404-schema-404');
                                         result.empty();
                                         result.append(view.render());
                                       });
                                     </script>
                                   </div>
-                                  <input id='responses-foodIdGet-404-schema-data' type='hidden' value=''></input>
+                                  <input id='responses-apiFoodIdGet-404-schema-data' type='hidden' value=''></input>
                                 </div>
                             </div>
 
@@ -1756,14 +1806,14 @@ except ApiException as e:
 
                             <ul class="nav nav-tabs nav-tabs-examples" >
                                 <li class="active">
-                                  <a data-toggle="tab" href="#responses-foodIdGet-200-schema">Schema</a>
+                                  <a data-toggle="tab" href="#responses-apiFoodIdGet-200-schema">Schema</a>
                                 </li>
 
                             </ul>
 
                             <div class="tab-content" style='margin-bottom: 10px;'>
-                                <div class="tab-pane active" id="responses-foodIdGet-200-schema">
-                                  <div id='responses-foodIdGet-200-schema-200' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
+                                <div class="tab-pane active" id="responses-apiFoodIdGet-200-schema">
+                                  <div id='responses-apiFoodIdGet-200-schema-200' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
                                     <script>
                                       $(document).ready(function() {
                                         var schemaWrapper = {
@@ -1789,24 +1839,24 @@ except ApiException as e:
 
                                         //console.log(JSON.stringify(schema));
                                         var view = new JSONSchemaView(schema, 3);
-                                        $('#responses-foodIdGet-200-schema-data').val(stringify(schema));
-                                        var result = $('#responses-foodIdGet-200-schema-200');
+                                        $('#responses-apiFoodIdGet-200-schema-data').val(stringify(schema));
+                                        var result = $('#responses-apiFoodIdGet-200-schema-200');
                                         result.empty();
                                         result.append(view.render());
                                       });
                                     </script>
                                   </div>
-                                  <input id='responses-foodIdGet-200-schema-data' type='hidden' value=''></input>
+                                  <input id='responses-apiFoodIdGet-200-schema-data' type='hidden' value=''></input>
                                 </div>
                             </div>
 
                         </article>
                       </div>
                       <hr>
-                    <div id="api-Default-foodPost">
-                      <article id="api-Default-foodPost-0" data-group="User" data-name="foodPost" data-version="0">
+                    <div id="api-Default-apiFoodPost">
+                      <article id="api-Default-apiFoodPost-0" data-group="User" data-name="apiFoodPost" data-version="0">
                         <div class="pull-left">
-                          <h1>foodPost</h1>
+                          <h1>apiFoodPost</h1>
                           <p></p>
                         </div>
                         <div class="pull-right"></div>
@@ -1815,32 +1865,32 @@ except ApiException as e:
                         <p class="marked"></p>
                         <p></p>
                         <br />
-                        <pre class="prettyprint language-html prettyprinted" data-type="post"><code><span class="pln">/food</span></code></pre>
+                        <pre class="prettyprint language-html prettyprinted" data-type="post"><code><span class="pln">/api/food</span></code></pre>
                         <p>
                           <h3>Usage and SDK Samples</h3>
                         </p>
                         <ul class="nav nav-tabs nav-tabs-examples">
-                          <li class="active"><a href="#examples-Default-foodPost-0-curl">Curl</a></li>
-                          <li class=""><a href="#examples-Default-foodPost-0-java">Java</a></li>
-                          <li class=""><a href="#examples-Default-foodPost-0-android">Android</a></li>
-                          <!--<li class=""><a href="#examples-Default-foodPost-0-groovy">Groovy</a></li>-->
-                          <li class=""><a href="#examples-Default-foodPost-0-objc">Obj-C</a></li>
-                          <li class=""><a href="#examples-Default-foodPost-0-javascript">JavaScript</a></li>
-                          <!--<li class=""><a href="#examples-Default-foodPost-0-angular">Angular</a></li>-->
-                          <li class=""><a href="#examples-Default-foodPost-0-csharp">C#</a></li>
-                          <li class=""><a href="#examples-Default-foodPost-0-php">PHP</a></li>
-                          <li class=""><a href="#examples-Default-foodPost-0-perl">Perl</a></li>
-                          <li class=""><a href="#examples-Default-foodPost-0-python">Python</a></li>
+                          <li class="active"><a href="#examples-Default-apiFoodPost-0-curl">Curl</a></li>
+                          <li class=""><a href="#examples-Default-apiFoodPost-0-java">Java</a></li>
+                          <li class=""><a href="#examples-Default-apiFoodPost-0-android">Android</a></li>
+                          <!--<li class=""><a href="#examples-Default-apiFoodPost-0-groovy">Groovy</a></li>-->
+                          <li class=""><a href="#examples-Default-apiFoodPost-0-objc">Obj-C</a></li>
+                          <li class=""><a href="#examples-Default-apiFoodPost-0-javascript">JavaScript</a></li>
+                          <!--<li class=""><a href="#examples-Default-apiFoodPost-0-angular">Angular</a></li>-->
+                          <li class=""><a href="#examples-Default-apiFoodPost-0-csharp">C#</a></li>
+                          <li class=""><a href="#examples-Default-apiFoodPost-0-php">PHP</a></li>
+                          <li class=""><a href="#examples-Default-apiFoodPost-0-perl">Perl</a></li>
+                          <li class=""><a href="#examples-Default-apiFoodPost-0-python">Python</a></li>
                         </ul>
 
                         <div class="tab-content">
-                          <div class="tab-pane active" id="examples-Default-foodPost-0-curl">
+                          <div class="tab-pane active" id="examples-Default-apiFoodPost-0-curl">
                            <pre class="prettyprint"><code class="language-bsh">curl -X POST\
 -H "Accept: text/plain,*/*"\
 -H "Content-Type: */*"\
-"https://CalorieTracker/food"</code></pre>
+"https://CalorieTracker/api/food"</code></pre>
                           </div>
-                          <div class="tab-pane" id="examples-Default-foodPost-0-java">
+                          <div class="tab-pane" id="examples-Default-apiFoodPost-0-java">
                             <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
 import io.swagger.client.auth.*;
 import io.swagger.client.model.*;
@@ -1856,17 +1906,17 @@ public class DefaultApiExample {
         DefaultApi apiInstance = new DefaultApi();
         Food body = ; // Food | 
         try {
-            Food result = apiInstance.foodPost(body);
+            Food result = apiInstance.apiFoodPost(body);
             System.out.println(result);
         } catch (ApiException e) {
-            System.err.println("Exception when calling DefaultApi#foodPost");
+            System.err.println("Exception when calling DefaultApi#apiFoodPost");
             e.printStackTrace();
         }
     }
 }</code></pre>
                           </div>
 
-                          <div class="tab-pane" id="examples-Default-foodPost-0-android">
+                          <div class="tab-pane" id="examples-Default-apiFoodPost-0-android">
                             <pre class="prettyprint"><code class="language-java">import io.swagger.client.api.DefaultApi;
 
 public class DefaultApiExample {
@@ -1875,25 +1925,25 @@ public class DefaultApiExample {
         DefaultApi apiInstance = new DefaultApi();
         Food body = ; // Food | 
         try {
-            Food result = apiInstance.foodPost(body);
+            Food result = apiInstance.apiFoodPost(body);
             System.out.println(result);
         } catch (ApiException e) {
-            System.err.println("Exception when calling DefaultApi#foodPost");
+            System.err.println("Exception when calling DefaultApi#apiFoodPost");
             e.printStackTrace();
         }
     }
 }</code></pre>
                           </div>
   <!--
-  <div class="tab-pane" id="examples-Default-foodPost-0-groovy">
+  <div class="tab-pane" id="examples-Default-apiFoodPost-0-groovy">
   <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
   </div> -->
-                            <div class="tab-pane" id="examples-Default-foodPost-0-objc">
+                            <div class="tab-pane" id="examples-Default-apiFoodPost-0-objc">
                               <pre class="prettyprint"><code class="language-cpp">Food *body = ; // 
 
 DefaultApi *apiInstance = [[DefaultApi alloc] init];
 
-[apiInstance foodPostWith:body
+[apiInstance apiFoodPostWith:body
               completionHandler: ^(Food output, NSError* error) {
                             if (output) {
                                 NSLog(@"%@", output);
@@ -1905,7 +1955,7 @@ DefaultApi *apiInstance = [[DefaultApi alloc] init];
 </code></pre>
                             </div>
 
-                            <div class="tab-pane" id="examples-Default-foodPost-0-javascript">
+                            <div class="tab-pane" id="examples-Default-apiFoodPost-0-javascript">
                               <pre class="prettyprint"><code class="language-js">var CalorieTrackerApi = require('calorie_tracker_api');
 
 var api = new CalorieTrackerApi.DefaultApi()
@@ -1918,14 +1968,14 @@ var callback = function(error, data, response) {
     console.log('API called successfully. Returned data: ' + data);
   }
 };
-api.foodPost(body, callback);
+api.apiFoodPost(body, callback);
 </code></pre>
                             </div>
 
-                            <!--<div class="tab-pane" id="examples-Default-foodPost-0-angular">
+                            <!--<div class="tab-pane" id="examples-Default-apiFoodPost-0-angular">
               <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
             </div>-->
-                            <div class="tab-pane" id="examples-Default-foodPost-0-csharp">
+                            <div class="tab-pane" id="examples-Default-apiFoodPost-0-csharp">
                               <pre class="prettyprint"><code class="language-cs">using System;
 using System.Diagnostics;
 using IO.Swagger.Api;
@@ -1934,7 +1984,7 @@ using IO.Swagger.Model;
 
 namespace Example
 {
-    public class foodPostExample
+    public class apiFoodPostExample
     {
         public void main()
         {
@@ -1944,12 +1994,12 @@ namespace Example
 
             try
             {
-                Food result = apiInstance.foodPost(body);
+                Food result = apiInstance.apiFoodPost(body);
                 Debug.WriteLine(result);
             }
             catch (Exception e)
             {
-                Debug.Print("Exception when calling DefaultApi.foodPost: " + e.Message );
+                Debug.Print("Exception when calling DefaultApi.apiFoodPost: " + e.Message );
             }
         }
     }
@@ -1957,7 +2007,7 @@ namespace Example
 </code></pre>
                             </div>
 
-                            <div class="tab-pane" id="examples-Default-foodPost-0-php">
+                            <div class="tab-pane" id="examples-Default-apiFoodPost-0-php">
                               <pre class="prettyprint"><code class="language-php"><&#63;php
 require_once(__DIR__ . '/vendor/autoload.php');
 
@@ -1965,15 +2015,15 @@ $api_instance = new Swagger\Client\ApiDefaultApi();
 $body = ; // Food | 
 
 try {
-    $result = $api_instance->foodPost($body);
+    $result = $api_instance->apiFoodPost($body);
     print_r($result);
 } catch (Exception $e) {
-    echo 'Exception when calling DefaultApi->foodPost: ', $e->getMessage(), PHP_EOL;
+    echo 'Exception when calling DefaultApi->apiFoodPost: ', $e->getMessage(), PHP_EOL;
 }
 ?></code></pre>
                             </div>
 
-                            <div class="tab-pane" id="examples-Default-foodPost-0-perl">
+                            <div class="tab-pane" id="examples-Default-apiFoodPost-0-perl">
                               <pre class="prettyprint"><code class="language-perl">use Data::Dumper;
 use WWW::SwaggerClient::Configuration;
 use WWW::SwaggerClient::DefaultApi;
@@ -1982,15 +2032,15 @@ my $api_instance = WWW::SwaggerClient::DefaultApi->new();
 my $body = WWW::SwaggerClient::Object::Food->new(); # Food | 
 
 eval { 
-    my $result = $api_instance->foodPost(body => $body);
+    my $result = $api_instance->apiFoodPost(body => $body);
     print Dumper($result);
 };
 if ($@) {
-    warn "Exception when calling DefaultApi->foodPost: $@\n";
+    warn "Exception when calling DefaultApi->apiFoodPost: $@\n";
 }</code></pre>
                             </div>
 
-                            <div class="tab-pane" id="examples-Default-foodPost-0-python">
+                            <div class="tab-pane" id="examples-Default-apiFoodPost-0-python">
                               <pre class="prettyprint"><code class="language-python">from __future__ import print_statement
 import time
 import swagger_client
@@ -2002,10 +2052,10 @@ api_instance = swagger_client.DefaultApi()
 body =  # Food | 
 
 try: 
-    api_response = api_instance.food_post(body)
+    api_response = api_instance.api_food_post(body)
     pprint(api_response)
 except ApiException as e:
-    print("Exception when calling DefaultApi->foodPost: %s\n" % e)</code></pre>
+    print("Exception when calling DefaultApi->apiFoodPost: %s\n" % e)</code></pre>
                             </div>
                           </div>
 
@@ -2047,12 +2097,12 @@ except ApiException as e:
                                   }
                                 
                                   var view = new JSONSchemaView(schema,2,{isBodyParam: true});
-                                  var result = $('#d2e199_foodPost_body');
+                                  var result = $('#d2e199_apiFoodPost_body');
                                   result.empty();
                                   result.append(view.render());
                                 });
                                 </script>
-                                <div id="d2e199_foodPost_body"></div>
+                                <div id="d2e199_apiFoodPost_body"></div>
                                 </td>
                                 </tr>
                             </table>
@@ -2064,14 +2114,14 @@ except ApiException as e:
 
                             <ul class="nav nav-tabs nav-tabs-examples" >
                                 <li class="active">
-                                  <a data-toggle="tab" href="#responses-foodPost-500-schema">Schema</a>
+                                  <a data-toggle="tab" href="#responses-apiFoodPost-500-schema">Schema</a>
                                 </li>
 
                             </ul>
 
                             <div class="tab-content" style='margin-bottom: 10px;'>
-                                <div class="tab-pane active" id="responses-foodPost-500-schema">
-                                  <div id='responses-foodPost-500-schema-500' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
+                                <div class="tab-pane active" id="responses-apiFoodPost-500-schema">
+                                  <div id='responses-apiFoodPost-500-schema-500' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
                                     <script>
                                       $(document).ready(function() {
                                         var schemaWrapper = {
@@ -2102,14 +2152,14 @@ except ApiException as e:
 
                                         //console.log(JSON.stringify(schema));
                                         var view = new JSONSchemaView(schema, 3);
-                                        $('#responses-foodPost-500-schema-data').val(stringify(schema));
-                                        var result = $('#responses-foodPost-500-schema-500');
+                                        $('#responses-apiFoodPost-500-schema-data').val(stringify(schema));
+                                        var result = $('#responses-apiFoodPost-500-schema-500');
                                         result.empty();
                                         result.append(view.render());
                                       });
                                     </script>
                                   </div>
-                                  <input id='responses-foodPost-500-schema-data' type='hidden' value=''></input>
+                                  <input id='responses-apiFoodPost-500-schema-data' type='hidden' value=''></input>
                                 </div>
                             </div>
 
@@ -2117,14 +2167,14 @@ except ApiException as e:
 
                             <ul class="nav nav-tabs nav-tabs-examples" >
                                 <li class="active">
-                                  <a data-toggle="tab" href="#responses-foodPost-201-schema">Schema</a>
+                                  <a data-toggle="tab" href="#responses-apiFoodPost-201-schema">Schema</a>
                                 </li>
 
                             </ul>
 
                             <div class="tab-content" style='margin-bottom: 10px;'>
-                                <div class="tab-pane active" id="responses-foodPost-201-schema">
-                                  <div id='responses-foodPost-201-schema-201' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
+                                <div class="tab-pane active" id="responses-apiFoodPost-201-schema">
+                                  <div id='responses-apiFoodPost-201-schema-201' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
                                     <script>
                                       $(document).ready(function() {
                                         var schemaWrapper = {
@@ -2150,24 +2200,24 @@ except ApiException as e:
 
                                         //console.log(JSON.stringify(schema));
                                         var view = new JSONSchemaView(schema, 3);
-                                        $('#responses-foodPost-201-schema-data').val(stringify(schema));
-                                        var result = $('#responses-foodPost-201-schema-201');
+                                        $('#responses-apiFoodPost-201-schema-data').val(stringify(schema));
+                                        var result = $('#responses-apiFoodPost-201-schema-201');
                                         result.empty();
                                         result.append(view.render());
                                       });
                                     </script>
                                   </div>
-                                  <input id='responses-foodPost-201-schema-data' type='hidden' value=''></input>
+                                  <input id='responses-apiFoodPost-201-schema-data' type='hidden' value=''></input>
                                 </div>
                             </div>
 
                         </article>
                       </div>
                       <hr>
-                    <div id="api-Default-foodPut">
-                      <article id="api-Default-foodPut-0" data-group="User" data-name="foodPut" data-version="0">
+                    <div id="api-Default-apiFoodPut">
+                      <article id="api-Default-apiFoodPut-0" data-group="User" data-name="apiFoodPut" data-version="0">
                         <div class="pull-left">
-                          <h1>foodPut</h1>
+                          <h1>apiFoodPut</h1>
                           <p></p>
                         </div>
                         <div class="pull-right"></div>
@@ -2176,32 +2226,32 @@ except ApiException as e:
                         <p class="marked"></p>
                         <p></p>
                         <br />
-                        <pre class="prettyprint language-html prettyprinted" data-type="put"><code><span class="pln">/food</span></code></pre>
+                        <pre class="prettyprint language-html prettyprinted" data-type="put"><code><span class="pln">/api/food</span></code></pre>
                         <p>
                           <h3>Usage and SDK Samples</h3>
                         </p>
                         <ul class="nav nav-tabs nav-tabs-examples">
-                          <li class="active"><a href="#examples-Default-foodPut-0-curl">Curl</a></li>
-                          <li class=""><a href="#examples-Default-foodPut-0-java">Java</a></li>
-                          <li class=""><a href="#examples-Default-foodPut-0-android">Android</a></li>
-                          <!--<li class=""><a href="#examples-Default-foodPut-0-groovy">Groovy</a></li>-->
-                          <li class=""><a href="#examples-Default-foodPut-0-objc">Obj-C</a></li>
-                          <li class=""><a href="#examples-Default-foodPut-0-javascript">JavaScript</a></li>
-                          <!--<li class=""><a href="#examples-Default-foodPut-0-angular">Angular</a></li>-->
-                          <li class=""><a href="#examples-Default-foodPut-0-csharp">C#</a></li>
-                          <li class=""><a href="#examples-Default-foodPut-0-php">PHP</a></li>
-                          <li class=""><a href="#examples-Default-foodPut-0-perl">Perl</a></li>
-                          <li class=""><a href="#examples-Default-foodPut-0-python">Python</a></li>
+                          <li class="active"><a href="#examples-Default-apiFoodPut-0-curl">Curl</a></li>
+                          <li class=""><a href="#examples-Default-apiFoodPut-0-java">Java</a></li>
+                          <li class=""><a href="#examples-Default-apiFoodPut-0-android">Android</a></li>
+                          <!--<li class=""><a href="#examples-Default-apiFoodPut-0-groovy">Groovy</a></li>-->
+                          <li class=""><a href="#examples-Default-apiFoodPut-0-objc">Obj-C</a></li>
+                          <li class=""><a href="#examples-Default-apiFoodPut-0-javascript">JavaScript</a></li>
+                          <!--<li class=""><a href="#examples-Default-apiFoodPut-0-angular">Angular</a></li>-->
+                          <li class=""><a href="#examples-Default-apiFoodPut-0-csharp">C#</a></li>
+                          <li class=""><a href="#examples-Default-apiFoodPut-0-php">PHP</a></li>
+                          <li class=""><a href="#examples-Default-apiFoodPut-0-perl">Perl</a></li>
+                          <li class=""><a href="#examples-Default-apiFoodPut-0-python">Python</a></li>
                         </ul>
 
                         <div class="tab-content">
-                          <div class="tab-pane active" id="examples-Default-foodPut-0-curl">
+                          <div class="tab-pane active" id="examples-Default-apiFoodPut-0-curl">
                            <pre class="prettyprint"><code class="language-bsh">curl -X PUT\
 -H "Accept: text/plain,*/*"\
 -H "Content-Type: */*"\
-"https://CalorieTracker/food"</code></pre>
+"https://CalorieTracker/api/food"</code></pre>
                           </div>
-                          <div class="tab-pane" id="examples-Default-foodPut-0-java">
+                          <div class="tab-pane" id="examples-Default-apiFoodPut-0-java">
                             <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
 import io.swagger.client.auth.*;
 import io.swagger.client.model.*;
@@ -2217,17 +2267,17 @@ public class DefaultApiExample {
         DefaultApi apiInstance = new DefaultApi();
         Food body = ; // Food | 
         try {
-            Food result = apiInstance.foodPut(body);
+            Food result = apiInstance.apiFoodPut(body);
             System.out.println(result);
         } catch (ApiException e) {
-            System.err.println("Exception when calling DefaultApi#foodPut");
+            System.err.println("Exception when calling DefaultApi#apiFoodPut");
             e.printStackTrace();
         }
     }
 }</code></pre>
                           </div>
 
-                          <div class="tab-pane" id="examples-Default-foodPut-0-android">
+                          <div class="tab-pane" id="examples-Default-apiFoodPut-0-android">
                             <pre class="prettyprint"><code class="language-java">import io.swagger.client.api.DefaultApi;
 
 public class DefaultApiExample {
@@ -2236,25 +2286,25 @@ public class DefaultApiExample {
         DefaultApi apiInstance = new DefaultApi();
         Food body = ; // Food | 
         try {
-            Food result = apiInstance.foodPut(body);
+            Food result = apiInstance.apiFoodPut(body);
             System.out.println(result);
         } catch (ApiException e) {
-            System.err.println("Exception when calling DefaultApi#foodPut");
+            System.err.println("Exception when calling DefaultApi#apiFoodPut");
             e.printStackTrace();
         }
     }
 }</code></pre>
                           </div>
   <!--
-  <div class="tab-pane" id="examples-Default-foodPut-0-groovy">
+  <div class="tab-pane" id="examples-Default-apiFoodPut-0-groovy">
   <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
   </div> -->
-                            <div class="tab-pane" id="examples-Default-foodPut-0-objc">
+                            <div class="tab-pane" id="examples-Default-apiFoodPut-0-objc">
                               <pre class="prettyprint"><code class="language-cpp">Food *body = ; // 
 
 DefaultApi *apiInstance = [[DefaultApi alloc] init];
 
-[apiInstance foodPutWith:body
+[apiInstance apiFoodPutWith:body
               completionHandler: ^(Food output, NSError* error) {
                             if (output) {
                                 NSLog(@"%@", output);
@@ -2266,7 +2316,7 @@ DefaultApi *apiInstance = [[DefaultApi alloc] init];
 </code></pre>
                             </div>
 
-                            <div class="tab-pane" id="examples-Default-foodPut-0-javascript">
+                            <div class="tab-pane" id="examples-Default-apiFoodPut-0-javascript">
                               <pre class="prettyprint"><code class="language-js">var CalorieTrackerApi = require('calorie_tracker_api');
 
 var api = new CalorieTrackerApi.DefaultApi()
@@ -2279,14 +2329,14 @@ var callback = function(error, data, response) {
     console.log('API called successfully. Returned data: ' + data);
   }
 };
-api.foodPut(body, callback);
+api.apiFoodPut(body, callback);
 </code></pre>
                             </div>
 
-                            <!--<div class="tab-pane" id="examples-Default-foodPut-0-angular">
+                            <!--<div class="tab-pane" id="examples-Default-apiFoodPut-0-angular">
               <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
             </div>-->
-                            <div class="tab-pane" id="examples-Default-foodPut-0-csharp">
+                            <div class="tab-pane" id="examples-Default-apiFoodPut-0-csharp">
                               <pre class="prettyprint"><code class="language-cs">using System;
 using System.Diagnostics;
 using IO.Swagger.Api;
@@ -2295,7 +2345,7 @@ using IO.Swagger.Model;
 
 namespace Example
 {
-    public class foodPutExample
+    public class apiFoodPutExample
     {
         public void main()
         {
@@ -2305,12 +2355,12 @@ namespace Example
 
             try
             {
-                Food result = apiInstance.foodPut(body);
+                Food result = apiInstance.apiFoodPut(body);
                 Debug.WriteLine(result);
             }
             catch (Exception e)
             {
-                Debug.Print("Exception when calling DefaultApi.foodPut: " + e.Message );
+                Debug.Print("Exception when calling DefaultApi.apiFoodPut: " + e.Message );
             }
         }
     }
@@ -2318,7 +2368,7 @@ namespace Example
 </code></pre>
                             </div>
 
-                            <div class="tab-pane" id="examples-Default-foodPut-0-php">
+                            <div class="tab-pane" id="examples-Default-apiFoodPut-0-php">
                               <pre class="prettyprint"><code class="language-php"><&#63;php
 require_once(__DIR__ . '/vendor/autoload.php');
 
@@ -2326,15 +2376,15 @@ $api_instance = new Swagger\Client\ApiDefaultApi();
 $body = ; // Food | 
 
 try {
-    $result = $api_instance->foodPut($body);
+    $result = $api_instance->apiFoodPut($body);
     print_r($result);
 } catch (Exception $e) {
-    echo 'Exception when calling DefaultApi->foodPut: ', $e->getMessage(), PHP_EOL;
+    echo 'Exception when calling DefaultApi->apiFoodPut: ', $e->getMessage(), PHP_EOL;
 }
 ?></code></pre>
                             </div>
 
-                            <div class="tab-pane" id="examples-Default-foodPut-0-perl">
+                            <div class="tab-pane" id="examples-Default-apiFoodPut-0-perl">
                               <pre class="prettyprint"><code class="language-perl">use Data::Dumper;
 use WWW::SwaggerClient::Configuration;
 use WWW::SwaggerClient::DefaultApi;
@@ -2343,15 +2393,15 @@ my $api_instance = WWW::SwaggerClient::DefaultApi->new();
 my $body = WWW::SwaggerClient::Object::Food->new(); # Food | 
 
 eval { 
-    my $result = $api_instance->foodPut(body => $body);
+    my $result = $api_instance->apiFoodPut(body => $body);
     print Dumper($result);
 };
 if ($@) {
-    warn "Exception when calling DefaultApi->foodPut: $@\n";
+    warn "Exception when calling DefaultApi->apiFoodPut: $@\n";
 }</code></pre>
                             </div>
 
-                            <div class="tab-pane" id="examples-Default-foodPut-0-python">
+                            <div class="tab-pane" id="examples-Default-apiFoodPut-0-python">
                               <pre class="prettyprint"><code class="language-python">from __future__ import print_statement
 import time
 import swagger_client
@@ -2363,10 +2413,10 @@ api_instance = swagger_client.DefaultApi()
 body =  # Food | 
 
 try: 
-    api_response = api_instance.food_put(body)
+    api_response = api_instance.api_food_put(body)
     pprint(api_response)
 except ApiException as e:
-    print("Exception when calling DefaultApi->foodPut: %s\n" % e)</code></pre>
+    print("Exception when calling DefaultApi->apiFoodPut: %s\n" % e)</code></pre>
                             </div>
                           </div>
 
@@ -2408,12 +2458,12 @@ except ApiException as e:
                                   }
                                 
                                   var view = new JSONSchemaView(schema,2,{isBodyParam: true});
-                                  var result = $('#d2e199_foodPut_body');
+                                  var result = $('#d2e199_apiFoodPut_body');
                                   result.empty();
                                   result.append(view.render());
                                 });
                                 </script>
-                                <div id="d2e199_foodPut_body"></div>
+                                <div id="d2e199_apiFoodPut_body"></div>
                                 </td>
                                 </tr>
                             </table>
@@ -2425,14 +2475,14 @@ except ApiException as e:
 
                             <ul class="nav nav-tabs nav-tabs-examples" >
                                 <li class="active">
-                                  <a data-toggle="tab" href="#responses-foodPut-500-schema">Schema</a>
+                                  <a data-toggle="tab" href="#responses-apiFoodPut-500-schema">Schema</a>
                                 </li>
 
                             </ul>
 
                             <div class="tab-content" style='margin-bottom: 10px;'>
-                                <div class="tab-pane active" id="responses-foodPut-500-schema">
-                                  <div id='responses-foodPut-500-schema-500' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
+                                <div class="tab-pane active" id="responses-apiFoodPut-500-schema">
+                                  <div id='responses-apiFoodPut-500-schema-500' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
                                     <script>
                                       $(document).ready(function() {
                                         var schemaWrapper = {
@@ -2463,14 +2513,14 @@ except ApiException as e:
 
                                         //console.log(JSON.stringify(schema));
                                         var view = new JSONSchemaView(schema, 3);
-                                        $('#responses-foodPut-500-schema-data').val(stringify(schema));
-                                        var result = $('#responses-foodPut-500-schema-500');
+                                        $('#responses-apiFoodPut-500-schema-data').val(stringify(schema));
+                                        var result = $('#responses-apiFoodPut-500-schema-500');
                                         result.empty();
                                         result.append(view.render());
                                       });
                                     </script>
                                   </div>
-                                  <input id='responses-foodPut-500-schema-data' type='hidden' value=''></input>
+                                  <input id='responses-apiFoodPut-500-schema-data' type='hidden' value=''></input>
                                 </div>
                             </div>
 
@@ -2478,14 +2528,14 @@ except ApiException as e:
 
                             <ul class="nav nav-tabs nav-tabs-examples" >
                                 <li class="active">
-                                  <a data-toggle="tab" href="#responses-foodPut-200-schema">Schema</a>
+                                  <a data-toggle="tab" href="#responses-apiFoodPut-200-schema">Schema</a>
                                 </li>
 
                             </ul>
 
                             <div class="tab-content" style='margin-bottom: 10px;'>
-                                <div class="tab-pane active" id="responses-foodPut-200-schema">
-                                  <div id='responses-foodPut-200-schema-200' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
+                                <div class="tab-pane active" id="responses-apiFoodPut-200-schema">
+                                  <div id='responses-apiFoodPut-200-schema-200' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
                                     <script>
                                       $(document).ready(function() {
                                         var schemaWrapper = {
@@ -2511,14 +2561,1766 @@ except ApiException as e:
 
                                         //console.log(JSON.stringify(schema));
                                         var view = new JSONSchemaView(schema, 3);
-                                        $('#responses-foodPut-200-schema-data').val(stringify(schema));
-                                        var result = $('#responses-foodPut-200-schema-200');
+                                        $('#responses-apiFoodPut-200-schema-data').val(stringify(schema));
+                                        var result = $('#responses-apiFoodPut-200-schema-200');
                                         result.empty();
                                         result.append(view.render());
                                       });
                                     </script>
                                   </div>
-                                  <input id='responses-foodPut-200-schema-data' type='hidden' value=''></input>
+                                  <input id='responses-apiFoodPut-200-schema-data' type='hidden' value=''></input>
+                                </div>
+                            </div>
+
+                        </article>
+                      </div>
+                      <hr>
+                    <div id="api-Default-apiUserGet">
+                      <article id="api-Default-apiUserGet-0" data-group="User" data-name="apiUserGet" data-version="0">
+                        <div class="pull-left">
+                          <h1>apiUserGet</h1>
+                          <p></p>
+                        </div>
+                        <div class="pull-right"></div>
+                        <div class="clearfix"></div>
+                        <p></p>
+                        <p class="marked"></p>
+                        <p></p>
+                        <br />
+                        <pre class="prettyprint language-html prettyprinted" data-type="get"><code><span class="pln">/api/user</span></code></pre>
+                        <p>
+                          <h3>Usage and SDK Samples</h3>
+                        </p>
+                        <ul class="nav nav-tabs nav-tabs-examples">
+                          <li class="active"><a href="#examples-Default-apiUserGet-0-curl">Curl</a></li>
+                          <li class=""><a href="#examples-Default-apiUserGet-0-java">Java</a></li>
+                          <li class=""><a href="#examples-Default-apiUserGet-0-android">Android</a></li>
+                          <!--<li class=""><a href="#examples-Default-apiUserGet-0-groovy">Groovy</a></li>-->
+                          <li class=""><a href="#examples-Default-apiUserGet-0-objc">Obj-C</a></li>
+                          <li class=""><a href="#examples-Default-apiUserGet-0-javascript">JavaScript</a></li>
+                          <!--<li class=""><a href="#examples-Default-apiUserGet-0-angular">Angular</a></li>-->
+                          <li class=""><a href="#examples-Default-apiUserGet-0-csharp">C#</a></li>
+                          <li class=""><a href="#examples-Default-apiUserGet-0-php">PHP</a></li>
+                          <li class=""><a href="#examples-Default-apiUserGet-0-perl">Perl</a></li>
+                          <li class=""><a href="#examples-Default-apiUserGet-0-python">Python</a></li>
+                        </ul>
+
+                        <div class="tab-content">
+                          <div class="tab-pane active" id="examples-Default-apiUserGet-0-curl">
+                           <pre class="prettyprint"><code class="language-bsh">curl -X GET\
+-H "Accept: text/plain,*/*"\
+"https://CalorieTracker/api/user"</code></pre>
+                          </div>
+                          <div class="tab-pane" id="examples-Default-apiUserGet-0-java">
+                            <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
+import io.swagger.client.auth.*;
+import io.swagger.client.model.*;
+import io.swagger.client.api.DefaultApi;
+
+import java.io.File;
+import java.util.*;
+
+public class DefaultApiExample {
+
+    public static void main(String[] args) {
+        
+        DefaultApi apiInstance = new DefaultApi();
+        try {
+            apiInstance.apiUserGet();
+        } catch (ApiException e) {
+            System.err.println("Exception when calling DefaultApi#apiUserGet");
+            e.printStackTrace();
+        }
+    }
+}</code></pre>
+                          </div>
+
+                          <div class="tab-pane" id="examples-Default-apiUserGet-0-android">
+                            <pre class="prettyprint"><code class="language-java">import io.swagger.client.api.DefaultApi;
+
+public class DefaultApiExample {
+
+    public static void main(String[] args) {
+        DefaultApi apiInstance = new DefaultApi();
+        try {
+            apiInstance.apiUserGet();
+        } catch (ApiException e) {
+            System.err.println("Exception when calling DefaultApi#apiUserGet");
+            e.printStackTrace();
+        }
+    }
+}</code></pre>
+                          </div>
+  <!--
+  <div class="tab-pane" id="examples-Default-apiUserGet-0-groovy">
+  <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
+  </div> -->
+                            <div class="tab-pane" id="examples-Default-apiUserGet-0-objc">
+                              <pre class="prettyprint"><code class="language-cpp">
+DefaultApi *apiInstance = [[DefaultApi alloc] init];
+
+[apiInstance apiUserGetWithCompletionHandler: 
+              ^(NSError* error) {
+                            if (error) {
+                                NSLog(@"Error: %@", error);
+                            }
+                        }];
+</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Default-apiUserGet-0-javascript">
+                              <pre class="prettyprint"><code class="language-js">var CalorieTrackerApi = require('calorie_tracker_api');
+
+var api = new CalorieTrackerApi.DefaultApi()
+var callback = function(error, data, response) {
+  if (error) {
+    console.error(error);
+  } else {
+    console.log('API called successfully.');
+  }
+};
+api.apiUserGet(callback);
+</code></pre>
+                            </div>
+
+                            <!--<div class="tab-pane" id="examples-Default-apiUserGet-0-angular">
+              <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
+            </div>-->
+                            <div class="tab-pane" id="examples-Default-apiUserGet-0-csharp">
+                              <pre class="prettyprint"><code class="language-cs">using System;
+using System.Diagnostics;
+using IO.Swagger.Api;
+using IO.Swagger.Client;
+using IO.Swagger.Model;
+
+namespace Example
+{
+    public class apiUserGetExample
+    {
+        public void main()
+        {
+
+            var apiInstance = new DefaultApi();
+
+            try
+            {
+                apiInstance.apiUserGet();
+            }
+            catch (Exception e)
+            {
+                Debug.Print("Exception when calling DefaultApi.apiUserGet: " + e.Message );
+            }
+        }
+    }
+}
+</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Default-apiUserGet-0-php">
+                              <pre class="prettyprint"><code class="language-php"><&#63;php
+require_once(__DIR__ . '/vendor/autoload.php');
+
+$api_instance = new Swagger\Client\ApiDefaultApi();
+
+try {
+    $api_instance->apiUserGet();
+} catch (Exception $e) {
+    echo 'Exception when calling DefaultApi->apiUserGet: ', $e->getMessage(), PHP_EOL;
+}
+?></code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Default-apiUserGet-0-perl">
+                              <pre class="prettyprint"><code class="language-perl">use Data::Dumper;
+use WWW::SwaggerClient::Configuration;
+use WWW::SwaggerClient::DefaultApi;
+
+my $api_instance = WWW::SwaggerClient::DefaultApi->new();
+
+eval { 
+    $api_instance->apiUserGet();
+};
+if ($@) {
+    warn "Exception when calling DefaultApi->apiUserGet: $@\n";
+}</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Default-apiUserGet-0-python">
+                              <pre class="prettyprint"><code class="language-python">from __future__ import print_statement
+import time
+import swagger_client
+from swagger_client.rest import ApiException
+from pprint import pprint
+
+# create an instance of the API class
+api_instance = swagger_client.DefaultApi()
+
+try: 
+    api_instance.api_user_get()
+except ApiException as e:
+    print("Exception when calling DefaultApi->apiUserGet: %s\n" % e)</code></pre>
+                            </div>
+                          </div>
+
+                          <h2>Parameters</h2>
+
+
+
+
+
+
+                          <h2>Responses</h2>
+                            <h3> Status: 500 - Internal Server Error </h3>
+
+                            <ul class="nav nav-tabs nav-tabs-examples" >
+                                <li class="active">
+                                  <a data-toggle="tab" href="#responses-apiUserGet-500-schema">Schema</a>
+                                </li>
+
+                            </ul>
+
+                            <div class="tab-content" style='margin-bottom: 10px;'>
+                                <div class="tab-pane active" id="responses-apiUserGet-500-schema">
+                                  <div id='responses-apiUserGet-500-schema-500' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
+                                    <script>
+                                      $(document).ready(function() {
+                                        var schemaWrapper = {
+  "description" : "Internal Server Error",
+  "content" : {
+    "text/plain" : {
+      "schema" : {
+        "x-content-type" : "text/plain"
+      },
+      "examples" : {
+        "Example#1" : {
+          "value" : ""
+        }
+      }
+    }
+  }
+};
+                                        var schema = schemaWrapper.content["text/plain"].schema;
+                                        if (schema.$ref != null) {
+                                          schema = defsParser.$refs.get(schema.$ref);
+                                        } else {
+                                          schemaWrapper.components = {};
+                                          schemaWrapper.components.schemas = Object.assign({}, defs);
+                                          $RefParser.dereference(schemaWrapper).catch(function(err) {
+                                            console.log(err);
+                                          });
+                                        }
+
+                                        //console.log(JSON.stringify(schema));
+                                        var view = new JSONSchemaView(schema, 3);
+                                        $('#responses-apiUserGet-500-schema-data').val(stringify(schema));
+                                        var result = $('#responses-apiUserGet-500-schema-500');
+                                        result.empty();
+                                        result.append(view.render());
+                                      });
+                                    </script>
+                                  </div>
+                                  <input id='responses-apiUserGet-500-schema-data' type='hidden' value=''></input>
+                                </div>
+                            </div>
+
+                            <h3> Status: 200 - OK </h3>
+
+                            <ul class="nav nav-tabs nav-tabs-examples" >
+                                <li class="active">
+                                  <a data-toggle="tab" href="#responses-apiUserGet-200-schema">Schema</a>
+                                </li>
+
+                            </ul>
+
+                            <div class="tab-content" style='margin-bottom: 10px;'>
+                                <div class="tab-pane active" id="responses-apiUserGet-200-schema">
+                                  <div id='responses-apiUserGet-200-schema-200' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
+                                    <script>
+                                      $(document).ready(function() {
+                                        var schemaWrapper = {
+  "description" : "OK",
+  "content" : {
+    "*/*" : {
+      "schema" : {
+        "items" : {
+          "$ref" : "#/components/schemas/UserResponse"
+        },
+        "x-content-type" : "*/*"
+      }
+    }
+  }
+};
+                                        var schema = schemaWrapper.content["*/*"].schema;
+                                        if (schema.$ref != null) {
+                                          schema = defsParser.$refs.get(schema.$ref);
+                                        } else {
+                                          schemaWrapper.components = {};
+                                          schemaWrapper.components.schemas = Object.assign({}, defs);
+                                          $RefParser.dereference(schemaWrapper).catch(function(err) {
+                                            console.log(err);
+                                          });
+                                        }
+
+                                        //console.log(JSON.stringify(schema));
+                                        var view = new JSONSchemaView(schema, 3);
+                                        $('#responses-apiUserGet-200-schema-data').val(stringify(schema));
+                                        var result = $('#responses-apiUserGet-200-schema-200');
+                                        result.empty();
+                                        result.append(view.render());
+                                      });
+                                    </script>
+                                  </div>
+                                  <input id='responses-apiUserGet-200-schema-data' type='hidden' value=''></input>
+                                </div>
+                            </div>
+
+                        </article>
+                      </div>
+                      <hr>
+                    <div id="api-Default-apiUserIdDelete">
+                      <article id="api-Default-apiUserIdDelete-0" data-group="User" data-name="apiUserIdDelete" data-version="0">
+                        <div class="pull-left">
+                          <h1>apiUserIdDelete</h1>
+                          <p></p>
+                        </div>
+                        <div class="pull-right"></div>
+                        <div class="clearfix"></div>
+                        <p></p>
+                        <p class="marked"></p>
+                        <p></p>
+                        <br />
+                        <pre class="prettyprint language-html prettyprinted" data-type="delete"><code><span class="pln">/api/user/{id}</span></code></pre>
+                        <p>
+                          <h3>Usage and SDK Samples</h3>
+                        </p>
+                        <ul class="nav nav-tabs nav-tabs-examples">
+                          <li class="active"><a href="#examples-Default-apiUserIdDelete-0-curl">Curl</a></li>
+                          <li class=""><a href="#examples-Default-apiUserIdDelete-0-java">Java</a></li>
+                          <li class=""><a href="#examples-Default-apiUserIdDelete-0-android">Android</a></li>
+                          <!--<li class=""><a href="#examples-Default-apiUserIdDelete-0-groovy">Groovy</a></li>-->
+                          <li class=""><a href="#examples-Default-apiUserIdDelete-0-objc">Obj-C</a></li>
+                          <li class=""><a href="#examples-Default-apiUserIdDelete-0-javascript">JavaScript</a></li>
+                          <!--<li class=""><a href="#examples-Default-apiUserIdDelete-0-angular">Angular</a></li>-->
+                          <li class=""><a href="#examples-Default-apiUserIdDelete-0-csharp">C#</a></li>
+                          <li class=""><a href="#examples-Default-apiUserIdDelete-0-php">PHP</a></li>
+                          <li class=""><a href="#examples-Default-apiUserIdDelete-0-perl">Perl</a></li>
+                          <li class=""><a href="#examples-Default-apiUserIdDelete-0-python">Python</a></li>
+                        </ul>
+
+                        <div class="tab-content">
+                          <div class="tab-pane active" id="examples-Default-apiUserIdDelete-0-curl">
+                           <pre class="prettyprint"><code class="language-bsh">curl -X DELETE\
+-H "Accept: text/plain,*/*"\
+"https://CalorieTracker/api/user/{id}"</code></pre>
+                          </div>
+                          <div class="tab-pane" id="examples-Default-apiUserIdDelete-0-java">
+                            <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
+import io.swagger.client.auth.*;
+import io.swagger.client.model.*;
+import io.swagger.client.api.DefaultApi;
+
+import java.io.File;
+import java.util.*;
+
+public class DefaultApiExample {
+
+    public static void main(String[] args) {
+        
+        DefaultApi apiInstance = new DefaultApi();
+         id = ; //  | 
+        try {
+            apiInstance.apiUserIdDelete(id);
+        } catch (ApiException e) {
+            System.err.println("Exception when calling DefaultApi#apiUserIdDelete");
+            e.printStackTrace();
+        }
+    }
+}</code></pre>
+                          </div>
+
+                          <div class="tab-pane" id="examples-Default-apiUserIdDelete-0-android">
+                            <pre class="prettyprint"><code class="language-java">import io.swagger.client.api.DefaultApi;
+
+public class DefaultApiExample {
+
+    public static void main(String[] args) {
+        DefaultApi apiInstance = new DefaultApi();
+         id = ; //  | 
+        try {
+            apiInstance.apiUserIdDelete(id);
+        } catch (ApiException e) {
+            System.err.println("Exception when calling DefaultApi#apiUserIdDelete");
+            e.printStackTrace();
+        }
+    }
+}</code></pre>
+                          </div>
+  <!--
+  <div class="tab-pane" id="examples-Default-apiUserIdDelete-0-groovy">
+  <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
+  </div> -->
+                            <div class="tab-pane" id="examples-Default-apiUserIdDelete-0-objc">
+                              <pre class="prettyprint"><code class="language-cpp"> *id = ; // 
+
+DefaultApi *apiInstance = [[DefaultApi alloc] init];
+
+[apiInstance apiUserIdDeleteWith:id
+              completionHandler: ^(NSError* error) {
+                            if (error) {
+                                NSLog(@"Error: %@", error);
+                            }
+                        }];
+</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Default-apiUserIdDelete-0-javascript">
+                              <pre class="prettyprint"><code class="language-js">var CalorieTrackerApi = require('calorie_tracker_api');
+
+var api = new CalorieTrackerApi.DefaultApi()
+var id = ; // {{}} 
+
+var callback = function(error, data, response) {
+  if (error) {
+    console.error(error);
+  } else {
+    console.log('API called successfully.');
+  }
+};
+api.apiUserIdDelete(id, callback);
+</code></pre>
+                            </div>
+
+                            <!--<div class="tab-pane" id="examples-Default-apiUserIdDelete-0-angular">
+              <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
+            </div>-->
+                            <div class="tab-pane" id="examples-Default-apiUserIdDelete-0-csharp">
+                              <pre class="prettyprint"><code class="language-cs">using System;
+using System.Diagnostics;
+using IO.Swagger.Api;
+using IO.Swagger.Client;
+using IO.Swagger.Model;
+
+namespace Example
+{
+    public class apiUserIdDeleteExample
+    {
+        public void main()
+        {
+
+            var apiInstance = new DefaultApi();
+            var id = new (); //  | 
+
+            try
+            {
+                apiInstance.apiUserIdDelete(id);
+            }
+            catch (Exception e)
+            {
+                Debug.Print("Exception when calling DefaultApi.apiUserIdDelete: " + e.Message );
+            }
+        }
+    }
+}
+</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Default-apiUserIdDelete-0-php">
+                              <pre class="prettyprint"><code class="language-php"><&#63;php
+require_once(__DIR__ . '/vendor/autoload.php');
+
+$api_instance = new Swagger\Client\ApiDefaultApi();
+$id = ; //  | 
+
+try {
+    $api_instance->apiUserIdDelete($id);
+} catch (Exception $e) {
+    echo 'Exception when calling DefaultApi->apiUserIdDelete: ', $e->getMessage(), PHP_EOL;
+}
+?></code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Default-apiUserIdDelete-0-perl">
+                              <pre class="prettyprint"><code class="language-perl">use Data::Dumper;
+use WWW::SwaggerClient::Configuration;
+use WWW::SwaggerClient::DefaultApi;
+
+my $api_instance = WWW::SwaggerClient::DefaultApi->new();
+my $id = ; #  | 
+
+eval { 
+    $api_instance->apiUserIdDelete(id => $id);
+};
+if ($@) {
+    warn "Exception when calling DefaultApi->apiUserIdDelete: $@\n";
+}</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Default-apiUserIdDelete-0-python">
+                              <pre class="prettyprint"><code class="language-python">from __future__ import print_statement
+import time
+import swagger_client
+from swagger_client.rest import ApiException
+from pprint import pprint
+
+# create an instance of the API class
+api_instance = swagger_client.DefaultApi()
+id =  #  | 
+
+try: 
+    api_instance.api_user_id_delete(id)
+except ApiException as e:
+    print("Exception when calling DefaultApi->apiUserIdDelete: %s\n" % e)</code></pre>
+                            </div>
+                          </div>
+
+                          <h2>Parameters</h2>
+
+                            <div class="methodsubtabletitle">Path parameters</div>
+                            <table id="methodsubtable">
+                                <tr>
+                                  <th width="150px">Name</th>
+                                  <th>Description</th>
+                                </tr>
+                                  <tr><td style="width:150px;">id*</td>
+                                  <td>
+                                  
+                                  
+                                      <div id="d2e199_apiUserIdDelete_id">
+                                          <div class="json-schema-view">
+                                              <div class="primitive">
+                                                  <span class="type">
+                                                      
+                                                  </span>
+                                  
+                                              </div>
+                                                  <div class="inner required">
+                                                      Required
+                                                  </div>
+                                          </div>
+                                      </div>
+                                  </td>
+                                  </tr>
+                            </table>
+
+
+
+
+
+                          <h2>Responses</h2>
+                            <h3> Status: 500 - Internal Server Error </h3>
+
+                            <ul class="nav nav-tabs nav-tabs-examples" >
+                                <li class="active">
+                                  <a data-toggle="tab" href="#responses-apiUserIdDelete-500-schema">Schema</a>
+                                </li>
+
+                            </ul>
+
+                            <div class="tab-content" style='margin-bottom: 10px;'>
+                                <div class="tab-pane active" id="responses-apiUserIdDelete-500-schema">
+                                  <div id='responses-apiUserIdDelete-500-schema-500' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
+                                    <script>
+                                      $(document).ready(function() {
+                                        var schemaWrapper = {
+  "description" : "Internal Server Error",
+  "content" : {
+    "text/plain" : {
+      "schema" : {
+        "x-content-type" : "text/plain"
+      },
+      "examples" : {
+        "Example#1" : {
+          "value" : ""
+        }
+      }
+    }
+  }
+};
+                                        var schema = schemaWrapper.content["text/plain"].schema;
+                                        if (schema.$ref != null) {
+                                          schema = defsParser.$refs.get(schema.$ref);
+                                        } else {
+                                          schemaWrapper.components = {};
+                                          schemaWrapper.components.schemas = Object.assign({}, defs);
+                                          $RefParser.dereference(schemaWrapper).catch(function(err) {
+                                            console.log(err);
+                                          });
+                                        }
+
+                                        //console.log(JSON.stringify(schema));
+                                        var view = new JSONSchemaView(schema, 3);
+                                        $('#responses-apiUserIdDelete-500-schema-data').val(stringify(schema));
+                                        var result = $('#responses-apiUserIdDelete-500-schema-500');
+                                        result.empty();
+                                        result.append(view.render());
+                                      });
+                                    </script>
+                                  </div>
+                                  <input id='responses-apiUserIdDelete-500-schema-data' type='hidden' value=''></input>
+                                </div>
+                            </div>
+
+                            <h3> Status: 204 - No Content </h3>
+
+                            <ul class="nav nav-tabs nav-tabs-examples" >
+                                <li class="active">
+                                  <a data-toggle="tab" href="#responses-apiUserIdDelete-204-schema">Schema</a>
+                                </li>
+
+                            </ul>
+
+                            <div class="tab-content" style='margin-bottom: 10px;'>
+                                <div class="tab-pane active" id="responses-apiUserIdDelete-204-schema">
+                                  <div id='responses-apiUserIdDelete-204-schema-204' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
+                                    <script>
+                                      $(document).ready(function() {
+                                        var schemaWrapper = {
+  "description" : "No Content",
+  "content" : {
+    "*/*" : {
+      "schema" : {
+        "x-content-type" : "*/*"
+      }
+    }
+  }
+};
+                                        var schema = schemaWrapper.content["*/*"].schema;
+                                        if (schema.$ref != null) {
+                                          schema = defsParser.$refs.get(schema.$ref);
+                                        } else {
+                                          schemaWrapper.components = {};
+                                          schemaWrapper.components.schemas = Object.assign({}, defs);
+                                          $RefParser.dereference(schemaWrapper).catch(function(err) {
+                                            console.log(err);
+                                          });
+                                        }
+
+                                        //console.log(JSON.stringify(schema));
+                                        var view = new JSONSchemaView(schema, 3);
+                                        $('#responses-apiUserIdDelete-204-schema-data').val(stringify(schema));
+                                        var result = $('#responses-apiUserIdDelete-204-schema-204');
+                                        result.empty();
+                                        result.append(view.render());
+                                      });
+                                    </script>
+                                  </div>
+                                  <input id='responses-apiUserIdDelete-204-schema-data' type='hidden' value=''></input>
+                                </div>
+                            </div>
+
+                        </article>
+                      </div>
+                      <hr>
+                    <div id="api-Default-apiUserIdGet">
+                      <article id="api-Default-apiUserIdGet-0" data-group="User" data-name="apiUserIdGet" data-version="0">
+                        <div class="pull-left">
+                          <h1>apiUserIdGet</h1>
+                          <p></p>
+                        </div>
+                        <div class="pull-right"></div>
+                        <div class="clearfix"></div>
+                        <p></p>
+                        <p class="marked"></p>
+                        <p></p>
+                        <br />
+                        <pre class="prettyprint language-html prettyprinted" data-type="get"><code><span class="pln">/api/user/{id}</span></code></pre>
+                        <p>
+                          <h3>Usage and SDK Samples</h3>
+                        </p>
+                        <ul class="nav nav-tabs nav-tabs-examples">
+                          <li class="active"><a href="#examples-Default-apiUserIdGet-0-curl">Curl</a></li>
+                          <li class=""><a href="#examples-Default-apiUserIdGet-0-java">Java</a></li>
+                          <li class=""><a href="#examples-Default-apiUserIdGet-0-android">Android</a></li>
+                          <!--<li class=""><a href="#examples-Default-apiUserIdGet-0-groovy">Groovy</a></li>-->
+                          <li class=""><a href="#examples-Default-apiUserIdGet-0-objc">Obj-C</a></li>
+                          <li class=""><a href="#examples-Default-apiUserIdGet-0-javascript">JavaScript</a></li>
+                          <!--<li class=""><a href="#examples-Default-apiUserIdGet-0-angular">Angular</a></li>-->
+                          <li class=""><a href="#examples-Default-apiUserIdGet-0-csharp">C#</a></li>
+                          <li class=""><a href="#examples-Default-apiUserIdGet-0-php">PHP</a></li>
+                          <li class=""><a href="#examples-Default-apiUserIdGet-0-perl">Perl</a></li>
+                          <li class=""><a href="#examples-Default-apiUserIdGet-0-python">Python</a></li>
+                        </ul>
+
+                        <div class="tab-content">
+                          <div class="tab-pane active" id="examples-Default-apiUserIdGet-0-curl">
+                           <pre class="prettyprint"><code class="language-bsh">curl -X GET\
+-H "Accept: text/plain,*/*"\
+"https://CalorieTracker/api/user/{id}"</code></pre>
+                          </div>
+                          <div class="tab-pane" id="examples-Default-apiUserIdGet-0-java">
+                            <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
+import io.swagger.client.auth.*;
+import io.swagger.client.model.*;
+import io.swagger.client.api.DefaultApi;
+
+import java.io.File;
+import java.util.*;
+
+public class DefaultApiExample {
+
+    public static void main(String[] args) {
+        
+        DefaultApi apiInstance = new DefaultApi();
+         id = ; //  | 
+        try {
+            UserResponse result = apiInstance.apiUserIdGet(id);
+            System.out.println(result);
+        } catch (ApiException e) {
+            System.err.println("Exception when calling DefaultApi#apiUserIdGet");
+            e.printStackTrace();
+        }
+    }
+}</code></pre>
+                          </div>
+
+                          <div class="tab-pane" id="examples-Default-apiUserIdGet-0-android">
+                            <pre class="prettyprint"><code class="language-java">import io.swagger.client.api.DefaultApi;
+
+public class DefaultApiExample {
+
+    public static void main(String[] args) {
+        DefaultApi apiInstance = new DefaultApi();
+         id = ; //  | 
+        try {
+            UserResponse result = apiInstance.apiUserIdGet(id);
+            System.out.println(result);
+        } catch (ApiException e) {
+            System.err.println("Exception when calling DefaultApi#apiUserIdGet");
+            e.printStackTrace();
+        }
+    }
+}</code></pre>
+                          </div>
+  <!--
+  <div class="tab-pane" id="examples-Default-apiUserIdGet-0-groovy">
+  <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
+  </div> -->
+                            <div class="tab-pane" id="examples-Default-apiUserIdGet-0-objc">
+                              <pre class="prettyprint"><code class="language-cpp"> *id = ; // 
+
+DefaultApi *apiInstance = [[DefaultApi alloc] init];
+
+[apiInstance apiUserIdGetWith:id
+              completionHandler: ^(UserResponse output, NSError* error) {
+                            if (output) {
+                                NSLog(@"%@", output);
+                            }
+                            if (error) {
+                                NSLog(@"Error: %@", error);
+                            }
+                        }];
+</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Default-apiUserIdGet-0-javascript">
+                              <pre class="prettyprint"><code class="language-js">var CalorieTrackerApi = require('calorie_tracker_api');
+
+var api = new CalorieTrackerApi.DefaultApi()
+var id = ; // {{}} 
+
+var callback = function(error, data, response) {
+  if (error) {
+    console.error(error);
+  } else {
+    console.log('API called successfully. Returned data: ' + data);
+  }
+};
+api.apiUserIdGet(id, callback);
+</code></pre>
+                            </div>
+
+                            <!--<div class="tab-pane" id="examples-Default-apiUserIdGet-0-angular">
+              <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
+            </div>-->
+                            <div class="tab-pane" id="examples-Default-apiUserIdGet-0-csharp">
+                              <pre class="prettyprint"><code class="language-cs">using System;
+using System.Diagnostics;
+using IO.Swagger.Api;
+using IO.Swagger.Client;
+using IO.Swagger.Model;
+
+namespace Example
+{
+    public class apiUserIdGetExample
+    {
+        public void main()
+        {
+
+            var apiInstance = new DefaultApi();
+            var id = new (); //  | 
+
+            try
+            {
+                UserResponse result = apiInstance.apiUserIdGet(id);
+                Debug.WriteLine(result);
+            }
+            catch (Exception e)
+            {
+                Debug.Print("Exception when calling DefaultApi.apiUserIdGet: " + e.Message );
+            }
+        }
+    }
+}
+</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Default-apiUserIdGet-0-php">
+                              <pre class="prettyprint"><code class="language-php"><&#63;php
+require_once(__DIR__ . '/vendor/autoload.php');
+
+$api_instance = new Swagger\Client\ApiDefaultApi();
+$id = ; //  | 
+
+try {
+    $result = $api_instance->apiUserIdGet($id);
+    print_r($result);
+} catch (Exception $e) {
+    echo 'Exception when calling DefaultApi->apiUserIdGet: ', $e->getMessage(), PHP_EOL;
+}
+?></code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Default-apiUserIdGet-0-perl">
+                              <pre class="prettyprint"><code class="language-perl">use Data::Dumper;
+use WWW::SwaggerClient::Configuration;
+use WWW::SwaggerClient::DefaultApi;
+
+my $api_instance = WWW::SwaggerClient::DefaultApi->new();
+my $id = ; #  | 
+
+eval { 
+    my $result = $api_instance->apiUserIdGet(id => $id);
+    print Dumper($result);
+};
+if ($@) {
+    warn "Exception when calling DefaultApi->apiUserIdGet: $@\n";
+}</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Default-apiUserIdGet-0-python">
+                              <pre class="prettyprint"><code class="language-python">from __future__ import print_statement
+import time
+import swagger_client
+from swagger_client.rest import ApiException
+from pprint import pprint
+
+# create an instance of the API class
+api_instance = swagger_client.DefaultApi()
+id =  #  | 
+
+try: 
+    api_response = api_instance.api_user_id_get(id)
+    pprint(api_response)
+except ApiException as e:
+    print("Exception when calling DefaultApi->apiUserIdGet: %s\n" % e)</code></pre>
+                            </div>
+                          </div>
+
+                          <h2>Parameters</h2>
+
+                            <div class="methodsubtabletitle">Path parameters</div>
+                            <table id="methodsubtable">
+                                <tr>
+                                  <th width="150px">Name</th>
+                                  <th>Description</th>
+                                </tr>
+                                  <tr><td style="width:150px;">id*</td>
+                                  <td>
+                                  
+                                  
+                                      <div id="d2e199_apiUserIdGet_id">
+                                          <div class="json-schema-view">
+                                              <div class="primitive">
+                                                  <span class="type">
+                                                      
+                                                  </span>
+                                  
+                                              </div>
+                                                  <div class="inner required">
+                                                      Required
+                                                  </div>
+                                          </div>
+                                      </div>
+                                  </td>
+                                  </tr>
+                            </table>
+
+
+
+
+
+                          <h2>Responses</h2>
+                            <h3> Status: 500 - Internal Server Error </h3>
+
+                            <ul class="nav nav-tabs nav-tabs-examples" >
+                                <li class="active">
+                                  <a data-toggle="tab" href="#responses-apiUserIdGet-500-schema">Schema</a>
+                                </li>
+
+                            </ul>
+
+                            <div class="tab-content" style='margin-bottom: 10px;'>
+                                <div class="tab-pane active" id="responses-apiUserIdGet-500-schema">
+                                  <div id='responses-apiUserIdGet-500-schema-500' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
+                                    <script>
+                                      $(document).ready(function() {
+                                        var schemaWrapper = {
+  "description" : "Internal Server Error",
+  "content" : {
+    "text/plain" : {
+      "schema" : {
+        "x-content-type" : "text/plain"
+      },
+      "examples" : {
+        "Example#1" : {
+          "value" : ""
+        },
+        "Example#2" : {
+          "value" : ""
+        }
+      }
+    }
+  }
+};
+                                        var schema = schemaWrapper.content["text/plain"].schema;
+                                        if (schema.$ref != null) {
+                                          schema = defsParser.$refs.get(schema.$ref);
+                                        } else {
+                                          schemaWrapper.components = {};
+                                          schemaWrapper.components.schemas = Object.assign({}, defs);
+                                          $RefParser.dereference(schemaWrapper).catch(function(err) {
+                                            console.log(err);
+                                          });
+                                        }
+
+                                        //console.log(JSON.stringify(schema));
+                                        var view = new JSONSchemaView(schema, 3);
+                                        $('#responses-apiUserIdGet-500-schema-data').val(stringify(schema));
+                                        var result = $('#responses-apiUserIdGet-500-schema-500');
+                                        result.empty();
+                                        result.append(view.render());
+                                      });
+                                    </script>
+                                  </div>
+                                  <input id='responses-apiUserIdGet-500-schema-data' type='hidden' value=''></input>
+                                </div>
+                            </div>
+
+                            <h3> Status: 404 - Not Found </h3>
+
+                            <ul class="nav nav-tabs nav-tabs-examples" >
+                                <li class="active">
+                                  <a data-toggle="tab" href="#responses-apiUserIdGet-404-schema">Schema</a>
+                                </li>
+
+                            </ul>
+
+                            <div class="tab-content" style='margin-bottom: 10px;'>
+                                <div class="tab-pane active" id="responses-apiUserIdGet-404-schema">
+                                  <div id='responses-apiUserIdGet-404-schema-404' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
+                                    <script>
+                                      $(document).ready(function() {
+                                        var schemaWrapper = {
+  "description" : "Not Found",
+  "content" : {
+    "*/*" : {
+      "schema" : {
+        "x-content-type" : "*/*"
+      }
+    }
+  }
+};
+                                        var schema = schemaWrapper.content["*/*"].schema;
+                                        if (schema.$ref != null) {
+                                          schema = defsParser.$refs.get(schema.$ref);
+                                        } else {
+                                          schemaWrapper.components = {};
+                                          schemaWrapper.components.schemas = Object.assign({}, defs);
+                                          $RefParser.dereference(schemaWrapper).catch(function(err) {
+                                            console.log(err);
+                                          });
+                                        }
+
+                                        //console.log(JSON.stringify(schema));
+                                        var view = new JSONSchemaView(schema, 3);
+                                        $('#responses-apiUserIdGet-404-schema-data').val(stringify(schema));
+                                        var result = $('#responses-apiUserIdGet-404-schema-404');
+                                        result.empty();
+                                        result.append(view.render());
+                                      });
+                                    </script>
+                                  </div>
+                                  <input id='responses-apiUserIdGet-404-schema-data' type='hidden' value=''></input>
+                                </div>
+                            </div>
+
+                            <h3> Status: 200 - OK </h3>
+
+                            <ul class="nav nav-tabs nav-tabs-examples" >
+                                <li class="active">
+                                  <a data-toggle="tab" href="#responses-apiUserIdGet-200-schema">Schema</a>
+                                </li>
+
+                            </ul>
+
+                            <div class="tab-content" style='margin-bottom: 10px;'>
+                                <div class="tab-pane active" id="responses-apiUserIdGet-200-schema">
+                                  <div id='responses-apiUserIdGet-200-schema-200' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
+                                    <script>
+                                      $(document).ready(function() {
+                                        var schemaWrapper = {
+  "description" : "OK",
+  "content" : {
+    "*/*" : {
+      "schema" : {
+        "$ref" : "#/components/schemas/UserResponse"
+      }
+    }
+  }
+};
+                                        var schema = schemaWrapper.content["*/*"].schema;
+                                        if (schema.$ref != null) {
+                                          schema = defsParser.$refs.get(schema.$ref);
+                                        } else {
+                                          schemaWrapper.components = {};
+                                          schemaWrapper.components.schemas = Object.assign({}, defs);
+                                          $RefParser.dereference(schemaWrapper).catch(function(err) {
+                                            console.log(err);
+                                          });
+                                        }
+
+                                        //console.log(JSON.stringify(schema));
+                                        var view = new JSONSchemaView(schema, 3);
+                                        $('#responses-apiUserIdGet-200-schema-data').val(stringify(schema));
+                                        var result = $('#responses-apiUserIdGet-200-schema-200');
+                                        result.empty();
+                                        result.append(view.render());
+                                      });
+                                    </script>
+                                  </div>
+                                  <input id='responses-apiUserIdGet-200-schema-data' type='hidden' value=''></input>
+                                </div>
+                            </div>
+
+                        </article>
+                      </div>
+                      <hr>
+                    <div id="api-Default-apiUserPost">
+                      <article id="api-Default-apiUserPost-0" data-group="User" data-name="apiUserPost" data-version="0">
+                        <div class="pull-left">
+                          <h1>apiUserPost</h1>
+                          <p></p>
+                        </div>
+                        <div class="pull-right"></div>
+                        <div class="clearfix"></div>
+                        <p></p>
+                        <p class="marked"></p>
+                        <p></p>
+                        <br />
+                        <pre class="prettyprint language-html prettyprinted" data-type="post"><code><span class="pln">/api/user</span></code></pre>
+                        <p>
+                          <h3>Usage and SDK Samples</h3>
+                        </p>
+                        <ul class="nav nav-tabs nav-tabs-examples">
+                          <li class="active"><a href="#examples-Default-apiUserPost-0-curl">Curl</a></li>
+                          <li class=""><a href="#examples-Default-apiUserPost-0-java">Java</a></li>
+                          <li class=""><a href="#examples-Default-apiUserPost-0-android">Android</a></li>
+                          <!--<li class=""><a href="#examples-Default-apiUserPost-0-groovy">Groovy</a></li>-->
+                          <li class=""><a href="#examples-Default-apiUserPost-0-objc">Obj-C</a></li>
+                          <li class=""><a href="#examples-Default-apiUserPost-0-javascript">JavaScript</a></li>
+                          <!--<li class=""><a href="#examples-Default-apiUserPost-0-angular">Angular</a></li>-->
+                          <li class=""><a href="#examples-Default-apiUserPost-0-csharp">C#</a></li>
+                          <li class=""><a href="#examples-Default-apiUserPost-0-php">PHP</a></li>
+                          <li class=""><a href="#examples-Default-apiUserPost-0-perl">Perl</a></li>
+                          <li class=""><a href="#examples-Default-apiUserPost-0-python">Python</a></li>
+                        </ul>
+
+                        <div class="tab-content">
+                          <div class="tab-pane active" id="examples-Default-apiUserPost-0-curl">
+                           <pre class="prettyprint"><code class="language-bsh">curl -X POST\
+-H "Accept: text/plain,*/*"\
+-H "Content-Type: */*"\
+"https://CalorieTracker/api/user"</code></pre>
+                          </div>
+                          <div class="tab-pane" id="examples-Default-apiUserPost-0-java">
+                            <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
+import io.swagger.client.auth.*;
+import io.swagger.client.model.*;
+import io.swagger.client.api.DefaultApi;
+
+import java.io.File;
+import java.util.*;
+
+public class DefaultApiExample {
+
+    public static void main(String[] args) {
+        
+        DefaultApi apiInstance = new DefaultApi();
+        UserRequest body = ; // UserRequest | 
+        try {
+            UserResponse result = apiInstance.apiUserPost(body);
+            System.out.println(result);
+        } catch (ApiException e) {
+            System.err.println("Exception when calling DefaultApi#apiUserPost");
+            e.printStackTrace();
+        }
+    }
+}</code></pre>
+                          </div>
+
+                          <div class="tab-pane" id="examples-Default-apiUserPost-0-android">
+                            <pre class="prettyprint"><code class="language-java">import io.swagger.client.api.DefaultApi;
+
+public class DefaultApiExample {
+
+    public static void main(String[] args) {
+        DefaultApi apiInstance = new DefaultApi();
+        UserRequest body = ; // UserRequest | 
+        try {
+            UserResponse result = apiInstance.apiUserPost(body);
+            System.out.println(result);
+        } catch (ApiException e) {
+            System.err.println("Exception when calling DefaultApi#apiUserPost");
+            e.printStackTrace();
+        }
+    }
+}</code></pre>
+                          </div>
+  <!--
+  <div class="tab-pane" id="examples-Default-apiUserPost-0-groovy">
+  <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
+  </div> -->
+                            <div class="tab-pane" id="examples-Default-apiUserPost-0-objc">
+                              <pre class="prettyprint"><code class="language-cpp">UserRequest *body = ; // 
+
+DefaultApi *apiInstance = [[DefaultApi alloc] init];
+
+[apiInstance apiUserPostWith:body
+              completionHandler: ^(UserResponse output, NSError* error) {
+                            if (output) {
+                                NSLog(@"%@", output);
+                            }
+                            if (error) {
+                                NSLog(@"Error: %@", error);
+                            }
+                        }];
+</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Default-apiUserPost-0-javascript">
+                              <pre class="prettyprint"><code class="language-js">var CalorieTrackerApi = require('calorie_tracker_api');
+
+var api = new CalorieTrackerApi.DefaultApi()
+var body = ; // {{UserRequest}} 
+
+var callback = function(error, data, response) {
+  if (error) {
+    console.error(error);
+  } else {
+    console.log('API called successfully. Returned data: ' + data);
+  }
+};
+api.apiUserPost(body, callback);
+</code></pre>
+                            </div>
+
+                            <!--<div class="tab-pane" id="examples-Default-apiUserPost-0-angular">
+              <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
+            </div>-->
+                            <div class="tab-pane" id="examples-Default-apiUserPost-0-csharp">
+                              <pre class="prettyprint"><code class="language-cs">using System;
+using System.Diagnostics;
+using IO.Swagger.Api;
+using IO.Swagger.Client;
+using IO.Swagger.Model;
+
+namespace Example
+{
+    public class apiUserPostExample
+    {
+        public void main()
+        {
+
+            var apiInstance = new DefaultApi();
+            var body = new UserRequest(); // UserRequest | 
+
+            try
+            {
+                UserResponse result = apiInstance.apiUserPost(body);
+                Debug.WriteLine(result);
+            }
+            catch (Exception e)
+            {
+                Debug.Print("Exception when calling DefaultApi.apiUserPost: " + e.Message );
+            }
+        }
+    }
+}
+</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Default-apiUserPost-0-php">
+                              <pre class="prettyprint"><code class="language-php"><&#63;php
+require_once(__DIR__ . '/vendor/autoload.php');
+
+$api_instance = new Swagger\Client\ApiDefaultApi();
+$body = ; // UserRequest | 
+
+try {
+    $result = $api_instance->apiUserPost($body);
+    print_r($result);
+} catch (Exception $e) {
+    echo 'Exception when calling DefaultApi->apiUserPost: ', $e->getMessage(), PHP_EOL;
+}
+?></code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Default-apiUserPost-0-perl">
+                              <pre class="prettyprint"><code class="language-perl">use Data::Dumper;
+use WWW::SwaggerClient::Configuration;
+use WWW::SwaggerClient::DefaultApi;
+
+my $api_instance = WWW::SwaggerClient::DefaultApi->new();
+my $body = WWW::SwaggerClient::Object::UserRequest->new(); # UserRequest | 
+
+eval { 
+    my $result = $api_instance->apiUserPost(body => $body);
+    print Dumper($result);
+};
+if ($@) {
+    warn "Exception when calling DefaultApi->apiUserPost: $@\n";
+}</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Default-apiUserPost-0-python">
+                              <pre class="prettyprint"><code class="language-python">from __future__ import print_statement
+import time
+import swagger_client
+from swagger_client.rest import ApiException
+from pprint import pprint
+
+# create an instance of the API class
+api_instance = swagger_client.DefaultApi()
+body =  # UserRequest | 
+
+try: 
+    api_response = api_instance.api_user_post(body)
+    pprint(api_response)
+except ApiException as e:
+    print("Exception when calling DefaultApi->apiUserPost: %s\n" % e)</code></pre>
+                            </div>
+                          </div>
+
+                          <h2>Parameters</h2>
+
+
+
+                            <div class="methodsubtabletitle">Body parameters</div>
+                            <table id="methodsubtable">
+                              <tr>
+                                <th width="150px">Name</th>
+                                <th>Description</th>
+                              </tr>
+                                <tr><td style="width:150px;">body <span style="color:red;">*</span></td>
+                                <td>
+                                
+                                
+                                <script>
+                                $(document).ready(function() {
+                                  var schemaWrapper = {
+  "content" : {
+    "*/*" : {
+      "schema" : {
+        "$ref" : "#/components/schemas/UserRequest"
+      }
+    }
+  },
+  "required" : true
+};
+                                  var schema = schemaWrapper.content["*/*"].schema;
+                                  if (schema.$ref != null) {
+                                    schema = defsParser.$refs.get(schema.$ref);
+                                  } else {
+                                    schemaWrapper.components = {};
+                                    schemaWrapper.components.schemas = Object.assign({}, defs);
+                                    $RefParser.dereference(schemaWrapper).catch(function(err) {
+                                      console.log(err);
+                                    });
+                                  }
+                                
+                                  var view = new JSONSchemaView(schema,2,{isBodyParam: true});
+                                  var result = $('#d2e199_apiUserPost_body');
+                                  result.empty();
+                                  result.append(view.render());
+                                });
+                                </script>
+                                <div id="d2e199_apiUserPost_body"></div>
+                                </td>
+                                </tr>
+                            </table>
+
+
+
+                          <h2>Responses</h2>
+                            <h3> Status: 500 - Internal Server Error </h3>
+
+                            <ul class="nav nav-tabs nav-tabs-examples" >
+                                <li class="active">
+                                  <a data-toggle="tab" href="#responses-apiUserPost-500-schema">Schema</a>
+                                </li>
+
+                            </ul>
+
+                            <div class="tab-content" style='margin-bottom: 10px;'>
+                                <div class="tab-pane active" id="responses-apiUserPost-500-schema">
+                                  <div id='responses-apiUserPost-500-schema-500' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
+                                    <script>
+                                      $(document).ready(function() {
+                                        var schemaWrapper = {
+  "description" : "Internal Server Error",
+  "content" : {
+    "text/plain" : {
+      "schema" : {
+        "x-content-type" : "text/plain"
+      },
+      "examples" : {
+        "Example#1" : {
+          "value" : ""
+        }
+      }
+    }
+  }
+};
+                                        var schema = schemaWrapper.content["text/plain"].schema;
+                                        if (schema.$ref != null) {
+                                          schema = defsParser.$refs.get(schema.$ref);
+                                        } else {
+                                          schemaWrapper.components = {};
+                                          schemaWrapper.components.schemas = Object.assign({}, defs);
+                                          $RefParser.dereference(schemaWrapper).catch(function(err) {
+                                            console.log(err);
+                                          });
+                                        }
+
+                                        //console.log(JSON.stringify(schema));
+                                        var view = new JSONSchemaView(schema, 3);
+                                        $('#responses-apiUserPost-500-schema-data').val(stringify(schema));
+                                        var result = $('#responses-apiUserPost-500-schema-500');
+                                        result.empty();
+                                        result.append(view.render());
+                                      });
+                                    </script>
+                                  </div>
+                                  <input id='responses-apiUserPost-500-schema-data' type='hidden' value=''></input>
+                                </div>
+                            </div>
+
+                            <h3> Status: 201 - Created </h3>
+
+                            <ul class="nav nav-tabs nav-tabs-examples" >
+                                <li class="active">
+                                  <a data-toggle="tab" href="#responses-apiUserPost-201-schema">Schema</a>
+                                </li>
+
+                            </ul>
+
+                            <div class="tab-content" style='margin-bottom: 10px;'>
+                                <div class="tab-pane active" id="responses-apiUserPost-201-schema">
+                                  <div id='responses-apiUserPost-201-schema-201' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
+                                    <script>
+                                      $(document).ready(function() {
+                                        var schemaWrapper = {
+  "description" : "Created",
+  "content" : {
+    "*/*" : {
+      "schema" : {
+        "$ref" : "#/components/schemas/UserResponse"
+      }
+    }
+  }
+};
+                                        var schema = schemaWrapper.content["*/*"].schema;
+                                        if (schema.$ref != null) {
+                                          schema = defsParser.$refs.get(schema.$ref);
+                                        } else {
+                                          schemaWrapper.components = {};
+                                          schemaWrapper.components.schemas = Object.assign({}, defs);
+                                          $RefParser.dereference(schemaWrapper).catch(function(err) {
+                                            console.log(err);
+                                          });
+                                        }
+
+                                        //console.log(JSON.stringify(schema));
+                                        var view = new JSONSchemaView(schema, 3);
+                                        $('#responses-apiUserPost-201-schema-data').val(stringify(schema));
+                                        var result = $('#responses-apiUserPost-201-schema-201');
+                                        result.empty();
+                                        result.append(view.render());
+                                      });
+                                    </script>
+                                  </div>
+                                  <input id='responses-apiUserPost-201-schema-data' type='hidden' value=''></input>
+                                </div>
+                            </div>
+
+                        </article>
+                      </div>
+                      <hr>
+                    <div id="api-Default-apiUserPut">
+                      <article id="api-Default-apiUserPut-0" data-group="User" data-name="apiUserPut" data-version="0">
+                        <div class="pull-left">
+                          <h1>apiUserPut</h1>
+                          <p></p>
+                        </div>
+                        <div class="pull-right"></div>
+                        <div class="clearfix"></div>
+                        <p></p>
+                        <p class="marked"></p>
+                        <p></p>
+                        <br />
+                        <pre class="prettyprint language-html prettyprinted" data-type="put"><code><span class="pln">/api/user</span></code></pre>
+                        <p>
+                          <h3>Usage and SDK Samples</h3>
+                        </p>
+                        <ul class="nav nav-tabs nav-tabs-examples">
+                          <li class="active"><a href="#examples-Default-apiUserPut-0-curl">Curl</a></li>
+                          <li class=""><a href="#examples-Default-apiUserPut-0-java">Java</a></li>
+                          <li class=""><a href="#examples-Default-apiUserPut-0-android">Android</a></li>
+                          <!--<li class=""><a href="#examples-Default-apiUserPut-0-groovy">Groovy</a></li>-->
+                          <li class=""><a href="#examples-Default-apiUserPut-0-objc">Obj-C</a></li>
+                          <li class=""><a href="#examples-Default-apiUserPut-0-javascript">JavaScript</a></li>
+                          <!--<li class=""><a href="#examples-Default-apiUserPut-0-angular">Angular</a></li>-->
+                          <li class=""><a href="#examples-Default-apiUserPut-0-csharp">C#</a></li>
+                          <li class=""><a href="#examples-Default-apiUserPut-0-php">PHP</a></li>
+                          <li class=""><a href="#examples-Default-apiUserPut-0-perl">Perl</a></li>
+                          <li class=""><a href="#examples-Default-apiUserPut-0-python">Python</a></li>
+                        </ul>
+
+                        <div class="tab-content">
+                          <div class="tab-pane active" id="examples-Default-apiUserPut-0-curl">
+                           <pre class="prettyprint"><code class="language-bsh">curl -X PUT\
+-H "Accept: text/plain,*/*"\
+-H "Content-Type: */*"\
+"https://CalorieTracker/api/user"</code></pre>
+                          </div>
+                          <div class="tab-pane" id="examples-Default-apiUserPut-0-java">
+                            <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
+import io.swagger.client.auth.*;
+import io.swagger.client.model.*;
+import io.swagger.client.api.DefaultApi;
+
+import java.io.File;
+import java.util.*;
+
+public class DefaultApiExample {
+
+    public static void main(String[] args) {
+        
+        DefaultApi apiInstance = new DefaultApi();
+        UserRequest body = ; // UserRequest | 
+        try {
+            UserResponse result = apiInstance.apiUserPut(body);
+            System.out.println(result);
+        } catch (ApiException e) {
+            System.err.println("Exception when calling DefaultApi#apiUserPut");
+            e.printStackTrace();
+        }
+    }
+}</code></pre>
+                          </div>
+
+                          <div class="tab-pane" id="examples-Default-apiUserPut-0-android">
+                            <pre class="prettyprint"><code class="language-java">import io.swagger.client.api.DefaultApi;
+
+public class DefaultApiExample {
+
+    public static void main(String[] args) {
+        DefaultApi apiInstance = new DefaultApi();
+        UserRequest body = ; // UserRequest | 
+        try {
+            UserResponse result = apiInstance.apiUserPut(body);
+            System.out.println(result);
+        } catch (ApiException e) {
+            System.err.println("Exception when calling DefaultApi#apiUserPut");
+            e.printStackTrace();
+        }
+    }
+}</code></pre>
+                          </div>
+  <!--
+  <div class="tab-pane" id="examples-Default-apiUserPut-0-groovy">
+  <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
+  </div> -->
+                            <div class="tab-pane" id="examples-Default-apiUserPut-0-objc">
+                              <pre class="prettyprint"><code class="language-cpp">UserRequest *body = ; // 
+
+DefaultApi *apiInstance = [[DefaultApi alloc] init];
+
+[apiInstance apiUserPutWith:body
+              completionHandler: ^(UserResponse output, NSError* error) {
+                            if (output) {
+                                NSLog(@"%@", output);
+                            }
+                            if (error) {
+                                NSLog(@"Error: %@", error);
+                            }
+                        }];
+</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Default-apiUserPut-0-javascript">
+                              <pre class="prettyprint"><code class="language-js">var CalorieTrackerApi = require('calorie_tracker_api');
+
+var api = new CalorieTrackerApi.DefaultApi()
+var body = ; // {{UserRequest}} 
+
+var callback = function(error, data, response) {
+  if (error) {
+    console.error(error);
+  } else {
+    console.log('API called successfully. Returned data: ' + data);
+  }
+};
+api.apiUserPut(body, callback);
+</code></pre>
+                            </div>
+
+                            <!--<div class="tab-pane" id="examples-Default-apiUserPut-0-angular">
+              <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
+            </div>-->
+                            <div class="tab-pane" id="examples-Default-apiUserPut-0-csharp">
+                              <pre class="prettyprint"><code class="language-cs">using System;
+using System.Diagnostics;
+using IO.Swagger.Api;
+using IO.Swagger.Client;
+using IO.Swagger.Model;
+
+namespace Example
+{
+    public class apiUserPutExample
+    {
+        public void main()
+        {
+
+            var apiInstance = new DefaultApi();
+            var body = new UserRequest(); // UserRequest | 
+
+            try
+            {
+                UserResponse result = apiInstance.apiUserPut(body);
+                Debug.WriteLine(result);
+            }
+            catch (Exception e)
+            {
+                Debug.Print("Exception when calling DefaultApi.apiUserPut: " + e.Message );
+            }
+        }
+    }
+}
+</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Default-apiUserPut-0-php">
+                              <pre class="prettyprint"><code class="language-php"><&#63;php
+require_once(__DIR__ . '/vendor/autoload.php');
+
+$api_instance = new Swagger\Client\ApiDefaultApi();
+$body = ; // UserRequest | 
+
+try {
+    $result = $api_instance->apiUserPut($body);
+    print_r($result);
+} catch (Exception $e) {
+    echo 'Exception when calling DefaultApi->apiUserPut: ', $e->getMessage(), PHP_EOL;
+}
+?></code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Default-apiUserPut-0-perl">
+                              <pre class="prettyprint"><code class="language-perl">use Data::Dumper;
+use WWW::SwaggerClient::Configuration;
+use WWW::SwaggerClient::DefaultApi;
+
+my $api_instance = WWW::SwaggerClient::DefaultApi->new();
+my $body = WWW::SwaggerClient::Object::UserRequest->new(); # UserRequest | 
+
+eval { 
+    my $result = $api_instance->apiUserPut(body => $body);
+    print Dumper($result);
+};
+if ($@) {
+    warn "Exception when calling DefaultApi->apiUserPut: $@\n";
+}</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Default-apiUserPut-0-python">
+                              <pre class="prettyprint"><code class="language-python">from __future__ import print_statement
+import time
+import swagger_client
+from swagger_client.rest import ApiException
+from pprint import pprint
+
+# create an instance of the API class
+api_instance = swagger_client.DefaultApi()
+body =  # UserRequest | 
+
+try: 
+    api_response = api_instance.api_user_put(body)
+    pprint(api_response)
+except ApiException as e:
+    print("Exception when calling DefaultApi->apiUserPut: %s\n" % e)</code></pre>
+                            </div>
+                          </div>
+
+                          <h2>Parameters</h2>
+
+
+
+                            <div class="methodsubtabletitle">Body parameters</div>
+                            <table id="methodsubtable">
+                              <tr>
+                                <th width="150px">Name</th>
+                                <th>Description</th>
+                              </tr>
+                                <tr><td style="width:150px;">body <span style="color:red;">*</span></td>
+                                <td>
+                                
+                                
+                                <script>
+                                $(document).ready(function() {
+                                  var schemaWrapper = {
+  "content" : {
+    "*/*" : {
+      "schema" : {
+        "$ref" : "#/components/schemas/UserRequest"
+      }
+    }
+  },
+  "required" : true
+};
+                                  var schema = schemaWrapper.content["*/*"].schema;
+                                  if (schema.$ref != null) {
+                                    schema = defsParser.$refs.get(schema.$ref);
+                                  } else {
+                                    schemaWrapper.components = {};
+                                    schemaWrapper.components.schemas = Object.assign({}, defs);
+                                    $RefParser.dereference(schemaWrapper).catch(function(err) {
+                                      console.log(err);
+                                    });
+                                  }
+                                
+                                  var view = new JSONSchemaView(schema,2,{isBodyParam: true});
+                                  var result = $('#d2e199_apiUserPut_body');
+                                  result.empty();
+                                  result.append(view.render());
+                                });
+                                </script>
+                                <div id="d2e199_apiUserPut_body"></div>
+                                </td>
+                                </tr>
+                            </table>
+
+
+
+                          <h2>Responses</h2>
+                            <h3> Status: 500 - Internal Server Error </h3>
+
+                            <ul class="nav nav-tabs nav-tabs-examples" >
+                                <li class="active">
+                                  <a data-toggle="tab" href="#responses-apiUserPut-500-schema">Schema</a>
+                                </li>
+
+                            </ul>
+
+                            <div class="tab-content" style='margin-bottom: 10px;'>
+                                <div class="tab-pane active" id="responses-apiUserPut-500-schema">
+                                  <div id='responses-apiUserPut-500-schema-500' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
+                                    <script>
+                                      $(document).ready(function() {
+                                        var schemaWrapper = {
+  "description" : "Internal Server Error",
+  "content" : {
+    "text/plain" : {
+      "schema" : {
+        "x-content-type" : "text/plain"
+      },
+      "examples" : {
+        "Example#1" : {
+          "value" : ""
+        }
+      }
+    }
+  }
+};
+                                        var schema = schemaWrapper.content["text/plain"].schema;
+                                        if (schema.$ref != null) {
+                                          schema = defsParser.$refs.get(schema.$ref);
+                                        } else {
+                                          schemaWrapper.components = {};
+                                          schemaWrapper.components.schemas = Object.assign({}, defs);
+                                          $RefParser.dereference(schemaWrapper).catch(function(err) {
+                                            console.log(err);
+                                          });
+                                        }
+
+                                        //console.log(JSON.stringify(schema));
+                                        var view = new JSONSchemaView(schema, 3);
+                                        $('#responses-apiUserPut-500-schema-data').val(stringify(schema));
+                                        var result = $('#responses-apiUserPut-500-schema-500');
+                                        result.empty();
+                                        result.append(view.render());
+                                      });
+                                    </script>
+                                  </div>
+                                  <input id='responses-apiUserPut-500-schema-data' type='hidden' value=''></input>
+                                </div>
+                            </div>
+
+                            <h3> Status: 200 - OK </h3>
+
+                            <ul class="nav nav-tabs nav-tabs-examples" >
+                                <li class="active">
+                                  <a data-toggle="tab" href="#responses-apiUserPut-200-schema">Schema</a>
+                                </li>
+
+                            </ul>
+
+                            <div class="tab-content" style='margin-bottom: 10px;'>
+                                <div class="tab-pane active" id="responses-apiUserPut-200-schema">
+                                  <div id='responses-apiUserPut-200-schema-200' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
+                                    <script>
+                                      $(document).ready(function() {
+                                        var schemaWrapper = {
+  "description" : "OK",
+  "content" : {
+    "*/*" : {
+      "schema" : {
+        "$ref" : "#/components/schemas/UserResponse"
+      }
+    }
+  }
+};
+                                        var schema = schemaWrapper.content["*/*"].schema;
+                                        if (schema.$ref != null) {
+                                          schema = defsParser.$refs.get(schema.$ref);
+                                        } else {
+                                          schemaWrapper.components = {};
+                                          schemaWrapper.components.schemas = Object.assign({}, defs);
+                                          $RefParser.dereference(schemaWrapper).catch(function(err) {
+                                            console.log(err);
+                                          });
+                                        }
+
+                                        //console.log(JSON.stringify(schema));
+                                        var view = new JSONSchemaView(schema, 3);
+                                        $('#responses-apiUserPut-200-schema-data').val(stringify(schema));
+                                        var result = $('#responses-apiUserPut-200-schema-200');
+                                        result.empty();
+                                        result.append(view.render());
+                                      });
+                                    </script>
+                                  </div>
+                                  <input id='responses-apiUserPut-200-schema-data' type='hidden' value=''></input>
                                 </div>
                             </div>
 
