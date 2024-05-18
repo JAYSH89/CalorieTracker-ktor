@@ -27,6 +27,7 @@ class FoodTests {
         user = "postgres"
         password = "postgres"
         databaseName = "calorietracker"
+        portNumbers = intArrayOf(5433)
     }
 
     private val database = Database.connect(datasource = dataSource)
