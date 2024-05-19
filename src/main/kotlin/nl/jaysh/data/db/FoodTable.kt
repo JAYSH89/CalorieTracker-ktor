@@ -36,11 +36,11 @@ fun ResultRow.toFood() = Food(
 )
 
 fun FoodTable.getAll(): List<Food> = selectAll()
-    .map { entity -> entity.toFood() }
+    .map(ResultRow::toFood)
 
 fun FoodTable.findById(id: UUID): Food? = selectAll()
     .where { FoodTable.id eq id }
-    .map { entity -> entity.toFood() }
+    .map(ResultRow::toFood)
     .singleOrNull()
 
 fun FoodTable.insert(food: Food): Food {

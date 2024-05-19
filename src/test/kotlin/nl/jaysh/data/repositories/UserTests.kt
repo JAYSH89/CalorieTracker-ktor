@@ -74,6 +74,28 @@ class UserTests {
     }
 
     @Test
+    fun findUserByEmail() {
+        transaction(db = database) {
+            UserTable.insert(testUser)
+        }
+
+        transaction {
+            val savedUser = UserTable.getAll().first()
+            val user = userRepository.findByEmail(email = savedUser.email)
+
+            assertNotNull(user)
+            assertEquals(user.id, savedUser.id!!)
+        }
+    }
+
+    @Test
+    fun `findUserByEmail not found`() {
+        transaction(db = database) {
+            assertNull(userRepository.findByEmail(email = "invalidemail@example.com"))
+        }
+    }
+
+    @Test
     fun createUser() {
         transaction(db = database) {
             assertEquals(userRepository.getAll().size, 0)

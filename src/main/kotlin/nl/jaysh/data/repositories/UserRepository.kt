@@ -2,6 +2,7 @@ package nl.jaysh.data.repositories
 
 import nl.jaysh.data.db.UserTable
 import nl.jaysh.data.db.delete
+import nl.jaysh.data.db.findByEmail
 import nl.jaysh.data.db.findById
 import nl.jaysh.data.db.getAll
 import nl.jaysh.data.db.insert
@@ -23,6 +24,10 @@ class UserRepository {
 
     fun findById(id: UUID): User? = transaction {
         UserTable.findById(id = id)
+    }
+
+    fun findByEmail(email: String): User? = transaction {
+        UserTable.findByEmail(email = email)
     }
 
     fun createUser(user: User): User = transaction {
