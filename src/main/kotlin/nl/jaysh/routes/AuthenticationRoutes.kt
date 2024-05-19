@@ -7,23 +7,26 @@ import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import nl.jaysh.models.authentication.LoginRequest
 import nl.jaysh.models.authentication.RegisterRequest
-import nl.jaysh.models.authentication.toUser
-import nl.jaysh.services.AuthenticationService
+import nl.jaysh.services.UserService
 import org.koin.ktor.ext.inject
 
 fun Route.authentication() {
 
-    val authenticationService by inject<AuthenticationService>()
+    val service by inject<UserService>()
 
     route("/api") {
         post("/login") {
             val request = call.receive<LoginRequest>()
-            authenticationService.login(user = request.toUser())
+            val response = service.login(request = request)
+
+            response.token
+                ?.let { call.respond(response) }
+                ?: call.respond(HttpStatusCode.Unauthorized)
         }
 
         post("/register") {
             val request = call.receive<RegisterRequest>()
-            val response = authenticationService.register(request.toUser())
+            val response = service.register(request = request)
             call.respond(HttpStatusCode.Created, response)
         }
     }

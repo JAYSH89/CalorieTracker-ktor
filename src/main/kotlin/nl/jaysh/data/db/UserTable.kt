@@ -48,6 +48,11 @@ fun UserTable.findById(id: UUID): User? = selectAll()
     .map(ResultRow::toUser)
     .singleOrNull()
 
+fun UserTable.findByEmail(email: String): User? = selectAll()
+    .where { UserTable.email eq email }
+    .map(ResultRow::toUser)
+    .singleOrNull()
+
 fun UserTable.insert(user: User): User {
     val id = insertAndGetId {
         it[email] = user.email

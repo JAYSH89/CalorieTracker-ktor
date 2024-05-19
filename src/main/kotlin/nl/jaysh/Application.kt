@@ -2,18 +2,12 @@ package nl.jaysh
 
 import io.ktor.server.application.*
 import io.ktor.server.cio.*
-import io.ktor.server.engine.*
 import nl.jaysh.core.config.DbConfig
 import nl.jaysh.plugins.*
 
-fun main() {
+fun main(args: Array<String>) {
     DbConfig.setup
-    embeddedServer(
-        CIO,
-        port = 8080,
-        host = "0.0.0.0",
-        module = Application::module,
-    ).start(wait = true)
+    EngineMain.main(args)
 }
 
 fun Application.module() {
@@ -21,5 +15,6 @@ fun Application.module() {
     configureHTTP()
     configureMonitoring()
     configureSerialization()
+    configureSecurity()
     configureRouting()
 }

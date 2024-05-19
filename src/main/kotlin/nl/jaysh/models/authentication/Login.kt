@@ -17,4 +17,5 @@ fun LoginRequest.toUser(): User = User(
 data class LoginResponse(
     @Serializable(with = UUIDSerializer::class) val id: UUID,
     val email: String,
+    val token: String?,
 )

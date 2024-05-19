@@ -2,11 +2,14 @@ package nl.jaysh.routes
 
 import io.ktor.http.*
 import io.ktor.server.application.*
+import io.ktor.server.auth.*
+import io.ktor.server.auth.jwt.*
 import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import nl.jaysh.models.UserRequest
 import nl.jaysh.models.toUser
+import nl.jaysh.services.JwtService
 import nl.jaysh.services.UserService
 import org.koin.ktor.ext.inject
 import java.util.*
@@ -15,39 +18,56 @@ fun Route.user() {
     val userService by inject<UserService>()
 
     route("/api/user") {
-        get {
-            val users = userService.getAll()
-            call.respond(HttpStatusCode.OK, users)
+        authenticate {
+            get("/{id}") {
+                val id = call.parameters["id"]
+                    ?.toString()
+                    ?: return@get call.respond(HttpStatusCode.BadRequest)
+
+                val uuid = UUID.fromString(id)
+                val user = userService.findById(id = uuid)
+
+                when {
+                    user == null -> call.respond(HttpStatusCode.NotFound)
+                    user.email != call.principalEmail() -> call.respond(HttpStatusCode.NotFound)
+                    else -> call.respond(HttpStatusCode.OK, user)
+                }
+            }
         }
 
-        get("/{id}") {
-            val id = call.parameters["id"]
-                ?.toString()
-                ?: throw IllegalStateException("Invalid id")
+        authenticate {
+            put {
+                val userRequest = call.receive<UserRequest>()
+                if (userRequest.email != call.principalEmail()) {
+                    return@put call.respond(HttpStatusCode.NotFound)
+                }
 
-            val uuid = UUID.fromString(id)
-            val user = userService.findById(id = uuid)
-
-            if (user == null)
-                call.respond(HttpStatusCode.NotFound)
-            else
-                call.respond(HttpStatusCode.OK, user)
+                val updatedUser = userService.updateUser(user = userRequest.toUser())
+                call.respond(HttpStatusCode.OK, updatedUser)
+            }
         }
 
-        put {
-            val userRequest = call.receive<UserRequest>()
-            val updatedUser = userService.updateUser(user = userRequest.toUser())
-            call.respond(HttpStatusCode.OK, updatedUser)
-        }
+        authenticate {
+            delete("/{id}") {
+                val id = call.parameters["id"]
+                    ?.toString()
+                    ?: return@delete call.respond(HttpStatusCode.BadRequest)
 
-        delete("/{id}") {
-            val id = call.parameters["id"]
-                ?.toString()
-                ?: throw IllegalStateException("Must provide id")
+                val uuid = UUID.fromString(id)
+                val user = userService.findById(id = uuid)
 
-            val uuid = UUID.fromString(id)
-            userService.deleteUser(id = uuid)
-            call.respond(HttpStatusCode.NoContent)
+                if (user?.email != call.principalEmail()) {
+                    return@delete call.respond(HttpStatusCode.NotFound)
+                }
+
+                userService.deleteUser(id = uuid)
+                call.respond(HttpStatusCode.NoContent)
+            }
         }
     }
 }
+
+fun ApplicationCall.principalEmail(): String? = principal<JWTPrincipal>()
+    ?.payload
+    ?.getClaim(JwtService.CLAIM_NAME)
+    ?.asString()

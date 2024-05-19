@@ -1,4 +1,4 @@
-openapi: "3.0.0"
+openapi: "3.1.0"
 info:
   title: "CalorieTracker API"
   description: "CalorieTracker API"
@@ -103,6 +103,47 @@ paths:
             '*/*':
               schema:
                 $ref: "#/components/schemas/Food"
+  /api/login:
+    post:
+      description: ""
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/LoginRequest"
+        required: true
+      responses:
+        "500":
+          description: "Internal Server Error"
+          content:
+            text/plain:
+              schema:
+                type: "string"
+              examples:
+                Example#1:
+                  value: ""
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/HashMap_String"
+  /api/register:
+    post:
+      description: ""
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/RegisterRequest"
+        required: true
+      responses:
+        "201":
+          description: "Created"
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/RegisterResponse"
   /api/user:
     get:
       description: ""
@@ -116,9 +157,7 @@ paths:
                 items:
                   $ref: "#/components/schemas/UserResponse"
     put:
-      description: "post { <br> val userRequest = call.receive<UserRequest>() <br>\
-        \ val createdUser = userService.createUser(user = userRequest.toUser()) <br>\
-        \ call.respond(HttpStatusCode.Created, createdUser) <br> }"
+      description: ""
       requestBody:
         content:
           application/json:
@@ -227,6 +266,42 @@ components:
       required:
       - "name"
       - "amountType"
+    LoginRequest:
+      type: "object"
+      properties:
+        email:
+          type: "string"
+        password:
+          type: "string"
+      required:
+      - "email"
+      - "password"
+    HashMap:
+      type: "object"
+      properties: {}
+    HashMap_String:
+      type: "string"
+    RegisterRequest:
+      type: "object"
+      properties:
+        email:
+          type: "string"
+        password:
+          type: "string"
+      required:
+      - "email"
+      - "password"
+    RegisterResponse:
+      type: "object"
+      properties:
+        id:
+          type: "string"
+          format: "uuid"
+        email:
+          type: "string"
+      required:
+      - "id"
+      - "email"
     UserResponse:
       type: "object"
       properties:
