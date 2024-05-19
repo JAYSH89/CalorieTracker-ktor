@@ -10,15 +10,6 @@ paths:
     get:
       description: ""
       responses:
-        "500":
-          description: "Internal Server Error"
-          content:
-            text/plain:
-              schema:
-                type: "string"
-              examples:
-                Example#1:
-                  value: ""
         "200":
           description: "OK"
           content:
@@ -36,15 +27,6 @@ paths:
               $ref: "#/components/schemas/Food"
         required: true
       responses:
-        "500":
-          description: "Internal Server Error"
-          content:
-            text/plain:
-              schema:
-                type: "string"
-              examples:
-                Example#1:
-                  value: ""
         "201":
           description: "Created"
           content:
@@ -60,15 +42,6 @@ paths:
               $ref: "#/components/schemas/Food"
         required: true
       responses:
-        "500":
-          description: "Internal Server Error"
-          content:
-            text/plain:
-              schema:
-                type: "string"
-              examples:
-                Example#1:
-                  value: ""
         "200":
           description: "OK"
           content:
@@ -118,8 +91,6 @@ paths:
               examples:
                 Example#1:
                   value: ""
-                Example#2:
-                  value: ""
         "404":
           description: "Not Found"
           content:
@@ -136,15 +107,6 @@ paths:
     get:
       description: ""
       responses:
-        "500":
-          description: "Internal Server Error"
-          content:
-            text/plain:
-              schema:
-                type: "string"
-              examples:
-                Example#1:
-                  value: ""
         "200":
           description: "OK"
           content:
@@ -153,32 +115,10 @@ paths:
                 type: "array"
                 items:
                   $ref: "#/components/schemas/UserResponse"
-    post:
-      description: ""
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/UserRequest"
-        required: true
-      responses:
-        "500":
-          description: "Internal Server Error"
-          content:
-            text/plain:
-              schema:
-                type: "string"
-              examples:
-                Example#1:
-                  value: ""
-        "201":
-          description: "Created"
-          content:
-            '*/*':
-              schema:
-                $ref: "#/components/schemas/UserResponse"
     put:
-      description: ""
+      description: "post { <br> val userRequest = call.receive<UserRequest>() <br>\
+        \ val createdUser = userService.createUser(user = userRequest.toUser()) <br>\
+        \ call.respond(HttpStatusCode.Created, createdUser) <br> }"
       requestBody:
         content:
           application/json:
@@ -186,15 +126,6 @@ paths:
               $ref: "#/components/schemas/UserRequest"
         required: true
       responses:
-        "500":
-          description: "Internal Server Error"
-          content:
-            text/plain:
-              schema:
-                type: "string"
-              examples:
-                Example#1:
-                  value: ""
         "200":
           description: "OK"
           content:
@@ -243,8 +174,6 @@ paths:
                 type: "string"
               examples:
                 Example#1:
-                  value: ""
-                Example#2:
                   value: ""
         "404":
           description: "Not Found"

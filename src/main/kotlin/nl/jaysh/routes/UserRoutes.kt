@@ -34,12 +34,6 @@ fun Route.user() {
                 call.respond(HttpStatusCode.OK, user)
         }
 
-        post {
-            val userRequest = call.receive<UserRequest>()
-            val createdUser = userService.createUser(user = userRequest.toUser())
-            call.respond(HttpStatusCode.Created, createdUser)
-        }
-
         put {
             val userRequest = call.receive<UserRequest>()
             val updatedUser = userService.updateUser(user = userRequest.toUser())

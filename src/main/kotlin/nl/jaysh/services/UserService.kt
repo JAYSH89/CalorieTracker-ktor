@@ -16,11 +16,6 @@ class UserService(private val userRepository: UserRepository) {
         return user?.let(UserResponse::fromUser)
     }
 
-    fun createUser(user: User): UserResponse {
-        val newUser = userRepository.createUser(user = user)
-        return UserResponse.fromUser(user = newUser)
-    }
-
     fun updateUser(user: User): UserResponse {
         val updatedUser = userRepository.updateUser(user = user)
         return UserResponse.fromUser(user = updatedUser)
