@@ -5,16 +5,15 @@ import nl.jaysh.models.Food
 import java.util.*
 
 class FoodService(private val foodRepository: FoodRepository) {
+    fun getAllFood(userId: UUID): List<Food> = foodRepository.getAll(userId = userId)
 
-    fun getAllFood(): List<Food> = foodRepository.getAll()
+    fun findById(foodId: UUID, userId: UUID): Food? = foodRepository.findById(foodId = foodId, userId = userId)
 
-    fun findById(id: UUID): Food? = foodRepository.findById(id = id)
+    fun createFood(food: Food, userId: UUID): Food = foodRepository.insert(food = food, userId = userId)
 
-    fun createFood(food: Food): Food = foodRepository.add(food = food)
+    fun updateFood(food: Food, userId: UUID): Food = foodRepository.update(food = food, userId = userId)
 
-    fun updateFood(food: Food): Food = foodRepository.update(food = food)
-
-    fun deleteFood(id: UUID) {
-        foodRepository.delete(id = id)
+    fun deleteFood(foodId: UUID, userId: UUID) {
+        foodRepository.delete(foodId = foodId, userId = userId)
     }
 }

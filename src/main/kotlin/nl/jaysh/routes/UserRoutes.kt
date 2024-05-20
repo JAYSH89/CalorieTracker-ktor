@@ -3,13 +3,12 @@ package nl.jaysh.routes
 import io.ktor.http.*
 import io.ktor.server.application.*
 import io.ktor.server.auth.*
-import io.ktor.server.auth.jwt.*
 import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
+import nl.jaysh.core.utils.principalEmail
 import nl.jaysh.models.UserRequest
 import nl.jaysh.models.toUser
-import nl.jaysh.services.JwtService
 import nl.jaysh.services.UserService
 import org.koin.ktor.ext.inject
 import java.util.*
@@ -66,8 +65,3 @@ fun Route.user() {
         }
     }
 }
-
-fun ApplicationCall.principalEmail(): String? = principal<JWTPrincipal>()
-    ?.payload
-    ?.getClaim(JwtService.CLAIM_NAME)
-    ?.asString()

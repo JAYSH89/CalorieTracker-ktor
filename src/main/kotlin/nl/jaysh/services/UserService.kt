@@ -24,7 +24,7 @@ class UserService(
         val savedUser = findByEmail(request.email) ?: throw IllegalStateException("invalid user credentials")
         if (savedUser.password != request.password) throw IllegalStateException("invalid user credentials")
 
-        val token = jwtService.createJwtToken(request.email)
+        val token = jwtService.createJwtToken(request)
 
         return LoginResponse(
             id = savedUser.id ?: throw IllegalStateException("logged in user should have an id"),
@@ -37,7 +37,7 @@ class UserService(
 
     fun findById(id: UUID): User? = userRepository.findById(id = id)
 
-    private fun findByEmail(email: String): User? = userRepository.findByEmail(email = email)
+    fun findByEmail(email: String): User? = userRepository.findByEmail(email = email)
 
     fun updateUser(user: User): User = userRepository.updateUser(user = user)
 
