@@ -16,12 +16,15 @@ class UserService(
 
     fun register(request: RegisterRequest): RegisterResponse {
         val user = request.toUser()
-        val newUser = userRepository.createUser(user = user)
+        val newUser = userRepository.insert(user = user)
         return RegisterResponse.fromUser(user = newUser)
     }
 
     fun login(request: LoginRequest): LoginResponse {
-        val savedUser = findByEmail(request.email) ?: throw IllegalStateException("invalid user credentials")
+        val savedUser = userRepository
+            .findByEmail(email = request.email)
+            ?: throw IllegalStateException("invalid user credentials")
+
         if (savedUser.password != request.password) throw IllegalStateException("invalid user credentials")
 
         val token = jwtService.createJwtToken(request)
@@ -33,15 +36,11 @@ class UserService(
         )
     }
 
-    fun getAll(): List<User> = userRepository.getAll()
+    fun findById(userId: UUID): User? = userRepository.findById(userId = userId)
 
-    fun findById(id: UUID): User? = userRepository.findById(id = id)
+    fun updateUser(user: User): User = userRepository.update(user = user)
 
-    fun findByEmail(email: String): User? = userRepository.findByEmail(email = email)
-
-    fun updateUser(user: User): User = userRepository.updateUser(user = user)
-
-    fun deleteUser(id: UUID) {
-        userRepository.deleteUser(id = id)
+    fun deleteUser(userId: UUID) {
+        userRepository.delete(userId = userId)
     }
 }

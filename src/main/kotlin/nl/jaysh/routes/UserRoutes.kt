@@ -6,61 +6,56 @@ import io.ktor.server.auth.*
 import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
-import nl.jaysh.core.utils.principalEmail
+import nl.jaysh.core.utils.principalId
 import nl.jaysh.models.UserRequest
 import nl.jaysh.models.toUser
 import nl.jaysh.services.UserService
 import org.koin.ktor.ext.inject
-import java.util.*
 
 fun Route.user() {
     val userService by inject<UserService>()
 
     route("/api/user") {
         authenticate {
-            get("/{id}") {
-                val id = call.parameters["id"]
-                    ?.toString()
-                    ?: return@get call.respond(HttpStatusCode.BadRequest)
+            get("/me") {
+                call.principalId()?.let { userId ->
+                    val user = userService.findById(userId = userId)
+                    if (user == null)
+                        call.respond(HttpStatusCode.NotFound)
+                    else
+                        call.respond(HttpStatusCode.OK, user)
 
-                val uuid = UUID.fromString(id)
-                val user = userService.findById(id = uuid)
-
-                when {
-                    user == null -> call.respond(HttpStatusCode.NotFound)
-                    user.email != call.principalEmail() -> call.respond(HttpStatusCode.NotFound)
-                    else -> call.respond(HttpStatusCode.OK, user)
-                }
+                } ?: call.respond(HttpStatusCode.BadRequest)
             }
         }
 
         authenticate {
             put {
-                val userRequest = call.receive<UserRequest>()
-                if (userRequest.email != call.principalEmail()) {
-                    return@put call.respond(HttpStatusCode.NotFound)
-                }
+                call.principalId()?.let { id ->
+                    val userRequest = call.receive<UserRequest>()
 
-                val updatedUser = userService.updateUser(user = userRequest.toUser())
-                call.respond(HttpStatusCode.OK, updatedUser)
+                    if (userRequest.id != id) {
+                        call.respond(HttpStatusCode.BadRequest)
+                    } else {
+                        val updatedUser = userService.updateUser(user = userRequest.toUser())
+                        call.respond(HttpStatusCode.OK, updatedUser)
+                    }
+                } ?: call.respond(HttpStatusCode.BadRequest)
             }
         }
 
         authenticate {
-            delete("/{id}") {
-                val id = call.parameters["id"]
-                    ?.toString()
-                    ?: return@delete call.respond(HttpStatusCode.BadRequest)
+            delete {
+                call.principalId()?.let { userId ->
+                    val user = userService.findById(userId = userId)
 
-                val uuid = UUID.fromString(id)
-                val user = userService.findById(id = uuid)
-
-                if (user?.email != call.principalEmail()) {
-                    return@delete call.respond(HttpStatusCode.NotFound)
-                }
-
-                userService.deleteUser(id = uuid)
-                call.respond(HttpStatusCode.NoContent)
+                    if (user?.id != userId) {
+                        call.respond(HttpStatusCode.BadRequest)
+                    } else {
+                        userService.deleteUser(userId = userId)
+                        call.respond(HttpStatusCode.NoContent)
+                    }
+                } ?: call.respond(HttpStatusCode.BadRequest)
             }
         }
     }
