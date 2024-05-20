@@ -11,8 +11,8 @@ import org.jetbrains.exposed.sql.ResultRow
 import org.jetbrains.exposed.sql.SchemaUtils
 import org.jetbrains.exposed.sql.selectAll
 import org.jetbrains.exposed.sql.transactions.transaction
-import org.postgresql.ds.PGSimpleDataSource
 import java.util.*
+import kotlin.test.AfterTest
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -22,26 +22,29 @@ import kotlin.test.assertNull
 
 class UserTests {
     private lateinit var userRepository: UserRepository
-
-    private val dataSource = PGSimpleDataSource().apply {
-        user = "postgres"
-        password = "postgres"
-        databaseName = "calorietracker"
-        portNumbers = intArrayOf(5433)
-    }
-
-    private val database = Database.connect(datasource = dataSource)
+    private lateinit var database: Database
 
     @BeforeTest
-    fun resetDb() {
-        transaction(db = database) {
-            SchemaUtils.drop(FoodTable)
-            SchemaUtils.drop(UserTable)
-            SchemaUtils.createMissingTablesAndColumns(UserTable)
-            SchemaUtils.createMissingTablesAndColumns(FoodTable)
+    fun setup() {
+        database = Database.connect(
+            url = "jdbc:h2:mem:test;DB_CLOSE_DELAY=-1;",
+            driver = "org.h2.Driver",
+            user = "sa",
+            password = ""
+        )
+
+        transaction(database) {
+            SchemaUtils.create(FoodTable, UserTable)
         }
 
         userRepository = UserRepository()
+    }
+
+    @AfterTest
+    fun tearDown() {
+        transaction(db = database) {
+            SchemaUtils.drop(FoodTable, UserTable)
+        }
     }
 
     @Test

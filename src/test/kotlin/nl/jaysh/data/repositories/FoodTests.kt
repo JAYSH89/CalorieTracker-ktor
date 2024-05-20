@@ -6,7 +6,6 @@ import nl.jaysh.data.db.UserTable
 import nl.jaysh.data.db.getAll
 import nl.jaysh.data.db.insert
 import nl.jaysh.data.db.toFood
-import nl.jaysh.data.db.toUser
 import nl.jaysh.helpers.objects.testFood
 import nl.jaysh.helpers.objects.testUser
 import nl.jaysh.models.User
@@ -14,8 +13,8 @@ import org.jetbrains.exposed.sql.Database
 import org.jetbrains.exposed.sql.SchemaUtils
 import org.jetbrains.exposed.sql.selectAll
 import org.jetbrains.exposed.sql.transactions.transaction
-import org.postgresql.ds.PGSimpleDataSource
 import java.util.UUID
+import kotlin.test.AfterTest
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -26,28 +25,29 @@ class FoodTests {
 
     private lateinit var user: User
     private lateinit var foodRepository: FoodRepository
-
-    private val dataSource = PGSimpleDataSource().apply {
-        user = "postgres"
-        password = "postgres"
-        databaseName = "calorietracker"
-        portNumbers = intArrayOf(5433)
-    }
-
-    private val database = Database.connect(datasource = dataSource)
+    private lateinit var database: Database
 
     @BeforeTest
-    fun resetDb() {
-        foodRepository = FoodRepository()
-        transaction(database) {
-            SchemaUtils.drop(FoodTable)
-            SchemaUtils.drop(UserTable)
-            SchemaUtils.createMissingTablesAndColumns(FoodTable)
-            SchemaUtils.createMissingTablesAndColumns(UserTable)
+    fun setup() {
+        database = Database.connect(
+            url = "jdbc:h2:mem:test;DB_CLOSE_DELAY=-1;",
+            driver = "org.h2.Driver",
+            user = "sa",
+            password = ""
+        )
 
-            UserTable.insert(testUser)
-            val savedUser = UserTable.selectAll().first().toUser()
-            user = savedUser
+        transaction(database) {
+            SchemaUtils.create(FoodTable, UserTable)
+            user = UserTable.insert(testUser)
+        }
+
+        foodRepository = FoodRepository()
+    }
+
+    @AfterTest
+    fun teardown() {
+        transaction(db = database) {
+            SchemaUtils.drop(FoodTable, UserTable)
         }
     }
 

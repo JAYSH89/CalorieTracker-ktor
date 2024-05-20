@@ -10,6 +10,8 @@ exposed = "0.50.1"
 postgresql = "42.7.3"
 hikari = "5.1.0"
 bcrypt = "0.10.2"
+mockk = "1.13.11"
+h2 = "2.2.224"
 
 [libraries]
 
@@ -35,6 +37,7 @@ ktor-server-test-host = { group = "io.ktor", name = "ktor-server-test-host" }
 kotlin-test = { group = "org.jetbrains.kotlin", name = "kotlin-test" }
 koin-test = { group = "io.insert-koin", name = "koin-test", version.ref = "koin" }
 koin-test-junit = { group = "io.insert-koin", name = "koin-test-junit4", version.ref = "koin" }
+mockk = { group = "io.mockk", name = "mockk", version.ref = "mockk" }
 
 # SERIALIZATION
 kotlinx-serialization = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "serialization" }
@@ -50,6 +53,7 @@ exposed-jdbc = { group = "org.jetbrains.exposed", name = "exposed-jdbc", version
 exposed-java-time = { group = "org.jetbrains.exposed", name = "exposed-java-time", version.ref = "exposed" }
 postgresql = { group = "org.postgresql", name = "postgresql", version.ref = "postgresql" }
 hikari = { group = "com.zaxxer", name = "HikariCP", version.ref = "hikari" }
+h2 = { group = "com.h2database", name = "h2", version.ref = "h2" }
 
 # CRYPTOGRAPHY
 bcrypt = { group = "at.favre.lib", name = "bcrypt", version.ref = "bcrypt" }
