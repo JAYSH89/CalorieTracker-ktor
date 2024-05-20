@@ -10,7 +10,7 @@ This project is a simple calorie tracker to play around with Ktor :)
 | ❎ | Food Journal              |
 | ❎ | Overview                  |
 | ❎ | Users                     |
-| ✅ | Security                  |
+| ❎ | Security                  |
 | ❎ | Profile                   |
 | ❎ | Weight Journal            |
 | ❎ | Caloric intake management |
