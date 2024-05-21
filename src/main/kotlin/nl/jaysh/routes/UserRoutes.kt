@@ -8,6 +8,7 @@ import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import nl.jaysh.core.utils.principalId
 import nl.jaysh.models.UserRequest
+import nl.jaysh.models.UserResponse
 import nl.jaysh.models.toUser
 import nl.jaysh.services.UserService
 import org.koin.ktor.ext.inject
@@ -23,7 +24,7 @@ fun Route.user() {
                     if (user == null)
                         call.respond(HttpStatusCode.NotFound)
                     else
-                        call.respond(HttpStatusCode.OK, user)
+                        call.respond(HttpStatusCode.OK, UserResponse.fromUser(user))
 
                 } ?: call.respond(HttpStatusCode.BadRequest)
             }
@@ -38,7 +39,7 @@ fun Route.user() {
                         call.respond(HttpStatusCode.BadRequest)
                     } else {
                         val updatedUser = userService.updateUser(user = userRequest.toUser())
-                        call.respond(HttpStatusCode.OK, updatedUser)
+                        call.respond(HttpStatusCode.OK, UserResponse.fromUser(updatedUser))
                     }
                 } ?: call.respond(HttpStatusCode.BadRequest)
             }
