@@ -6,11 +6,6 @@ import io.ktor.server.auth.jwt.*
 import nl.jaysh.services.JwtService
 import java.util.*
 
-fun ApplicationCall.principalEmail(): String? = principal<JWTPrincipal>()
-    ?.payload
-    ?.getClaim(JwtService.EMAIL_CLAIM)
-    ?.asString()
-
 fun ApplicationCall.principalId(): UUID? = try {
     val raw = principal<JWTPrincipal>()
         ?.payload
