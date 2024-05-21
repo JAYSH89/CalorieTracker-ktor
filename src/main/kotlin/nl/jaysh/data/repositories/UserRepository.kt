@@ -25,8 +25,8 @@ class UserRepository {
         UserTable.findByEmail(email = email)
     }
 
-    fun insert(user: User): User = transaction {
-        UserTable.insert(user = user)
+    fun insert(email: String, password: String): User = transaction {
+        UserTable.insert(email = email, password = password)
     }
 
     fun update(user: User): User = transaction {

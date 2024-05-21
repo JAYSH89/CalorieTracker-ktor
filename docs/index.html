@@ -713,15 +713,21 @@
     }
   }
 };
-            defs["HashMap"] = {
-  "properties" : { }
-};
-            defs["HashMap_String"] = { };
             defs["LoginRequest"] = {
   "required" : [ "email", "password" ],
   "properties" : {
     "email" : { },
     "password" : { }
+  }
+};
+            defs["LoginResponse"] = {
+  "required" : [ "email", "id" ],
+  "properties" : {
+    "id" : {
+      "format" : "uuid"
+    },
+    "email" : { },
+    "token" : { }
   }
 };
             defs["Map"] = {
@@ -744,7 +750,7 @@
     "email" : { }
   }
 };
-            defs["UserRequest"] = {
+            defs["User"] = {
   "required" : [ "email", "password" ],
   "properties" : {
     "id" : {
@@ -762,13 +768,14 @@
     }
   }
 };
-            defs["UserResponse"] = {
-  "required" : [ "email", "id" ],
+            defs["UserRequest"] = {
+  "required" : [ "email", "password" ],
   "properties" : {
     "id" : {
       "format" : "uuid"
     },
     "email" : { },
+    "password" : { },
     "firstName" : { },
     "lastName" : { },
     "birthday" : {
@@ -817,14 +824,11 @@
                     <li data-group="Default" data-name="apiRegisterPost" class="">
                       <a href="#api-Default-apiRegisterPost">apiRegisterPost</a>
                     </li>
-                    <li data-group="Default" data-name="apiUserGet" class="">
-                      <a href="#api-Default-apiUserGet">apiUserGet</a>
+                    <li data-group="Default" data-name="apiUserDelete" class="">
+                      <a href="#api-Default-apiUserDelete">apiUserDelete</a>
                     </li>
-                    <li data-group="Default" data-name="apiUserIdDelete" class="">
-                      <a href="#api-Default-apiUserIdDelete">apiUserIdDelete</a>
-                    </li>
-                    <li data-group="Default" data-name="apiUserIdGet" class="">
-                      <a href="#api-Default-apiUserIdGet">apiUserIdGet</a>
+                    <li data-group="Default" data-name="apiUserMeGet" class="">
+                      <a href="#api-Default-apiUserMeGet">apiUserMeGet</a>
                     </li>
                     <li data-group="Default" data-name="apiUserPut" class="">
                       <a href="#api-Default-apiUserPut">apiUserPut</a>
@@ -1099,6 +1103,54 @@ except ApiException as e:
                                 </div>
                             </div>
 
+                            <h3> Status: 401 - Unauthorized </h3>
+
+                            <ul class="nav nav-tabs nav-tabs-examples" >
+                                <li class="active">
+                                  <a data-toggle="tab" href="#responses-apiFoodGet-401-schema">Schema</a>
+                                </li>
+
+                            </ul>
+
+                            <div class="tab-content" style='margin-bottom: 10px;'>
+                                <div class="tab-pane active" id="responses-apiFoodGet-401-schema">
+                                  <div id='responses-apiFoodGet-401-schema-401' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
+                                    <script>
+                                      $(document).ready(function() {
+                                        var schemaWrapper = {
+  "description" : "Unauthorized",
+  "content" : {
+    "*/*" : {
+      "schema" : {
+        "x-content-type" : "*/*"
+      }
+    }
+  }
+};
+                                        var schema = schemaWrapper.content["*/*"].schema;
+                                        if (schema.$ref != null) {
+                                          schema = defsParser.$refs.get(schema.$ref);
+                                        } else {
+                                          schemaWrapper.components = {};
+                                          schemaWrapper.components.schemas = Object.assign({}, defs);
+                                          $RefParser.dereference(schemaWrapper).catch(function(err) {
+                                            console.log(err);
+                                          });
+                                        }
+
+                                        //console.log(JSON.stringify(schema));
+                                        var view = new JSONSchemaView(schema, 3);
+                                        $('#responses-apiFoodGet-401-schema-data').val(stringify(schema));
+                                        var result = $('#responses-apiFoodGet-401-schema-401');
+                                        result.empty();
+                                        result.append(view.render());
+                                      });
+                                    </script>
+                                  </div>
+                                  <input id='responses-apiFoodGet-401-schema-data' type='hidden' value=''></input>
+                                </div>
+                            </div>
+
                         </article>
                       </div>
                       <hr>
@@ -1135,7 +1187,7 @@ except ApiException as e:
                         <div class="tab-content">
                           <div class="tab-pane active" id="examples-Default-apiFoodIdDelete-0-curl">
                            <pre class="prettyprint"><code class="language-bsh">curl -X DELETE\
--H "Accept: text/plain,*/*"\
+-H "Accept: */*"\
 "https://CalorieTracker/api/food/{id}"</code></pre>
                           </div>
                           <div class="tab-pane" id="examples-Default-apiFoodIdDelete-0-java">
@@ -1332,36 +1384,31 @@ except ApiException as e:
 
 
                           <h2>Responses</h2>
-                            <h3> Status: 500 - Internal Server Error </h3>
+                            <h3> Status: 400 - Bad Request </h3>
 
                             <ul class="nav nav-tabs nav-tabs-examples" >
                                 <li class="active">
-                                  <a data-toggle="tab" href="#responses-apiFoodIdDelete-500-schema">Schema</a>
+                                  <a data-toggle="tab" href="#responses-apiFoodIdDelete-400-schema">Schema</a>
                                 </li>
 
                             </ul>
 
                             <div class="tab-content" style='margin-bottom: 10px;'>
-                                <div class="tab-pane active" id="responses-apiFoodIdDelete-500-schema">
-                                  <div id='responses-apiFoodIdDelete-500-schema-500' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
+                                <div class="tab-pane active" id="responses-apiFoodIdDelete-400-schema">
+                                  <div id='responses-apiFoodIdDelete-400-schema-400' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
                                     <script>
                                       $(document).ready(function() {
                                         var schemaWrapper = {
-  "description" : "Internal Server Error",
+  "description" : "Bad Request",
   "content" : {
-    "text/plain" : {
+    "*/*" : {
       "schema" : {
-        "x-content-type" : "text/plain"
-      },
-      "examples" : {
-        "Example#1" : {
-          "value" : ""
-        }
+        "x-content-type" : "*/*"
       }
     }
   }
 };
-                                        var schema = schemaWrapper.content["text/plain"].schema;
+                                        var schema = schemaWrapper.content["*/*"].schema;
                                         if (schema.$ref != null) {
                                           schema = defsParser.$refs.get(schema.$ref);
                                         } else {
@@ -1374,14 +1421,14 @@ except ApiException as e:
 
                                         //console.log(JSON.stringify(schema));
                                         var view = new JSONSchemaView(schema, 3);
-                                        $('#responses-apiFoodIdDelete-500-schema-data').val(stringify(schema));
-                                        var result = $('#responses-apiFoodIdDelete-500-schema-500');
+                                        $('#responses-apiFoodIdDelete-400-schema-data').val(stringify(schema));
+                                        var result = $('#responses-apiFoodIdDelete-400-schema-400');
                                         result.empty();
                                         result.append(view.render());
                                       });
                                     </script>
                                   </div>
-                                  <input id='responses-apiFoodIdDelete-500-schema-data' type='hidden' value=''></input>
+                                  <input id='responses-apiFoodIdDelete-400-schema-data' type='hidden' value=''></input>
                                 </div>
                             </div>
 
@@ -1433,6 +1480,54 @@ except ApiException as e:
                                 </div>
                             </div>
 
+                            <h3> Status: 401 - Unauthorized </h3>
+
+                            <ul class="nav nav-tabs nav-tabs-examples" >
+                                <li class="active">
+                                  <a data-toggle="tab" href="#responses-apiFoodIdDelete-401-schema">Schema</a>
+                                </li>
+
+                            </ul>
+
+                            <div class="tab-content" style='margin-bottom: 10px;'>
+                                <div class="tab-pane active" id="responses-apiFoodIdDelete-401-schema">
+                                  <div id='responses-apiFoodIdDelete-401-schema-401' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
+                                    <script>
+                                      $(document).ready(function() {
+                                        var schemaWrapper = {
+  "description" : "Unauthorized",
+  "content" : {
+    "*/*" : {
+      "schema" : {
+        "x-content-type" : "*/*"
+      }
+    }
+  }
+};
+                                        var schema = schemaWrapper.content["*/*"].schema;
+                                        if (schema.$ref != null) {
+                                          schema = defsParser.$refs.get(schema.$ref);
+                                        } else {
+                                          schemaWrapper.components = {};
+                                          schemaWrapper.components.schemas = Object.assign({}, defs);
+                                          $RefParser.dereference(schemaWrapper).catch(function(err) {
+                                            console.log(err);
+                                          });
+                                        }
+
+                                        //console.log(JSON.stringify(schema));
+                                        var view = new JSONSchemaView(schema, 3);
+                                        $('#responses-apiFoodIdDelete-401-schema-data').val(stringify(schema));
+                                        var result = $('#responses-apiFoodIdDelete-401-schema-401');
+                                        result.empty();
+                                        result.append(view.render());
+                                      });
+                                    </script>
+                                  </div>
+                                  <input id='responses-apiFoodIdDelete-401-schema-data' type='hidden' value=''></input>
+                                </div>
+                            </div>
+
                         </article>
                       </div>
                       <hr>
@@ -1469,7 +1564,7 @@ except ApiException as e:
                         <div class="tab-content">
                           <div class="tab-pane active" id="examples-Default-apiFoodIdGet-0-curl">
                            <pre class="prettyprint"><code class="language-bsh">curl -X GET\
--H "Accept: text/plain,*/*"\
+-H "Accept: */*"\
 "https://CalorieTracker/api/food/{id}"</code></pre>
                           </div>
                           <div class="tab-pane" id="examples-Default-apiFoodIdGet-0-java">
@@ -1675,36 +1770,31 @@ except ApiException as e:
 
 
                           <h2>Responses</h2>
-                            <h3> Status: 500 - Internal Server Error </h3>
+                            <h3> Status: 400 - Bad Request </h3>
 
                             <ul class="nav nav-tabs nav-tabs-examples" >
                                 <li class="active">
-                                  <a data-toggle="tab" href="#responses-apiFoodIdGet-500-schema">Schema</a>
+                                  <a data-toggle="tab" href="#responses-apiFoodIdGet-400-schema">Schema</a>
                                 </li>
 
                             </ul>
 
                             <div class="tab-content" style='margin-bottom: 10px;'>
-                                <div class="tab-pane active" id="responses-apiFoodIdGet-500-schema">
-                                  <div id='responses-apiFoodIdGet-500-schema-500' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
+                                <div class="tab-pane active" id="responses-apiFoodIdGet-400-schema">
+                                  <div id='responses-apiFoodIdGet-400-schema-400' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
                                     <script>
                                       $(document).ready(function() {
                                         var schemaWrapper = {
-  "description" : "Internal Server Error",
+  "description" : "Bad Request",
   "content" : {
-    "text/plain" : {
+    "*/*" : {
       "schema" : {
-        "x-content-type" : "text/plain"
-      },
-      "examples" : {
-        "Example#1" : {
-          "value" : ""
-        }
+        "x-content-type" : "*/*"
       }
     }
   }
 };
-                                        var schema = schemaWrapper.content["text/plain"].schema;
+                                        var schema = schemaWrapper.content["*/*"].schema;
                                         if (schema.$ref != null) {
                                           schema = defsParser.$refs.get(schema.$ref);
                                         } else {
@@ -1717,14 +1807,14 @@ except ApiException as e:
 
                                         //console.log(JSON.stringify(schema));
                                         var view = new JSONSchemaView(schema, 3);
-                                        $('#responses-apiFoodIdGet-500-schema-data').val(stringify(schema));
-                                        var result = $('#responses-apiFoodIdGet-500-schema-500');
+                                        $('#responses-apiFoodIdGet-400-schema-data').val(stringify(schema));
+                                        var result = $('#responses-apiFoodIdGet-400-schema-400');
                                         result.empty();
                                         result.append(view.render());
                                       });
                                     </script>
                                   </div>
-                                  <input id='responses-apiFoodIdGet-500-schema-data' type='hidden' value=''></input>
+                                  <input id='responses-apiFoodIdGet-400-schema-data' type='hidden' value=''></input>
                                 </div>
                             </div>
 
@@ -1821,6 +1911,54 @@ except ApiException as e:
                                     </script>
                                   </div>
                                   <input id='responses-apiFoodIdGet-200-schema-data' type='hidden' value=''></input>
+                                </div>
+                            </div>
+
+                            <h3> Status: 401 - Unauthorized </h3>
+
+                            <ul class="nav nav-tabs nav-tabs-examples" >
+                                <li class="active">
+                                  <a data-toggle="tab" href="#responses-apiFoodIdGet-401-schema">Schema</a>
+                                </li>
+
+                            </ul>
+
+                            <div class="tab-content" style='margin-bottom: 10px;'>
+                                <div class="tab-pane active" id="responses-apiFoodIdGet-401-schema">
+                                  <div id='responses-apiFoodIdGet-401-schema-401' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
+                                    <script>
+                                      $(document).ready(function() {
+                                        var schemaWrapper = {
+  "description" : "Unauthorized",
+  "content" : {
+    "*/*" : {
+      "schema" : {
+        "x-content-type" : "*/*"
+      }
+    }
+  }
+};
+                                        var schema = schemaWrapper.content["*/*"].schema;
+                                        if (schema.$ref != null) {
+                                          schema = defsParser.$refs.get(schema.$ref);
+                                        } else {
+                                          schemaWrapper.components = {};
+                                          schemaWrapper.components.schemas = Object.assign({}, defs);
+                                          $RefParser.dereference(schemaWrapper).catch(function(err) {
+                                            console.log(err);
+                                          });
+                                        }
+
+                                        //console.log(JSON.stringify(schema));
+                                        var view = new JSONSchemaView(schema, 3);
+                                        $('#responses-apiFoodIdGet-401-schema-data').val(stringify(schema));
+                                        var result = $('#responses-apiFoodIdGet-401-schema-401');
+                                        result.empty();
+                                        result.append(view.render());
+                                      });
+                                    </script>
+                                  </div>
+                                  <input id='responses-apiFoodIdGet-401-schema-data' type='hidden' value=''></input>
                                 </div>
                             </div>
 
@@ -2132,6 +2270,54 @@ except ApiException as e:
                                 </div>
                             </div>
 
+                            <h3> Status: 401 - Unauthorized </h3>
+
+                            <ul class="nav nav-tabs nav-tabs-examples" >
+                                <li class="active">
+                                  <a data-toggle="tab" href="#responses-apiFoodPost-401-schema">Schema</a>
+                                </li>
+
+                            </ul>
+
+                            <div class="tab-content" style='margin-bottom: 10px;'>
+                                <div class="tab-pane active" id="responses-apiFoodPost-401-schema">
+                                  <div id='responses-apiFoodPost-401-schema-401' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
+                                    <script>
+                                      $(document).ready(function() {
+                                        var schemaWrapper = {
+  "description" : "Unauthorized",
+  "content" : {
+    "*/*" : {
+      "schema" : {
+        "x-content-type" : "*/*"
+      }
+    }
+  }
+};
+                                        var schema = schemaWrapper.content["*/*"].schema;
+                                        if (schema.$ref != null) {
+                                          schema = defsParser.$refs.get(schema.$ref);
+                                        } else {
+                                          schemaWrapper.components = {};
+                                          schemaWrapper.components.schemas = Object.assign({}, defs);
+                                          $RefParser.dereference(schemaWrapper).catch(function(err) {
+                                            console.log(err);
+                                          });
+                                        }
+
+                                        //console.log(JSON.stringify(schema));
+                                        var view = new JSONSchemaView(schema, 3);
+                                        $('#responses-apiFoodPost-401-schema-data').val(stringify(schema));
+                                        var result = $('#responses-apiFoodPost-401-schema-401');
+                                        result.empty();
+                                        result.append(view.render());
+                                      });
+                                    </script>
+                                  </div>
+                                  <input id='responses-apiFoodPost-401-schema-data' type='hidden' value=''></input>
+                                </div>
+                            </div>
+
                         </article>
                       </div>
                       <hr>
@@ -2440,6 +2626,54 @@ except ApiException as e:
                                 </div>
                             </div>
 
+                            <h3> Status: 401 - Unauthorized </h3>
+
+                            <ul class="nav nav-tabs nav-tabs-examples" >
+                                <li class="active">
+                                  <a data-toggle="tab" href="#responses-apiFoodPut-401-schema">Schema</a>
+                                </li>
+
+                            </ul>
+
+                            <div class="tab-content" style='margin-bottom: 10px;'>
+                                <div class="tab-pane active" id="responses-apiFoodPut-401-schema">
+                                  <div id='responses-apiFoodPut-401-schema-401' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
+                                    <script>
+                                      $(document).ready(function() {
+                                        var schemaWrapper = {
+  "description" : "Unauthorized",
+  "content" : {
+    "*/*" : {
+      "schema" : {
+        "x-content-type" : "*/*"
+      }
+    }
+  }
+};
+                                        var schema = schemaWrapper.content["*/*"].schema;
+                                        if (schema.$ref != null) {
+                                          schema = defsParser.$refs.get(schema.$ref);
+                                        } else {
+                                          schemaWrapper.components = {};
+                                          schemaWrapper.components.schemas = Object.assign({}, defs);
+                                          $RefParser.dereference(schemaWrapper).catch(function(err) {
+                                            console.log(err);
+                                          });
+                                        }
+
+                                        //console.log(JSON.stringify(schema));
+                                        var view = new JSONSchemaView(schema, 3);
+                                        $('#responses-apiFoodPut-401-schema-data').val(stringify(schema));
+                                        var result = $('#responses-apiFoodPut-401-schema-401');
+                                        result.empty();
+                                        result.append(view.render());
+                                      });
+                                    </script>
+                                  </div>
+                                  <input id='responses-apiFoodPut-401-schema-data' type='hidden' value=''></input>
+                                </div>
+                            </div>
+
                         </article>
                       </div>
                       <hr>
@@ -2496,7 +2730,7 @@ public class DefaultApiExample {
         DefaultApi apiInstance = new DefaultApi();
         LoginRequest body = ; // LoginRequest | 
         try {
-            HashMap_String result = apiInstance.apiLoginPost(body);
+            LoginResponse result = apiInstance.apiLoginPost(body);
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling DefaultApi#apiLoginPost");
@@ -2515,7 +2749,7 @@ public class DefaultApiExample {
         DefaultApi apiInstance = new DefaultApi();
         LoginRequest body = ; // LoginRequest | 
         try {
-            HashMap_String result = apiInstance.apiLoginPost(body);
+            LoginResponse result = apiInstance.apiLoginPost(body);
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling DefaultApi#apiLoginPost");
@@ -2534,7 +2768,7 @@ public class DefaultApiExample {
 DefaultApi *apiInstance = [[DefaultApi alloc] init];
 
 [apiInstance apiLoginPostWith:body
-              completionHandler: ^(HashMap_String output, NSError* error) {
+              completionHandler: ^(LoginResponse output, NSError* error) {
                             if (output) {
                                 NSLog(@"%@", output);
                             }
@@ -2584,7 +2818,7 @@ namespace Example
 
             try
             {
-                HashMap_String result = apiInstance.apiLoginPost(body);
+                LoginResponse result = apiInstance.apiLoginPost(body);
                 Debug.WriteLine(result);
             }
             catch (Exception e)
@@ -2724,6 +2958,12 @@ except ApiException as e:
       "examples" : {
         "Example#1" : {
           "value" : ""
+        },
+        "Example#2" : {
+          "value" : ""
+        },
+        "Example#3" : {
+          "value" : ""
         }
       }
     }
@@ -2772,7 +3012,7 @@ except ApiException as e:
   "content" : {
     "*/*" : {
       "schema" : {
-        "$ref" : "#/components/schemas/HashMap_String"
+        "$ref" : "#/components/schemas/LoginResponse"
       }
     }
   }
@@ -2798,6 +3038,54 @@ except ApiException as e:
                                     </script>
                                   </div>
                                   <input id='responses-apiLoginPost-200-schema-data' type='hidden' value=''></input>
+                                </div>
+                            </div>
+
+                            <h3> Status: 401 - Unauthorized </h3>
+
+                            <ul class="nav nav-tabs nav-tabs-examples" >
+                                <li class="active">
+                                  <a data-toggle="tab" href="#responses-apiLoginPost-401-schema">Schema</a>
+                                </li>
+
+                            </ul>
+
+                            <div class="tab-content" style='margin-bottom: 10px;'>
+                                <div class="tab-pane active" id="responses-apiLoginPost-401-schema">
+                                  <div id='responses-apiLoginPost-401-schema-401' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
+                                    <script>
+                                      $(document).ready(function() {
+                                        var schemaWrapper = {
+  "description" : "Unauthorized",
+  "content" : {
+    "*/*" : {
+      "schema" : {
+        "x-content-type" : "*/*"
+      }
+    }
+  }
+};
+                                        var schema = schemaWrapper.content["*/*"].schema;
+                                        if (schema.$ref != null) {
+                                          schema = defsParser.$refs.get(schema.$ref);
+                                        } else {
+                                          schemaWrapper.components = {};
+                                          schemaWrapper.components.schemas = Object.assign({}, defs);
+                                          $RefParser.dereference(schemaWrapper).catch(function(err) {
+                                            console.log(err);
+                                          });
+                                        }
+
+                                        //console.log(JSON.stringify(schema));
+                                        var view = new JSONSchemaView(schema, 3);
+                                        $('#responses-apiLoginPost-401-schema-data').val(stringify(schema));
+                                        var result = $('#responses-apiLoginPost-401-schema-401');
+                                        result.empty();
+                                        result.append(view.render());
+                                      });
+                                    </script>
+                                  </div>
+                                  <input id='responses-apiLoginPost-401-schema-data' type='hidden' value=''></input>
                                 </div>
                             </div>
 
@@ -3112,10 +3400,10 @@ except ApiException as e:
                         </article>
                       </div>
                       <hr>
-                    <div id="api-Default-apiUserGet">
-                      <article id="api-Default-apiUserGet-0" data-group="User" data-name="apiUserGet" data-version="0">
+                    <div id="api-Default-apiUserDelete">
+                      <article id="api-Default-apiUserDelete-0" data-group="User" data-name="apiUserDelete" data-version="0">
                         <div class="pull-left">
-                          <h1>apiUserGet</h1>
+                          <h1>apiUserDelete</h1>
                           <p></p>
                         </div>
                         <div class="pull-right"></div>
@@ -3124,31 +3412,31 @@ except ApiException as e:
                         <p class="marked"></p>
                         <p></p>
                         <br />
-                        <pre class="prettyprint language-html prettyprinted" data-type="get"><code><span class="pln">/api/user</span></code></pre>
+                        <pre class="prettyprint language-html prettyprinted" data-type="delete"><code><span class="pln">/api/user</span></code></pre>
                         <p>
                           <h3>Usage and SDK Samples</h3>
                         </p>
                         <ul class="nav nav-tabs nav-tabs-examples">
-                          <li class="active"><a href="#examples-Default-apiUserGet-0-curl">Curl</a></li>
-                          <li class=""><a href="#examples-Default-apiUserGet-0-java">Java</a></li>
-                          <li class=""><a href="#examples-Default-apiUserGet-0-android">Android</a></li>
-                          <!--<li class=""><a href="#examples-Default-apiUserGet-0-groovy">Groovy</a></li>-->
-                          <li class=""><a href="#examples-Default-apiUserGet-0-objc">Obj-C</a></li>
-                          <li class=""><a href="#examples-Default-apiUserGet-0-javascript">JavaScript</a></li>
-                          <!--<li class=""><a href="#examples-Default-apiUserGet-0-angular">Angular</a></li>-->
-                          <li class=""><a href="#examples-Default-apiUserGet-0-csharp">C#</a></li>
-                          <li class=""><a href="#examples-Default-apiUserGet-0-php">PHP</a></li>
-                          <li class=""><a href="#examples-Default-apiUserGet-0-perl">Perl</a></li>
-                          <li class=""><a href="#examples-Default-apiUserGet-0-python">Python</a></li>
+                          <li class="active"><a href="#examples-Default-apiUserDelete-0-curl">Curl</a></li>
+                          <li class=""><a href="#examples-Default-apiUserDelete-0-java">Java</a></li>
+                          <li class=""><a href="#examples-Default-apiUserDelete-0-android">Android</a></li>
+                          <!--<li class=""><a href="#examples-Default-apiUserDelete-0-groovy">Groovy</a></li>-->
+                          <li class=""><a href="#examples-Default-apiUserDelete-0-objc">Obj-C</a></li>
+                          <li class=""><a href="#examples-Default-apiUserDelete-0-javascript">JavaScript</a></li>
+                          <!--<li class=""><a href="#examples-Default-apiUserDelete-0-angular">Angular</a></li>-->
+                          <li class=""><a href="#examples-Default-apiUserDelete-0-csharp">C#</a></li>
+                          <li class=""><a href="#examples-Default-apiUserDelete-0-php">PHP</a></li>
+                          <li class=""><a href="#examples-Default-apiUserDelete-0-perl">Perl</a></li>
+                          <li class=""><a href="#examples-Default-apiUserDelete-0-python">Python</a></li>
                         </ul>
 
                         <div class="tab-content">
-                          <div class="tab-pane active" id="examples-Default-apiUserGet-0-curl">
-                           <pre class="prettyprint"><code class="language-bsh">curl -X GET\
+                          <div class="tab-pane active" id="examples-Default-apiUserDelete-0-curl">
+                           <pre class="prettyprint"><code class="language-bsh">curl -X DELETE\
 -H "Accept: */*"\
 "https://CalorieTracker/api/user"</code></pre>
                           </div>
-                          <div class="tab-pane" id="examples-Default-apiUserGet-0-java">
+                          <div class="tab-pane" id="examples-Default-apiUserDelete-0-java">
                             <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
 import io.swagger.client.auth.*;
 import io.swagger.client.model.*;
@@ -3163,16 +3451,16 @@ public class DefaultApiExample {
         
         DefaultApi apiInstance = new DefaultApi();
         try {
-            apiInstance.apiUserGet();
+            apiInstance.apiUserDelete();
         } catch (ApiException e) {
-            System.err.println("Exception when calling DefaultApi#apiUserGet");
+            System.err.println("Exception when calling DefaultApi#apiUserDelete");
             e.printStackTrace();
         }
     }
 }</code></pre>
                           </div>
 
-                          <div class="tab-pane" id="examples-Default-apiUserGet-0-android">
+                          <div class="tab-pane" id="examples-Default-apiUserDelete-0-android">
                             <pre class="prettyprint"><code class="language-java">import io.swagger.client.api.DefaultApi;
 
 public class DefaultApiExample {
@@ -3180,23 +3468,23 @@ public class DefaultApiExample {
     public static void main(String[] args) {
         DefaultApi apiInstance = new DefaultApi();
         try {
-            apiInstance.apiUserGet();
+            apiInstance.apiUserDelete();
         } catch (ApiException e) {
-            System.err.println("Exception when calling DefaultApi#apiUserGet");
+            System.err.println("Exception when calling DefaultApi#apiUserDelete");
             e.printStackTrace();
         }
     }
 }</code></pre>
                           </div>
   <!--
-  <div class="tab-pane" id="examples-Default-apiUserGet-0-groovy">
+  <div class="tab-pane" id="examples-Default-apiUserDelete-0-groovy">
   <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
   </div> -->
-                            <div class="tab-pane" id="examples-Default-apiUserGet-0-objc">
+                            <div class="tab-pane" id="examples-Default-apiUserDelete-0-objc">
                               <pre class="prettyprint"><code class="language-cpp">
 DefaultApi *apiInstance = [[DefaultApi alloc] init];
 
-[apiInstance apiUserGetWithCompletionHandler: 
+[apiInstance apiUserDeleteWithCompletionHandler: 
               ^(NSError* error) {
                             if (error) {
                                 NSLog(@"Error: %@", error);
@@ -3205,7 +3493,7 @@ DefaultApi *apiInstance = [[DefaultApi alloc] init];
 </code></pre>
                             </div>
 
-                            <div class="tab-pane" id="examples-Default-apiUserGet-0-javascript">
+                            <div class="tab-pane" id="examples-Default-apiUserDelete-0-javascript">
                               <pre class="prettyprint"><code class="language-js">var CalorieTrackerApi = require('calorie_tracker_api');
 
 var api = new CalorieTrackerApi.DefaultApi()
@@ -3216,14 +3504,14 @@ var callback = function(error, data, response) {
     console.log('API called successfully.');
   }
 };
-api.apiUserGet(callback);
+api.apiUserDelete(callback);
 </code></pre>
                             </div>
 
-                            <!--<div class="tab-pane" id="examples-Default-apiUserGet-0-angular">
+                            <!--<div class="tab-pane" id="examples-Default-apiUserDelete-0-angular">
               <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
             </div>-->
-                            <div class="tab-pane" id="examples-Default-apiUserGet-0-csharp">
+                            <div class="tab-pane" id="examples-Default-apiUserDelete-0-csharp">
                               <pre class="prettyprint"><code class="language-cs">using System;
 using System.Diagnostics;
 using IO.Swagger.Api;
@@ -3232,7 +3520,7 @@ using IO.Swagger.Model;
 
 namespace Example
 {
-    public class apiUserGetExample
+    public class apiUserDeleteExample
     {
         public void main()
         {
@@ -3241,11 +3529,11 @@ namespace Example
 
             try
             {
-                apiInstance.apiUserGet();
+                apiInstance.apiUserDelete();
             }
             catch (Exception e)
             {
-                Debug.Print("Exception when calling DefaultApi.apiUserGet: " + e.Message );
+                Debug.Print("Exception when calling DefaultApi.apiUserDelete: " + e.Message );
             }
         }
     }
@@ -3253,21 +3541,21 @@ namespace Example
 </code></pre>
                             </div>
 
-                            <div class="tab-pane" id="examples-Default-apiUserGet-0-php">
+                            <div class="tab-pane" id="examples-Default-apiUserDelete-0-php">
                               <pre class="prettyprint"><code class="language-php"><&#63;php
 require_once(__DIR__ . '/vendor/autoload.php');
 
 $api_instance = new Swagger\Client\ApiDefaultApi();
 
 try {
-    $api_instance->apiUserGet();
+    $api_instance->apiUserDelete();
 } catch (Exception $e) {
-    echo 'Exception when calling DefaultApi->apiUserGet: ', $e->getMessage(), PHP_EOL;
+    echo 'Exception when calling DefaultApi->apiUserDelete: ', $e->getMessage(), PHP_EOL;
 }
 ?></code></pre>
                             </div>
 
-                            <div class="tab-pane" id="examples-Default-apiUserGet-0-perl">
+                            <div class="tab-pane" id="examples-Default-apiUserDelete-0-perl">
                               <pre class="prettyprint"><code class="language-perl">use Data::Dumper;
 use WWW::SwaggerClient::Configuration;
 use WWW::SwaggerClient::DefaultApi;
@@ -3275,14 +3563,14 @@ use WWW::SwaggerClient::DefaultApi;
 my $api_instance = WWW::SwaggerClient::DefaultApi->new();
 
 eval { 
-    $api_instance->apiUserGet();
+    $api_instance->apiUserDelete();
 };
 if ($@) {
-    warn "Exception when calling DefaultApi->apiUserGet: $@\n";
+    warn "Exception when calling DefaultApi->apiUserDelete: $@\n";
 }</code></pre>
                             </div>
 
-                            <div class="tab-pane" id="examples-Default-apiUserGet-0-python">
+                            <div class="tab-pane" id="examples-Default-apiUserDelete-0-python">
                               <pre class="prettyprint"><code class="language-python">from __future__ import print_statement
 import time
 import swagger_client
@@ -3293,9 +3581,9 @@ from pprint import pprint
 api_instance = swagger_client.DefaultApi()
 
 try: 
-    api_instance.api_user_get()
+    api_instance.api_user_delete()
 except ApiException as e:
-    print("Exception when calling DefaultApi->apiUserGet: %s\n" % e)</code></pre>
+    print("Exception when calling DefaultApi->apiUserDelete: %s\n" % e)</code></pre>
                             </div>
                           </div>
 
@@ -3307,28 +3595,25 @@ except ApiException as e:
 
 
                           <h2>Responses</h2>
-                            <h3> Status: 200 - OK </h3>
+                            <h3> Status: 400 - Bad Request </h3>
 
                             <ul class="nav nav-tabs nav-tabs-examples" >
                                 <li class="active">
-                                  <a data-toggle="tab" href="#responses-apiUserGet-200-schema">Schema</a>
+                                  <a data-toggle="tab" href="#responses-apiUserDelete-400-schema">Schema</a>
                                 </li>
 
                             </ul>
 
                             <div class="tab-content" style='margin-bottom: 10px;'>
-                                <div class="tab-pane active" id="responses-apiUserGet-200-schema">
-                                  <div id='responses-apiUserGet-200-schema-200' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
+                                <div class="tab-pane active" id="responses-apiUserDelete-400-schema">
+                                  <div id='responses-apiUserDelete-400-schema-400' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
                                     <script>
                                       $(document).ready(function() {
                                         var schemaWrapper = {
-  "description" : "OK",
+  "description" : "Bad Request",
   "content" : {
     "*/*" : {
       "schema" : {
-        "items" : {
-          "$ref" : "#/components/schemas/UserResponse"
-        },
         "x-content-type" : "*/*"
       }
     }
@@ -3347,300 +3632,14 @@ except ApiException as e:
 
                                         //console.log(JSON.stringify(schema));
                                         var view = new JSONSchemaView(schema, 3);
-                                        $('#responses-apiUserGet-200-schema-data').val(stringify(schema));
-                                        var result = $('#responses-apiUserGet-200-schema-200');
+                                        $('#responses-apiUserDelete-400-schema-data').val(stringify(schema));
+                                        var result = $('#responses-apiUserDelete-400-schema-400');
                                         result.empty();
                                         result.append(view.render());
                                       });
                                     </script>
                                   </div>
-                                  <input id='responses-apiUserGet-200-schema-data' type='hidden' value=''></input>
-                                </div>
-                            </div>
-
-                        </article>
-                      </div>
-                      <hr>
-                    <div id="api-Default-apiUserIdDelete">
-                      <article id="api-Default-apiUserIdDelete-0" data-group="User" data-name="apiUserIdDelete" data-version="0">
-                        <div class="pull-left">
-                          <h1>apiUserIdDelete</h1>
-                          <p></p>
-                        </div>
-                        <div class="pull-right"></div>
-                        <div class="clearfix"></div>
-                        <p></p>
-                        <p class="marked"></p>
-                        <p></p>
-                        <br />
-                        <pre class="prettyprint language-html prettyprinted" data-type="delete"><code><span class="pln">/api/user/{id}</span></code></pre>
-                        <p>
-                          <h3>Usage and SDK Samples</h3>
-                        </p>
-                        <ul class="nav nav-tabs nav-tabs-examples">
-                          <li class="active"><a href="#examples-Default-apiUserIdDelete-0-curl">Curl</a></li>
-                          <li class=""><a href="#examples-Default-apiUserIdDelete-0-java">Java</a></li>
-                          <li class=""><a href="#examples-Default-apiUserIdDelete-0-android">Android</a></li>
-                          <!--<li class=""><a href="#examples-Default-apiUserIdDelete-0-groovy">Groovy</a></li>-->
-                          <li class=""><a href="#examples-Default-apiUserIdDelete-0-objc">Obj-C</a></li>
-                          <li class=""><a href="#examples-Default-apiUserIdDelete-0-javascript">JavaScript</a></li>
-                          <!--<li class=""><a href="#examples-Default-apiUserIdDelete-0-angular">Angular</a></li>-->
-                          <li class=""><a href="#examples-Default-apiUserIdDelete-0-csharp">C#</a></li>
-                          <li class=""><a href="#examples-Default-apiUserIdDelete-0-php">PHP</a></li>
-                          <li class=""><a href="#examples-Default-apiUserIdDelete-0-perl">Perl</a></li>
-                          <li class=""><a href="#examples-Default-apiUserIdDelete-0-python">Python</a></li>
-                        </ul>
-
-                        <div class="tab-content">
-                          <div class="tab-pane active" id="examples-Default-apiUserIdDelete-0-curl">
-                           <pre class="prettyprint"><code class="language-bsh">curl -X DELETE\
--H "Accept: text/plain,*/*"\
-"https://CalorieTracker/api/user/{id}"</code></pre>
-                          </div>
-                          <div class="tab-pane" id="examples-Default-apiUserIdDelete-0-java">
-                            <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
-import io.swagger.client.auth.*;
-import io.swagger.client.model.*;
-import io.swagger.client.api.DefaultApi;
-
-import java.io.File;
-import java.util.*;
-
-public class DefaultApiExample {
-
-    public static void main(String[] args) {
-        
-        DefaultApi apiInstance = new DefaultApi();
-         id = ; //  | 
-        try {
-            apiInstance.apiUserIdDelete(id);
-        } catch (ApiException e) {
-            System.err.println("Exception when calling DefaultApi#apiUserIdDelete");
-            e.printStackTrace();
-        }
-    }
-}</code></pre>
-                          </div>
-
-                          <div class="tab-pane" id="examples-Default-apiUserIdDelete-0-android">
-                            <pre class="prettyprint"><code class="language-java">import io.swagger.client.api.DefaultApi;
-
-public class DefaultApiExample {
-
-    public static void main(String[] args) {
-        DefaultApi apiInstance = new DefaultApi();
-         id = ; //  | 
-        try {
-            apiInstance.apiUserIdDelete(id);
-        } catch (ApiException e) {
-            System.err.println("Exception when calling DefaultApi#apiUserIdDelete");
-            e.printStackTrace();
-        }
-    }
-}</code></pre>
-                          </div>
-  <!--
-  <div class="tab-pane" id="examples-Default-apiUserIdDelete-0-groovy">
-  <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
-  </div> -->
-                            <div class="tab-pane" id="examples-Default-apiUserIdDelete-0-objc">
-                              <pre class="prettyprint"><code class="language-cpp"> *id = ; // 
-
-DefaultApi *apiInstance = [[DefaultApi alloc] init];
-
-[apiInstance apiUserIdDeleteWith:id
-              completionHandler: ^(NSError* error) {
-                            if (error) {
-                                NSLog(@"Error: %@", error);
-                            }
-                        }];
-</code></pre>
-                            </div>
-
-                            <div class="tab-pane" id="examples-Default-apiUserIdDelete-0-javascript">
-                              <pre class="prettyprint"><code class="language-js">var CalorieTrackerApi = require('calorie_tracker_api');
-
-var api = new CalorieTrackerApi.DefaultApi()
-var id = ; // {{}} 
-
-var callback = function(error, data, response) {
-  if (error) {
-    console.error(error);
-  } else {
-    console.log('API called successfully.');
-  }
-};
-api.apiUserIdDelete(id, callback);
-</code></pre>
-                            </div>
-
-                            <!--<div class="tab-pane" id="examples-Default-apiUserIdDelete-0-angular">
-              <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
-            </div>-->
-                            <div class="tab-pane" id="examples-Default-apiUserIdDelete-0-csharp">
-                              <pre class="prettyprint"><code class="language-cs">using System;
-using System.Diagnostics;
-using IO.Swagger.Api;
-using IO.Swagger.Client;
-using IO.Swagger.Model;
-
-namespace Example
-{
-    public class apiUserIdDeleteExample
-    {
-        public void main()
-        {
-
-            var apiInstance = new DefaultApi();
-            var id = new (); //  | 
-
-            try
-            {
-                apiInstance.apiUserIdDelete(id);
-            }
-            catch (Exception e)
-            {
-                Debug.Print("Exception when calling DefaultApi.apiUserIdDelete: " + e.Message );
-            }
-        }
-    }
-}
-</code></pre>
-                            </div>
-
-                            <div class="tab-pane" id="examples-Default-apiUserIdDelete-0-php">
-                              <pre class="prettyprint"><code class="language-php"><&#63;php
-require_once(__DIR__ . '/vendor/autoload.php');
-
-$api_instance = new Swagger\Client\ApiDefaultApi();
-$id = ; //  | 
-
-try {
-    $api_instance->apiUserIdDelete($id);
-} catch (Exception $e) {
-    echo 'Exception when calling DefaultApi->apiUserIdDelete: ', $e->getMessage(), PHP_EOL;
-}
-?></code></pre>
-                            </div>
-
-                            <div class="tab-pane" id="examples-Default-apiUserIdDelete-0-perl">
-                              <pre class="prettyprint"><code class="language-perl">use Data::Dumper;
-use WWW::SwaggerClient::Configuration;
-use WWW::SwaggerClient::DefaultApi;
-
-my $api_instance = WWW::SwaggerClient::DefaultApi->new();
-my $id = ; #  | 
-
-eval { 
-    $api_instance->apiUserIdDelete(id => $id);
-};
-if ($@) {
-    warn "Exception when calling DefaultApi->apiUserIdDelete: $@\n";
-}</code></pre>
-                            </div>
-
-                            <div class="tab-pane" id="examples-Default-apiUserIdDelete-0-python">
-                              <pre class="prettyprint"><code class="language-python">from __future__ import print_statement
-import time
-import swagger_client
-from swagger_client.rest import ApiException
-from pprint import pprint
-
-# create an instance of the API class
-api_instance = swagger_client.DefaultApi()
-id =  #  | 
-
-try: 
-    api_instance.api_user_id_delete(id)
-except ApiException as e:
-    print("Exception when calling DefaultApi->apiUserIdDelete: %s\n" % e)</code></pre>
-                            </div>
-                          </div>
-
-                          <h2>Parameters</h2>
-
-                            <div class="methodsubtabletitle">Path parameters</div>
-                            <table id="methodsubtable">
-                                <tr>
-                                  <th width="150px">Name</th>
-                                  <th>Description</th>
-                                </tr>
-                                  <tr><td style="width:150px;">id*</td>
-                                  <td>
-                                  
-                                  
-                                      <div id="d2e199_apiUserIdDelete_id">
-                                          <div class="json-schema-view">
-                                              <div class="primitive">
-                                                  <span class="type">
-                                                      
-                                                  </span>
-                                  
-                                              </div>
-                                                  <div class="inner required">
-                                                      Required
-                                                  </div>
-                                          </div>
-                                      </div>
-                                  </td>
-                                  </tr>
-                            </table>
-
-
-
-
-
-                          <h2>Responses</h2>
-                            <h3> Status: 500 - Internal Server Error </h3>
-
-                            <ul class="nav nav-tabs nav-tabs-examples" >
-                                <li class="active">
-                                  <a data-toggle="tab" href="#responses-apiUserIdDelete-500-schema">Schema</a>
-                                </li>
-
-                            </ul>
-
-                            <div class="tab-content" style='margin-bottom: 10px;'>
-                                <div class="tab-pane active" id="responses-apiUserIdDelete-500-schema">
-                                  <div id='responses-apiUserIdDelete-500-schema-500' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
-                                    <script>
-                                      $(document).ready(function() {
-                                        var schemaWrapper = {
-  "description" : "Internal Server Error",
-  "content" : {
-    "text/plain" : {
-      "schema" : {
-        "x-content-type" : "text/plain"
-      },
-      "examples" : {
-        "Example#1" : {
-          "value" : ""
-        }
-      }
-    }
-  }
-};
-                                        var schema = schemaWrapper.content["text/plain"].schema;
-                                        if (schema.$ref != null) {
-                                          schema = defsParser.$refs.get(schema.$ref);
-                                        } else {
-                                          schemaWrapper.components = {};
-                                          schemaWrapper.components.schemas = Object.assign({}, defs);
-                                          $RefParser.dereference(schemaWrapper).catch(function(err) {
-                                            console.log(err);
-                                          });
-                                        }
-
-                                        //console.log(JSON.stringify(schema));
-                                        var view = new JSONSchemaView(schema, 3);
-                                        $('#responses-apiUserIdDelete-500-schema-data').val(stringify(schema));
-                                        var result = $('#responses-apiUserIdDelete-500-schema-500');
-                                        result.empty();
-                                        result.append(view.render());
-                                      });
-                                    </script>
-                                  </div>
-                                  <input id='responses-apiUserIdDelete-500-schema-data' type='hidden' value=''></input>
+                                  <input id='responses-apiUserDelete-400-schema-data' type='hidden' value=''></input>
                                 </div>
                             </div>
 
@@ -3648,14 +3647,14 @@ except ApiException as e:
 
                             <ul class="nav nav-tabs nav-tabs-examples" >
                                 <li class="active">
-                                  <a data-toggle="tab" href="#responses-apiUserIdDelete-204-schema">Schema</a>
+                                  <a data-toggle="tab" href="#responses-apiUserDelete-204-schema">Schema</a>
                                 </li>
 
                             </ul>
 
                             <div class="tab-content" style='margin-bottom: 10px;'>
-                                <div class="tab-pane active" id="responses-apiUserIdDelete-204-schema">
-                                  <div id='responses-apiUserIdDelete-204-schema-204' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
+                                <div class="tab-pane active" id="responses-apiUserDelete-204-schema">
+                                  <div id='responses-apiUserDelete-204-schema-204' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
                                     <script>
                                       $(document).ready(function() {
                                         var schemaWrapper = {
@@ -3681,24 +3680,24 @@ except ApiException as e:
 
                                         //console.log(JSON.stringify(schema));
                                         var view = new JSONSchemaView(schema, 3);
-                                        $('#responses-apiUserIdDelete-204-schema-data').val(stringify(schema));
-                                        var result = $('#responses-apiUserIdDelete-204-schema-204');
+                                        $('#responses-apiUserDelete-204-schema-data').val(stringify(schema));
+                                        var result = $('#responses-apiUserDelete-204-schema-204');
                                         result.empty();
                                         result.append(view.render());
                                       });
                                     </script>
                                   </div>
-                                  <input id='responses-apiUserIdDelete-204-schema-data' type='hidden' value=''></input>
+                                  <input id='responses-apiUserDelete-204-schema-data' type='hidden' value=''></input>
                                 </div>
                             </div>
 
                         </article>
                       </div>
                       <hr>
-                    <div id="api-Default-apiUserIdGet">
-                      <article id="api-Default-apiUserIdGet-0" data-group="User" data-name="apiUserIdGet" data-version="0">
+                    <div id="api-Default-apiUserMeGet">
+                      <article id="api-Default-apiUserMeGet-0" data-group="User" data-name="apiUserMeGet" data-version="0">
                         <div class="pull-left">
-                          <h1>apiUserIdGet</h1>
+                          <h1>apiUserMeGet</h1>
                           <p></p>
                         </div>
                         <div class="pull-right"></div>
@@ -3707,31 +3706,31 @@ except ApiException as e:
                         <p class="marked"></p>
                         <p></p>
                         <br />
-                        <pre class="prettyprint language-html prettyprinted" data-type="get"><code><span class="pln">/api/user/{id}</span></code></pre>
+                        <pre class="prettyprint language-html prettyprinted" data-type="get"><code><span class="pln">/api/user/me</span></code></pre>
                         <p>
                           <h3>Usage and SDK Samples</h3>
                         </p>
                         <ul class="nav nav-tabs nav-tabs-examples">
-                          <li class="active"><a href="#examples-Default-apiUserIdGet-0-curl">Curl</a></li>
-                          <li class=""><a href="#examples-Default-apiUserIdGet-0-java">Java</a></li>
-                          <li class=""><a href="#examples-Default-apiUserIdGet-0-android">Android</a></li>
-                          <!--<li class=""><a href="#examples-Default-apiUserIdGet-0-groovy">Groovy</a></li>-->
-                          <li class=""><a href="#examples-Default-apiUserIdGet-0-objc">Obj-C</a></li>
-                          <li class=""><a href="#examples-Default-apiUserIdGet-0-javascript">JavaScript</a></li>
-                          <!--<li class=""><a href="#examples-Default-apiUserIdGet-0-angular">Angular</a></li>-->
-                          <li class=""><a href="#examples-Default-apiUserIdGet-0-csharp">C#</a></li>
-                          <li class=""><a href="#examples-Default-apiUserIdGet-0-php">PHP</a></li>
-                          <li class=""><a href="#examples-Default-apiUserIdGet-0-perl">Perl</a></li>
-                          <li class=""><a href="#examples-Default-apiUserIdGet-0-python">Python</a></li>
+                          <li class="active"><a href="#examples-Default-apiUserMeGet-0-curl">Curl</a></li>
+                          <li class=""><a href="#examples-Default-apiUserMeGet-0-java">Java</a></li>
+                          <li class=""><a href="#examples-Default-apiUserMeGet-0-android">Android</a></li>
+                          <!--<li class=""><a href="#examples-Default-apiUserMeGet-0-groovy">Groovy</a></li>-->
+                          <li class=""><a href="#examples-Default-apiUserMeGet-0-objc">Obj-C</a></li>
+                          <li class=""><a href="#examples-Default-apiUserMeGet-0-javascript">JavaScript</a></li>
+                          <!--<li class=""><a href="#examples-Default-apiUserMeGet-0-angular">Angular</a></li>-->
+                          <li class=""><a href="#examples-Default-apiUserMeGet-0-csharp">C#</a></li>
+                          <li class=""><a href="#examples-Default-apiUserMeGet-0-php">PHP</a></li>
+                          <li class=""><a href="#examples-Default-apiUserMeGet-0-perl">Perl</a></li>
+                          <li class=""><a href="#examples-Default-apiUserMeGet-0-python">Python</a></li>
                         </ul>
 
                         <div class="tab-content">
-                          <div class="tab-pane active" id="examples-Default-apiUserIdGet-0-curl">
+                          <div class="tab-pane active" id="examples-Default-apiUserMeGet-0-curl">
                            <pre class="prettyprint"><code class="language-bsh">curl -X GET\
--H "Accept: text/plain,*/*"\
-"https://CalorieTracker/api/user/{id}"</code></pre>
+-H "Accept: */*"\
+"https://CalorieTracker/api/user/me"</code></pre>
                           </div>
-                          <div class="tab-pane" id="examples-Default-apiUserIdGet-0-java">
+                          <div class="tab-pane" id="examples-Default-apiUserMeGet-0-java">
                             <pre class="prettyprint"><code class="language-java">import io.swagger.client.*;
 import io.swagger.client.auth.*;
 import io.swagger.client.model.*;
@@ -3745,47 +3744,44 @@ public class DefaultApiExample {
     public static void main(String[] args) {
         
         DefaultApi apiInstance = new DefaultApi();
-         id = ; //  | 
         try {
-            UserResponse result = apiInstance.apiUserIdGet(id);
+            User result = apiInstance.apiUserMeGet();
             System.out.println(result);
         } catch (ApiException e) {
-            System.err.println("Exception when calling DefaultApi#apiUserIdGet");
+            System.err.println("Exception when calling DefaultApi#apiUserMeGet");
             e.printStackTrace();
         }
     }
 }</code></pre>
                           </div>
 
-                          <div class="tab-pane" id="examples-Default-apiUserIdGet-0-android">
+                          <div class="tab-pane" id="examples-Default-apiUserMeGet-0-android">
                             <pre class="prettyprint"><code class="language-java">import io.swagger.client.api.DefaultApi;
 
 public class DefaultApiExample {
 
     public static void main(String[] args) {
         DefaultApi apiInstance = new DefaultApi();
-         id = ; //  | 
         try {
-            UserResponse result = apiInstance.apiUserIdGet(id);
+            User result = apiInstance.apiUserMeGet();
             System.out.println(result);
         } catch (ApiException e) {
-            System.err.println("Exception when calling DefaultApi#apiUserIdGet");
+            System.err.println("Exception when calling DefaultApi#apiUserMeGet");
             e.printStackTrace();
         }
     }
 }</code></pre>
                           </div>
   <!--
-  <div class="tab-pane" id="examples-Default-apiUserIdGet-0-groovy">
+  <div class="tab-pane" id="examples-Default-apiUserMeGet-0-groovy">
   <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
   </div> -->
-                            <div class="tab-pane" id="examples-Default-apiUserIdGet-0-objc">
-                              <pre class="prettyprint"><code class="language-cpp"> *id = ; // 
-
+                            <div class="tab-pane" id="examples-Default-apiUserMeGet-0-objc">
+                              <pre class="prettyprint"><code class="language-cpp">
 DefaultApi *apiInstance = [[DefaultApi alloc] init];
 
-[apiInstance apiUserIdGetWith:id
-              completionHandler: ^(UserResponse output, NSError* error) {
+[apiInstance apiUserMeGetWithCompletionHandler: 
+              ^(User output, NSError* error) {
                             if (output) {
                                 NSLog(@"%@", output);
                             }
@@ -3796,12 +3792,10 @@ DefaultApi *apiInstance = [[DefaultApi alloc] init];
 </code></pre>
                             </div>
 
-                            <div class="tab-pane" id="examples-Default-apiUserIdGet-0-javascript">
+                            <div class="tab-pane" id="examples-Default-apiUserMeGet-0-javascript">
                               <pre class="prettyprint"><code class="language-js">var CalorieTrackerApi = require('calorie_tracker_api');
 
 var api = new CalorieTrackerApi.DefaultApi()
-var id = ; // {{}} 
-
 var callback = function(error, data, response) {
   if (error) {
     console.error(error);
@@ -3809,14 +3803,14 @@ var callback = function(error, data, response) {
     console.log('API called successfully. Returned data: ' + data);
   }
 };
-api.apiUserIdGet(id, callback);
+api.apiUserMeGet(callback);
 </code></pre>
                             </div>
 
-                            <!--<div class="tab-pane" id="examples-Default-apiUserIdGet-0-angular">
+                            <!--<div class="tab-pane" id="examples-Default-apiUserMeGet-0-angular">
               <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
             </div>-->
-                            <div class="tab-pane" id="examples-Default-apiUserIdGet-0-csharp">
+                            <div class="tab-pane" id="examples-Default-apiUserMeGet-0-csharp">
                               <pre class="prettyprint"><code class="language-cs">using System;
 using System.Diagnostics;
 using IO.Swagger.Api;
@@ -3825,22 +3819,21 @@ using IO.Swagger.Model;
 
 namespace Example
 {
-    public class apiUserIdGetExample
+    public class apiUserMeGetExample
     {
         public void main()
         {
 
             var apiInstance = new DefaultApi();
-            var id = new (); //  | 
 
             try
             {
-                UserResponse result = apiInstance.apiUserIdGet(id);
+                User result = apiInstance.apiUserMeGet();
                 Debug.WriteLine(result);
             }
             catch (Exception e)
             {
-                Debug.Print("Exception when calling DefaultApi.apiUserIdGet: " + e.Message );
+                Debug.Print("Exception when calling DefaultApi.apiUserMeGet: " + e.Message );
             }
         }
     }
@@ -3848,40 +3841,38 @@ namespace Example
 </code></pre>
                             </div>
 
-                            <div class="tab-pane" id="examples-Default-apiUserIdGet-0-php">
+                            <div class="tab-pane" id="examples-Default-apiUserMeGet-0-php">
                               <pre class="prettyprint"><code class="language-php"><&#63;php
 require_once(__DIR__ . '/vendor/autoload.php');
 
 $api_instance = new Swagger\Client\ApiDefaultApi();
-$id = ; //  | 
 
 try {
-    $result = $api_instance->apiUserIdGet($id);
+    $result = $api_instance->apiUserMeGet();
     print_r($result);
 } catch (Exception $e) {
-    echo 'Exception when calling DefaultApi->apiUserIdGet: ', $e->getMessage(), PHP_EOL;
+    echo 'Exception when calling DefaultApi->apiUserMeGet: ', $e->getMessage(), PHP_EOL;
 }
 ?></code></pre>
                             </div>
 
-                            <div class="tab-pane" id="examples-Default-apiUserIdGet-0-perl">
+                            <div class="tab-pane" id="examples-Default-apiUserMeGet-0-perl">
                               <pre class="prettyprint"><code class="language-perl">use Data::Dumper;
 use WWW::SwaggerClient::Configuration;
 use WWW::SwaggerClient::DefaultApi;
 
 my $api_instance = WWW::SwaggerClient::DefaultApi->new();
-my $id = ; #  | 
 
 eval { 
-    my $result = $api_instance->apiUserIdGet(id => $id);
+    my $result = $api_instance->apiUserMeGet();
     print Dumper($result);
 };
 if ($@) {
-    warn "Exception when calling DefaultApi->apiUserIdGet: $@\n";
+    warn "Exception when calling DefaultApi->apiUserMeGet: $@\n";
 }</code></pre>
                             </div>
 
-                            <div class="tab-pane" id="examples-Default-apiUserIdGet-0-python">
+                            <div class="tab-pane" id="examples-Default-apiUserMeGet-0-python">
                               <pre class="prettyprint"><code class="language-python">from __future__ import print_statement
 import time
 import swagger_client
@@ -3890,115 +3881,35 @@ from pprint import pprint
 
 # create an instance of the API class
 api_instance = swagger_client.DefaultApi()
-id =  #  | 
 
 try: 
-    api_response = api_instance.api_user_id_get(id)
+    api_response = api_instance.api_user_me_get()
     pprint(api_response)
 except ApiException as e:
-    print("Exception when calling DefaultApi->apiUserIdGet: %s\n" % e)</code></pre>
+    print("Exception when calling DefaultApi->apiUserMeGet: %s\n" % e)</code></pre>
                             </div>
                           </div>
 
                           <h2>Parameters</h2>
 
-                            <div class="methodsubtabletitle">Path parameters</div>
-                            <table id="methodsubtable">
-                                <tr>
-                                  <th width="150px">Name</th>
-                                  <th>Description</th>
-                                </tr>
-                                  <tr><td style="width:150px;">id*</td>
-                                  <td>
-                                  
-                                  
-                                      <div id="d2e199_apiUserIdGet_id">
-                                          <div class="json-schema-view">
-                                              <div class="primitive">
-                                                  <span class="type">
-                                                      
-                                                  </span>
-                                  
-                                              </div>
-                                                  <div class="inner required">
-                                                      Required
-                                                  </div>
-                                          </div>
-                                      </div>
-                                  </td>
-                                  </tr>
-                            </table>
 
 
 
 
 
                           <h2>Responses</h2>
-                            <h3> Status: 500 - Internal Server Error </h3>
-
-                            <ul class="nav nav-tabs nav-tabs-examples" >
-                                <li class="active">
-                                  <a data-toggle="tab" href="#responses-apiUserIdGet-500-schema">Schema</a>
-                                </li>
-
-                            </ul>
-
-                            <div class="tab-content" style='margin-bottom: 10px;'>
-                                <div class="tab-pane active" id="responses-apiUserIdGet-500-schema">
-                                  <div id='responses-apiUserIdGet-500-schema-500' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
-                                    <script>
-                                      $(document).ready(function() {
-                                        var schemaWrapper = {
-  "description" : "Internal Server Error",
-  "content" : {
-    "text/plain" : {
-      "schema" : {
-        "x-content-type" : "text/plain"
-      },
-      "examples" : {
-        "Example#1" : {
-          "value" : ""
-        }
-      }
-    }
-  }
-};
-                                        var schema = schemaWrapper.content["text/plain"].schema;
-                                        if (schema.$ref != null) {
-                                          schema = defsParser.$refs.get(schema.$ref);
-                                        } else {
-                                          schemaWrapper.components = {};
-                                          schemaWrapper.components.schemas = Object.assign({}, defs);
-                                          $RefParser.dereference(schemaWrapper).catch(function(err) {
-                                            console.log(err);
-                                          });
-                                        }
-
-                                        //console.log(JSON.stringify(schema));
-                                        var view = new JSONSchemaView(schema, 3);
-                                        $('#responses-apiUserIdGet-500-schema-data').val(stringify(schema));
-                                        var result = $('#responses-apiUserIdGet-500-schema-500');
-                                        result.empty();
-                                        result.append(view.render());
-                                      });
-                                    </script>
-                                  </div>
-                                  <input id='responses-apiUserIdGet-500-schema-data' type='hidden' value=''></input>
-                                </div>
-                            </div>
-
                             <h3> Status: 404 - Not Found </h3>
 
                             <ul class="nav nav-tabs nav-tabs-examples" >
                                 <li class="active">
-                                  <a data-toggle="tab" href="#responses-apiUserIdGet-404-schema">Schema</a>
+                                  <a data-toggle="tab" href="#responses-apiUserMeGet-404-schema">Schema</a>
                                 </li>
 
                             </ul>
 
                             <div class="tab-content" style='margin-bottom: 10px;'>
-                                <div class="tab-pane active" id="responses-apiUserIdGet-404-schema">
-                                  <div id='responses-apiUserIdGet-404-schema-404' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
+                                <div class="tab-pane active" id="responses-apiUserMeGet-404-schema">
+                                  <div id='responses-apiUserMeGet-404-schema-404' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
                                     <script>
                                       $(document).ready(function() {
                                         var schemaWrapper = {
@@ -4024,14 +3935,14 @@ except ApiException as e:
 
                                         //console.log(JSON.stringify(schema));
                                         var view = new JSONSchemaView(schema, 3);
-                                        $('#responses-apiUserIdGet-404-schema-data').val(stringify(schema));
-                                        var result = $('#responses-apiUserIdGet-404-schema-404');
+                                        $('#responses-apiUserMeGet-404-schema-data').val(stringify(schema));
+                                        var result = $('#responses-apiUserMeGet-404-schema-404');
                                         result.empty();
                                         result.append(view.render());
                                       });
                                     </script>
                                   </div>
-                                  <input id='responses-apiUserIdGet-404-schema-data' type='hidden' value=''></input>
+                                  <input id='responses-apiUserMeGet-404-schema-data' type='hidden' value=''></input>
                                 </div>
                             </div>
 
@@ -4039,14 +3950,14 @@ except ApiException as e:
 
                             <ul class="nav nav-tabs nav-tabs-examples" >
                                 <li class="active">
-                                  <a data-toggle="tab" href="#responses-apiUserIdGet-200-schema">Schema</a>
+                                  <a data-toggle="tab" href="#responses-apiUserMeGet-200-schema">Schema</a>
                                 </li>
 
                             </ul>
 
                             <div class="tab-content" style='margin-bottom: 10px;'>
-                                <div class="tab-pane active" id="responses-apiUserIdGet-200-schema">
-                                  <div id='responses-apiUserIdGet-200-schema-200' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
+                                <div class="tab-pane active" id="responses-apiUserMeGet-200-schema">
+                                  <div id='responses-apiUserMeGet-200-schema-200' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
                                     <script>
                                       $(document).ready(function() {
                                         var schemaWrapper = {
@@ -4054,7 +3965,7 @@ except ApiException as e:
   "content" : {
     "*/*" : {
       "schema" : {
-        "$ref" : "#/components/schemas/UserResponse"
+        "$ref" : "#/components/schemas/User"
       }
     }
   }
@@ -4072,14 +3983,62 @@ except ApiException as e:
 
                                         //console.log(JSON.stringify(schema));
                                         var view = new JSONSchemaView(schema, 3);
-                                        $('#responses-apiUserIdGet-200-schema-data').val(stringify(schema));
-                                        var result = $('#responses-apiUserIdGet-200-schema-200');
+                                        $('#responses-apiUserMeGet-200-schema-data').val(stringify(schema));
+                                        var result = $('#responses-apiUserMeGet-200-schema-200');
                                         result.empty();
                                         result.append(view.render());
                                       });
                                     </script>
                                   </div>
-                                  <input id='responses-apiUserIdGet-200-schema-data' type='hidden' value=''></input>
+                                  <input id='responses-apiUserMeGet-200-schema-data' type='hidden' value=''></input>
+                                </div>
+                            </div>
+
+                            <h3> Status: 400 - Bad Request </h3>
+
+                            <ul class="nav nav-tabs nav-tabs-examples" >
+                                <li class="active">
+                                  <a data-toggle="tab" href="#responses-apiUserMeGet-400-schema">Schema</a>
+                                </li>
+
+                            </ul>
+
+                            <div class="tab-content" style='margin-bottom: 10px;'>
+                                <div class="tab-pane active" id="responses-apiUserMeGet-400-schema">
+                                  <div id='responses-apiUserMeGet-400-schema-400' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
+                                    <script>
+                                      $(document).ready(function() {
+                                        var schemaWrapper = {
+  "description" : "Bad Request",
+  "content" : {
+    "*/*" : {
+      "schema" : {
+        "x-content-type" : "*/*"
+      }
+    }
+  }
+};
+                                        var schema = schemaWrapper.content["*/*"].schema;
+                                        if (schema.$ref != null) {
+                                          schema = defsParser.$refs.get(schema.$ref);
+                                        } else {
+                                          schemaWrapper.components = {};
+                                          schemaWrapper.components.schemas = Object.assign({}, defs);
+                                          $RefParser.dereference(schemaWrapper).catch(function(err) {
+                                            console.log(err);
+                                          });
+                                        }
+
+                                        //console.log(JSON.stringify(schema));
+                                        var view = new JSONSchemaView(schema, 3);
+                                        $('#responses-apiUserMeGet-400-schema-data').val(stringify(schema));
+                                        var result = $('#responses-apiUserMeGet-400-schema-400');
+                                        result.empty();
+                                        result.append(view.render());
+                                      });
+                                    </script>
+                                  </div>
+                                  <input id='responses-apiUserMeGet-400-schema-data' type='hidden' value=''></input>
                                 </div>
                             </div>
 
@@ -4139,7 +4098,7 @@ public class DefaultApiExample {
         DefaultApi apiInstance = new DefaultApi();
         UserRequest body = ; // UserRequest | 
         try {
-            UserResponse result = apiInstance.apiUserPut(body);
+            User result = apiInstance.apiUserPut(body);
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling DefaultApi#apiUserPut");
@@ -4158,7 +4117,7 @@ public class DefaultApiExample {
         DefaultApi apiInstance = new DefaultApi();
         UserRequest body = ; // UserRequest | 
         try {
-            UserResponse result = apiInstance.apiUserPut(body);
+            User result = apiInstance.apiUserPut(body);
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling DefaultApi#apiUserPut");
@@ -4177,7 +4136,7 @@ public class DefaultApiExample {
 DefaultApi *apiInstance = [[DefaultApi alloc] init];
 
 [apiInstance apiUserPutWith:body
-              completionHandler: ^(UserResponse output, NSError* error) {
+              completionHandler: ^(User output, NSError* error) {
                             if (output) {
                                 NSLog(@"%@", output);
                             }
@@ -4227,7 +4186,7 @@ namespace Example
 
             try
             {
-                UserResponse result = apiInstance.apiUserPut(body);
+                User result = apiInstance.apiUserPut(body);
                 Debug.WriteLine(result);
             }
             catch (Exception e)
@@ -4343,6 +4302,54 @@ except ApiException as e:
 
 
                           <h2>Responses</h2>
+                            <h3> Status: 400 - Bad Request </h3>
+
+                            <ul class="nav nav-tabs nav-tabs-examples" >
+                                <li class="active">
+                                  <a data-toggle="tab" href="#responses-apiUserPut-400-schema">Schema</a>
+                                </li>
+
+                            </ul>
+
+                            <div class="tab-content" style='margin-bottom: 10px;'>
+                                <div class="tab-pane active" id="responses-apiUserPut-400-schema">
+                                  <div id='responses-apiUserPut-400-schema-400' style="padding: 30px; border-left: 1px solid #eee; border-right: 1px solid #eee; border-bottom: 1px solid #eee;">
+                                    <script>
+                                      $(document).ready(function() {
+                                        var schemaWrapper = {
+  "description" : "Bad Request",
+  "content" : {
+    "*/*" : {
+      "schema" : {
+        "x-content-type" : "*/*"
+      }
+    }
+  }
+};
+                                        var schema = schemaWrapper.content["*/*"].schema;
+                                        if (schema.$ref != null) {
+                                          schema = defsParser.$refs.get(schema.$ref);
+                                        } else {
+                                          schemaWrapper.components = {};
+                                          schemaWrapper.components.schemas = Object.assign({}, defs);
+                                          $RefParser.dereference(schemaWrapper).catch(function(err) {
+                                            console.log(err);
+                                          });
+                                        }
+
+                                        //console.log(JSON.stringify(schema));
+                                        var view = new JSONSchemaView(schema, 3);
+                                        $('#responses-apiUserPut-400-schema-data').val(stringify(schema));
+                                        var result = $('#responses-apiUserPut-400-schema-400');
+                                        result.empty();
+                                        result.append(view.render());
+                                      });
+                                    </script>
+                                  </div>
+                                  <input id='responses-apiUserPut-400-schema-data' type='hidden' value=''></input>
+                                </div>
+                            </div>
+
                             <h3> Status: 200 - OK </h3>
 
                             <ul class="nav nav-tabs nav-tabs-examples" >
@@ -4362,7 +4369,7 @@ except ApiException as e:
   "content" : {
     "*/*" : {
       "schema" : {
-        "$ref" : "#/components/schemas/UserResponse"
+        "$ref" : "#/components/schemas/User"
       }
     }
   }

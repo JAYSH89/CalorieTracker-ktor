@@ -38,7 +38,7 @@ class FoodTests {
 
         transaction(database) {
             SchemaUtils.create(FoodTable, UserTable)
-            user = UserTable.insert(testUser)
+            user = UserTable.insert(email = testUser.email, password = testUser.password)
         }
 
         foodRepository = FoodRepository()
@@ -54,7 +54,7 @@ class FoodTests {
     @Test
     fun `getAll should return empty list if no food`() {
         transaction(db = database) {
-            val allFoods = foodRepository.getAll(userId = user.id!!)
+            val allFoods = foodRepository.getAll(userId = user.id)
             assertEquals(allFoods, emptyList())
         }
     }
@@ -62,10 +62,10 @@ class FoodTests {
     @Test
     fun `getAll should return list of food`() {
         transaction(db = database) {
-            FoodTable.insert(food = testFood, userId = user.id!!)
-            FoodTable.insert(food = testFood.copy(name = "Tomato"), userId = user.id!!)
+            FoodTable.insert(food = testFood, userId = user.id)
+            FoodTable.insert(food = testFood.copy(name = "Tomato"), userId = user.id)
 
-            val allFoods = foodRepository.getAll(userId = user.id!!)
+            val allFoods = foodRepository.getAll(userId = user.id)
             assertEquals(allFoods.size, 2)
         }
     }
@@ -73,42 +73,42 @@ class FoodTests {
     @Test
     fun `findById should return Food given an id`() {
         transaction(db = database) {
-            FoodTable.insert(food = testFood, userId = user.id!!)
-            val foodId = FoodTable.getAll(userId = user.id!!).first().id!!
+            FoodTable.insert(food = testFood, userId = user.id)
+            val foodId = FoodTable.getAll(userId = user.id).first().id!!
 
-            assertNotNull(foodRepository.findById(foodId = foodId, userId = user.id!!))
+            assertNotNull(foodRepository.findById(foodId = foodId, userId = user.id))
         }
     }
 
     @Test
     fun `findById should return null if food not found`() {
         transaction(db = database) {
-            assertNull(foodRepository.findById(foodId = UUID.randomUUID(), userId = user.id!!))
+            assertNull(foodRepository.findById(foodId = UUID.randomUUID(), userId = user.id))
         }
     }
 
     @Test
     fun `create food should insert food in db`() {
         transaction(db = database) {
-            assertEquals(foodRepository.getAll(userId = user.id!!).size, 0)
+            assertEquals(foodRepository.getAll(userId = user.id).size, 0)
 
-            foodRepository.insert(food = testFood, userId = user.id!!)
+            foodRepository.insert(food = testFood, userId = user.id)
 
-            assertEquals(FoodTable.getAll(userId = user.id!!).size, 1)
+            assertEquals(FoodTable.getAll(userId = user.id).size, 1)
         }
     }
 
     @Test
     fun `update should update food in the db`() {
         transaction(db = database) {
-            FoodTable.insert(food = testFood, userId = user.id!!)
+            FoodTable.insert(food = testFood, userId = user.id)
 
             val changedFood = FoodTable
-                .getAll(userId = user.id!!)
+                .getAll(userId = user.id)
                 .first()
                 .copy(name = "changed food")
 
-            foodRepository.update(food = changedFood, userId = user.id!!)
+            foodRepository.update(food = changedFood, userId = user.id)
 
             val updatedFood = FoodTable.selectAll().first().toFood()
             assertEquals(updatedFood.name, changedFood.name)
@@ -120,7 +120,7 @@ class FoodTests {
         transaction(db = database) {
             val invalidFood = testFood.copy(id = UUID.randomUUID())
             assertFailsWith<IllegalStateException> {
-                foodRepository.update(food = invalidFood, userId = user.id!!)
+                foodRepository.update(food = invalidFood, userId = user.id)
             }
         }
     }
@@ -128,13 +128,13 @@ class FoodTests {
     @Test
     fun `delete with id successful`() {
         transaction(db = database) {
-            FoodTable.insert(food = testFood, userId = user.id!!)
-            FoodTable.insert(food = testFood.copy(name = "Apple"), userId = user.id!!)
+            FoodTable.insert(food = testFood, userId = user.id)
+            FoodTable.insert(food = testFood.copy(name = "Apple"), userId = user.id)
 
-            val id = FoodTable.getAll(userId = user.id!!).first().id!!
-            foodRepository.delete(foodId = id, userId = user.id!!)
+            val id = FoodTable.getAll(userId = user.id).first().id!!
+            foodRepository.delete(foodId = id, userId = user.id)
 
-            assertEquals(FoodTable.getAll(userId = user.id!!).size, 1)
+            assertEquals(FoodTable.getAll(userId = user.id).size, 1)
         }
     }
 
@@ -143,7 +143,7 @@ class FoodTests {
         transaction(db = database) {
             val invalidId = UUID.randomUUID()
             assertFailsWith<IllegalStateException> {
-                foodRepository.delete(foodId = invalidId, userId = user.id!!)
+                foodRepository.delete(foodId = invalidId, userId = user.id)
             }
         }
     }

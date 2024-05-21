@@ -37,7 +37,9 @@ fun ResultRow.toUser() = User(
     firstName = this[UserTable.firstName],
     lastName = this[UserTable.lastName],
     birthday = this[UserTable.birthday],
-    gender = this[UserTable.gender]?.let { Gender.fromString(it) },
+    gender = this[UserTable.gender]
+        ?.let { Gender.fromString(it) }
+        ?: Gender.UNKNOWN,
 )
 
 fun UserTable.findById(userId: UUID): User? = selectAll()
@@ -50,16 +52,10 @@ fun UserTable.findByEmail(email: String): User? = selectAll()
     .map(ResultRow::toUser)
     .singleOrNull()
 
-fun UserTable.insert(user: User): User {
+fun UserTable.insert(email: String, password: String): User {
     val id = insertAndGetId {
-        it[email] = user.email
-        it[password] = user.password
-        it[firstName] = user.firstName
-        it[lastName] = user.lastName
-        it[birthday] = user.birthday
-        it[gender] = user.gender.toString()
-        it[createdAt] = LocalDateTime.now()
-        it[updatedAt] = LocalDateTime.now()
+        it[UserTable.email] = email
+        it[UserTable.password] = password
     }.value
 
     val newUser = findById(id)

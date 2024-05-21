@@ -50,9 +50,9 @@ class UserTests {
     @Test
     fun `findById should return User given an id`() {
         transaction(db = database) {
-            UserTable.insert(testUser)
+            UserTable.insert(email = testUser.email, password = testUser.password)
 
-            val userId = UserTable.selectAll().first().toUser().id!!
+            val userId = UserTable.selectAll().first().toUser().id
             val user = userRepository.findById(userId)
 
             assertNotNull(user)
@@ -70,13 +70,13 @@ class UserTests {
     @Test
     fun `findUserByEmail should return User given email`() {
         transaction(db = database) {
-            UserTable.insert(testUser)
+            UserTable.insert(email = testUser.email, password = testUser.password)
 
             val savedUser = UserTable.selectAll().first().toUser()
             val user = userRepository.findByEmail(email = savedUser.email)
 
             assertNotNull(user)
-            assertEquals(user.id, savedUser.id!!)
+            assertEquals(user.id, savedUser.id)
         }
     }
 
@@ -93,7 +93,7 @@ class UserTests {
             val initialUsers = UserTable.selectAll().map(ResultRow::toUser)
             assertEquals(initialUsers.size, 0)
 
-            userRepository.insert(user = testUser)
+            userRepository.insert(email = testUser.email, password = testUser.password)
 
             val user = UserTable
                 .selectAll()
@@ -110,10 +110,10 @@ class UserTests {
     @Test
     fun `create user duplicate email should fail`() {
         transaction(db = database) {
-            UserTable.insert(user = testUser)
+            UserTable.insert(email = testUser.email, password = testUser.password)
 
             assertFailsWith<ExposedSQLException> {
-                userRepository.insert(user = testUser)
+                userRepository.insert(email = testUser.email, password = testUser.password)
             }
         }
     }
@@ -123,7 +123,7 @@ class UserTests {
         transaction(db = database) {
             assertFailsWith<ExposedSQLException> {
                 val invalidUser = testUser.copy(email = "")
-                userRepository.insert(user = invalidUser)
+                userRepository.insert(email = invalidUser.email, password = invalidUser.password)
             }
         }
     }
@@ -133,7 +133,7 @@ class UserTests {
         transaction(db = database) {
             assertFailsWith<ExposedSQLException> {
                 val invalidUser = testUser.copy(password = "")
-                userRepository.insert(user = invalidUser)
+                userRepository.insert(email = invalidUser.email, password = invalidUser.password)
             }
         }
     }
@@ -141,10 +141,11 @@ class UserTests {
     @Test
     fun `updateUser should update record successfully`() {
         transaction(db = database) {
-            UserTable.insert(testUser)
+            UserTable.insert(email = testUser.email, password = testUser.password)
 
             val savedUser = UserTable.selectAll().first().toUser()
-            userRepository.update(savedUser.copy(firstName = "Erik"))
+            val changedUser = savedUser.copy(firstName = "Erik")
+            userRepository.update(user = changedUser)
 
             val updatedUser = UserTable.selectAll().first().toUser()
             assertEquals(updatedUser.firstName, "Erik")
@@ -164,7 +165,7 @@ class UserTests {
     @Test
     fun `update user empty email address should fail`() {
         transaction(db = database) {
-            UserTable.insert(testUser)
+            UserTable.insert(email = testUser.email, password = testUser.password)
 
             val invalidUser = UserTable
                 .selectAll()
@@ -181,7 +182,7 @@ class UserTests {
     @Test
     fun `update user empty password should fail`() {
         transaction(db = database) {
-            UserTable.insert(testUser)
+            UserTable.insert(email = testUser.email, password = testUser.password)
 
             val invalidUser = UserTable
                 .selectAll()
@@ -198,9 +199,9 @@ class UserTests {
     @Test
     fun `delete should remove user from db`() {
         transaction(db = database) {
-            UserTable.insert(testUser)
+            UserTable.insert(email = testUser.email, password = testUser.password)
 
-            val userId = UserTable.selectAll().first().toUser().id!!
+            val userId = UserTable.selectAll().first().toUser().id
             assertNotNull(userId)
 
             userRepository.delete(userId)
