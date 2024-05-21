@@ -17,23 +17,23 @@ class FoodRepository {
         transaction { SchemaUtils.create(FoodTable) }
     }
 
-    fun getAll(): List<Food> = transaction {
-        FoodTable.getAll()
+    fun getAll(userId: UUID): List<Food> = transaction {
+        FoodTable.getAll(userId = userId)
     }
 
-    fun add(food: Food): Food = transaction {
-        FoodTable.insert(food)
+    fun findById(foodId: UUID, userId: UUID): Food? = transaction {
+        FoodTable.findById(foodId = foodId, userId = userId)
     }
 
-    fun findById(id: UUID): Food? = transaction {
-        FoodTable.findById(id = id)
+    fun insert(food: Food, userId: UUID): Food = transaction {
+        FoodTable.insert(food = food, userId = userId)
     }
 
-    fun update(food: Food): Food = transaction {
-        FoodTable.update(food = food)
+    fun update(food: Food, userId: UUID): Food = transaction {
+        FoodTable.update(food = food, userId = userId)
     }
 
-    fun delete(id: UUID) = transaction {
-        FoodTable.delete(id = id)
+    fun delete(foodId: UUID, userId: UUID) = transaction {
+        FoodTable.delete(foodId = foodId, userId = userId)
     }
 }

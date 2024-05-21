@@ -18,6 +18,12 @@ paths:
                 type: "array"
                 items:
                   $ref: "#/components/schemas/Food"
+        "401":
+          description: "Unauthorized"
+          content:
+            '*/*':
+              schema:
+                type: "object"
     post:
       description: ""
       requestBody:
@@ -33,6 +39,12 @@ paths:
             '*/*':
               schema:
                 $ref: "#/components/schemas/Food"
+        "401":
+          description: "Unauthorized"
+          content:
+            '*/*':
+              schema:
+                type: "object"
     put:
       description: ""
       requestBody:
@@ -48,6 +60,12 @@ paths:
             '*/*':
               schema:
                 $ref: "#/components/schemas/Food"
+        "401":
+          description: "Unauthorized"
+          content:
+            '*/*':
+              schema:
+                type: "object"
   /api/food/{id}:
     delete:
       description: ""
@@ -58,17 +76,20 @@ paths:
         schema:
           type: "string"
       responses:
-        "500":
-          description: "Internal Server Error"
+        "400":
+          description: "Bad Request"
           content:
-            text/plain:
+            '*/*':
               schema:
-                type: "string"
-              examples:
-                Example#1:
-                  value: ""
+                type: "object"
         "204":
           description: "No Content"
+          content:
+            '*/*':
+              schema:
+                type: "object"
+        "401":
+          description: "Unauthorized"
           content:
             '*/*':
               schema:
@@ -82,15 +103,12 @@ paths:
         schema:
           type: "string"
       responses:
-        "500":
-          description: "Internal Server Error"
+        "400":
+          description: "Bad Request"
           content:
-            text/plain:
+            '*/*':
               schema:
-                type: "string"
-              examples:
-                Example#1:
-                  value: ""
+                type: "object"
         "404":
           description: "Not Found"
           content:
@@ -103,6 +121,12 @@ paths:
             '*/*':
               schema:
                 $ref: "#/components/schemas/Food"
+        "401":
+          description: "Unauthorized"
+          content:
+            '*/*':
+              schema:
+                type: "object"
   /api/login:
     post:
       description: ""
@@ -122,12 +146,22 @@ paths:
               examples:
                 Example#1:
                   value: ""
+                Example#2:
+                  value: ""
+                Example#3:
+                  value: ""
         "200":
           description: "OK"
           content:
             '*/*':
               schema:
-                $ref: "#/components/schemas/HashMap_String"
+                $ref: "#/components/schemas/LoginResponse"
+        "401":
+          description: "Unauthorized"
+          content:
+            '*/*':
+              schema:
+                type: "object"
   /api/register:
     post:
       description: ""
@@ -145,17 +179,21 @@ paths:
               schema:
                 $ref: "#/components/schemas/RegisterResponse"
   /api/user:
-    get:
+    delete:
       description: ""
       responses:
-        "200":
-          description: "OK"
+        "400":
+          description: "Bad Request"
           content:
             '*/*':
               schema:
-                type: "array"
-                items:
-                  $ref: "#/components/schemas/UserResponse"
+                type: "object"
+        "204":
+          description: "No Content"
+          content:
+            '*/*':
+              schema:
+                type: "object"
     put:
       description: ""
       requestBody:
@@ -165,55 +203,22 @@ paths:
               $ref: "#/components/schemas/UserRequest"
         required: true
       responses:
+        "400":
+          description: "Bad Request"
+          content:
+            '*/*':
+              schema:
+                type: "object"
         "200":
           description: "OK"
           content:
             '*/*':
               schema:
-                $ref: "#/components/schemas/UserResponse"
-  /api/user/{id}:
-    delete:
-      description: ""
-      parameters:
-      - name: "id"
-        in: "path"
-        required: true
-        schema:
-          type: "string"
-      responses:
-        "500":
-          description: "Internal Server Error"
-          content:
-            text/plain:
-              schema:
-                type: "string"
-              examples:
-                Example#1:
-                  value: ""
-        "204":
-          description: "No Content"
-          content:
-            '*/*':
-              schema:
-                type: "object"
+                $ref: "#/components/schemas/User"
+  /api/user/me:
     get:
       description: ""
-      parameters:
-      - name: "id"
-        in: "path"
-        required: true
-        schema:
-          type: "string"
       responses:
-        "500":
-          description: "Internal Server Error"
-          content:
-            text/plain:
-              schema:
-                type: "string"
-              examples:
-                Example#1:
-                  value: ""
         "404":
           description: "Not Found"
           content:
@@ -225,7 +230,13 @@ paths:
           content:
             '*/*':
               schema:
-                $ref: "#/components/schemas/UserResponse"
+                $ref: "#/components/schemas/User"
+        "400":
+          description: "Bad Request"
+          content:
+            '*/*':
+              schema:
+                type: "object"
   /json/kotlinx-serialization:
     get:
       description: ""
@@ -276,11 +287,19 @@ components:
       required:
       - "email"
       - "password"
-    HashMap:
+    LoginResponse:
       type: "object"
-      properties: {}
-    HashMap_String:
-      type: "string"
+      properties:
+        id:
+          type: "string"
+          format: "uuid"
+        email:
+          type: "string"
+        token:
+          type: "string"
+      required:
+      - "id"
+      - "email"
     RegisterRequest:
       type: "object"
       properties:
@@ -302,13 +321,15 @@ components:
       required:
       - "id"
       - "email"
-    UserResponse:
+    UserRequest:
       type: "object"
       properties:
         id:
           type: "string"
           format: "uuid"
         email:
+          type: "string"
+        password:
           type: "string"
         firstName:
           type: "string"
@@ -323,9 +344,9 @@ components:
           - "MALE"
           - "FEMALE"
       required:
-      - "id"
       - "email"
-    UserRequest:
+      - "password"
+    User:
       type: "object"
       properties:
         id:

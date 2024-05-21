@@ -6,6 +6,7 @@ import com.auth0.jwt.algorithms.Algorithm
 import io.ktor.server.auth.jwt.*
 import nl.jaysh.data.repositories.UserRepository
 import nl.jaysh.models.authentication.JwtConfig
+import nl.jaysh.models.authentication.LoginRequest
 import java.util.*
 
 class JwtService(
@@ -18,12 +19,18 @@ class JwtService(
         .withIssuer(jwtConfig.issuer)
         .build()
 
-    fun createJwtToken(email: String): String? = JWT.create()
-        .withAudience(jwtConfig.audience)
-        .withIssuer(jwtConfig.issuer)
-        .withClaim(CLAIM_NAME, email)
-        .withExpiresAt(Date(System.currentTimeMillis() + 3_600_000))
-        .sign(Algorithm.HMAC256(jwtConfig.secret))
+    fun createJwtToken(request: LoginRequest): String? {
+        val user = repository.findByEmail(request.email)
+        return user?.id?.let { id ->
+            JWT.create()
+                .withAudience(jwtConfig.audience)
+                .withIssuer(jwtConfig.issuer)
+                .withClaim(ID_CLAIM, id.toString())
+                .withClaim(EMAIL_CLAIM, user.email)
+                .withExpiresAt(Date(System.currentTimeMillis() + 3_600_000))
+                .sign(Algorithm.HMAC256(jwtConfig.secret))
+        }
+    }
 
     fun customValidator(credential: JWTCredential): JWTPrincipal? {
         val email = extractEmailAddress(credential = credential)
@@ -39,10 +46,11 @@ class JwtService(
         .contains(jwtConfig.audience)
 
     private fun extractEmailAddress(credential: JWTCredential): String? = credential.payload
-        .getClaim(CLAIM_NAME)
+        .getClaim(EMAIL_CLAIM)
         .asString()
 
     companion object {
-        const val CLAIM_NAME = "email"
+        const val ID_CLAIM = "id"
+        const val EMAIL_CLAIM = "email"
     }
 }

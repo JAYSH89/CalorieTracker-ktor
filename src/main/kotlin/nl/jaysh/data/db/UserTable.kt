@@ -40,11 +40,8 @@ fun ResultRow.toUser() = User(
     gender = this[UserTable.gender]?.let { Gender.fromString(it) },
 )
 
-fun UserTable.getAll(): List<User> = selectAll()
-    .map(ResultRow::toUser)
-
-fun UserTable.findById(id: UUID): User? = selectAll()
-    .where { UserTable.id eq id }
+fun UserTable.findById(userId: UUID): User? = selectAll()
+    .where { UserTable.id eq userId }
     .map(ResultRow::toUser)
     .singleOrNull()
 
@@ -91,7 +88,7 @@ fun UserTable.update(user: User): User {
     return updatedUser
 }
 
-fun UserTable.delete(id: UUID) {
-    val rowsChanged = deleteWhere { UserTable.id eq id }
+fun UserTable.delete(userId: UUID) {
+    val rowsChanged = deleteWhere { UserTable.id eq userId }
     check(rowsChanged == 1)
 }

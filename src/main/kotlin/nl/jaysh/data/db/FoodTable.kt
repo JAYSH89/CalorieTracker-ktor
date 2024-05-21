@@ -2,10 +2,13 @@ package nl.jaysh.data.db
 
 import nl.jaysh.models.AmountType
 import nl.jaysh.models.Food
+import org.jetbrains.exposed.dao.id.EntityID
 import org.jetbrains.exposed.dao.id.UUIDTable
 import org.jetbrains.exposed.sql.Column
+import org.jetbrains.exposed.sql.ReferenceOption
 import org.jetbrains.exposed.sql.ResultRow
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
+import org.jetbrains.exposed.sql.and
 import org.jetbrains.exposed.sql.deleteWhere
 import org.jetbrains.exposed.sql.insertAndGetId
 import org.jetbrains.exposed.sql.javatime.datetime
@@ -23,6 +26,65 @@ object FoodTable : UUIDTable() {
     val amountType: Column<String> = varchar(name = "amount_type", length = 50)
     val createdAt: Column<LocalDateTime?> = datetime(name = "created_at").nullable()
     val updatedAt: Column<LocalDateTime?> = datetime(name = "updated_at").nullable()
+
+    val user: Column<EntityID<UUID>> = reference(
+        name = "user",
+        refColumn = UserTable.id,
+        onDelete = ReferenceOption.CASCADE,
+    )
+}
+
+fun FoodTable.getAll(userId: UUID): List<Food> = selectAll()
+    .where { FoodTable.user eq userId }
+    .map(ResultRow::toFood)
+
+fun FoodTable.findById(foodId: UUID, userId: UUID): Food? = selectAll()
+    .where { (FoodTable.id eq foodId) and (FoodTable.user eq userId) }
+    .map(ResultRow::toFood)
+    .singleOrNull()
+
+fun FoodTable.insert(food: Food, userId: UUID): Food {
+    val id = insertAndGetId {
+        it[name] = food.name
+        it[carbs] = food.carbs
+        it[proteins] = food.proteins
+        it[fats] = food.fats
+        it[amount] = food.amount
+        it[amountType] = food.amountType.toString()
+        it[createdAt] = LocalDateTime.now()
+        it[updatedAt] = LocalDateTime.now()
+        it[user] = userId
+    }.value
+
+    val newFood = findById(foodId = id, userId = userId)
+    requireNotNull(newFood)
+
+    return newFood
+}
+
+fun FoodTable.update(food: Food, userId: UUID): Food {
+    requireNotNull(food.id)
+
+    val rowsChanged = update({ (FoodTable.id eq food.id) and (FoodTable.user eq userId) }) {
+        it[name] = food.name
+        it[carbs] = food.carbs
+        it[proteins] = food.proteins
+        it[fats] = food.fats
+        it[amount] = food.amount
+        it[amountType] = food.amountType.toString()
+        it[updatedAt] = LocalDateTime.now()
+    }
+    check(rowsChanged == 1)
+
+    val updatedFood = findById(foodId = food.id, userId = userId)
+    requireNotNull(updatedFood)
+
+    return updatedFood
+}
+
+fun FoodTable.delete(foodId: UUID, userId: UUID) {
+    val rowsChanged = deleteWhere { (FoodTable.id eq foodId) and (FoodTable.user eq userId) }
+    check(rowsChanged == 1)
 }
 
 fun ResultRow.toFood() = Food(
@@ -34,54 +96,3 @@ fun ResultRow.toFood() = Food(
     amount = this[FoodTable.amount],
     amountType = AmountType.fromString(this[FoodTable.amountType]),
 )
-
-fun FoodTable.getAll(): List<Food> = selectAll()
-    .map(ResultRow::toFood)
-
-fun FoodTable.findById(id: UUID): Food? = selectAll()
-    .where { FoodTable.id eq id }
-    .map(ResultRow::toFood)
-    .singleOrNull()
-
-fun FoodTable.insert(food: Food): Food {
-    val id = insertAndGetId {
-        it[name] = food.name
-        it[carbs] = food.carbs
-        it[proteins] = food.proteins
-        it[fats] = food.fats
-        it[amount] = food.amount
-        it[amountType] = food.amountType.toString()
-        it[createdAt] = LocalDateTime.now()
-        it[updatedAt] = LocalDateTime.now()
-    }.value
-
-    val newFood = findById(id = id)
-    requireNotNull(newFood)
-
-    return newFood
-}
-
-fun FoodTable.update(food: Food): Food {
-    requireNotNull(food.id)
-
-    val rowsChanged = update({ FoodTable.id eq food.id }) {
-        it[name] = food.name
-        it[carbs] = food.carbs
-        it[proteins] = food.proteins
-        it[fats] = food.fats
-        it[amount] = food.amount
-        it[amountType] = food.amountType.toString()
-        it[updatedAt] = LocalDateTime.now()
-    }
-    check(rowsChanged == 1)
-
-    val updatedFood = findById(food.id)
-    requireNotNull(updatedFood)
-
-    return updatedFood
-}
-
-fun FoodTable.delete(id: UUID) {
-    val rowsChanged = deleteWhere { FoodTable.id eq id }
-    check(rowsChanged == 1)
-}

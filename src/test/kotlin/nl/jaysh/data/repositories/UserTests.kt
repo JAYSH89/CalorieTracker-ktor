@@ -1,17 +1,18 @@
 package nl.jaysh.data.repositories
 
+import nl.jaysh.data.db.FoodTable
 import nl.jaysh.data.db.UserTable
-import nl.jaysh.data.db.getAll
 import nl.jaysh.data.db.insert
 import nl.jaysh.data.db.toUser
 import nl.jaysh.helpers.objects.testUser
 import org.jetbrains.exposed.exceptions.ExposedSQLException
 import org.jetbrains.exposed.sql.Database
+import org.jetbrains.exposed.sql.ResultRow
 import org.jetbrains.exposed.sql.SchemaUtils
 import org.jetbrains.exposed.sql.selectAll
 import org.jetbrains.exposed.sql.transactions.transaction
-import org.postgresql.ds.PGSimpleDataSource
 import java.util.*
+import kotlin.test.AfterTest
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -21,44 +22,37 @@ import kotlin.test.assertNull
 
 class UserTests {
     private lateinit var userRepository: UserRepository
-
-    private val dataSource = PGSimpleDataSource().apply {
-        user = "postgres"
-        password = "postgres"
-        databaseName = "calorietracker"
-        portNumbers = intArrayOf(5433)
-    }
-
-    private val database = Database.connect(datasource = dataSource)
+    private lateinit var database: Database
 
     @BeforeTest
-    fun resetDb() {
-        transaction(db = database) {
-            SchemaUtils.drop(UserTable)
-            SchemaUtils.createMissingTablesAndColumns(UserTable)
+    fun setup() {
+        database = Database.connect(
+            url = "jdbc:h2:mem:test;DB_CLOSE_DELAY=-1;",
+            driver = "org.h2.Driver",
+            user = "sa",
+            password = ""
+        )
+
+        transaction(database) {
+            SchemaUtils.create(FoodTable, UserTable)
         }
 
         userRepository = UserRepository()
     }
 
-    @Test
-    fun getAllUsers() {
+    @AfterTest
+    fun tearDown() {
         transaction(db = database) {
-            UserTable.insert(testUser)
-            val users = userRepository.getAll()
-
-            assertEquals(users.size, 1)
+            SchemaUtils.drop(FoodTable, UserTable)
         }
     }
 
     @Test
-    fun findUserById() {
+    fun `findById should return User given an id`() {
         transaction(db = database) {
             UserTable.insert(testUser)
-        }
 
-        transaction(db = database) {
-            val userId = UserTable.getAll().first().id!!
+            val userId = UserTable.selectAll().first().toUser().id!!
             val user = userRepository.findById(userId)
 
             assertNotNull(user)
@@ -74,13 +68,11 @@ class UserTests {
     }
 
     @Test
-    fun findUserByEmail() {
+    fun `findUserByEmail should return User given email`() {
         transaction(db = database) {
             UserTable.insert(testUser)
-        }
 
-        transaction {
-            val savedUser = UserTable.getAll().first()
+            val savedUser = UserTable.selectAll().first().toUser()
             val user = userRepository.findByEmail(email = savedUser.email)
 
             assertNotNull(user)
@@ -89,28 +81,29 @@ class UserTests {
     }
 
     @Test
-    fun `findUserByEmail not found`() {
+    fun `findUserByEmail not found should return null`() {
         transaction(db = database) {
-            assertNull(userRepository.findByEmail(email = "invalidemail@example.com"))
+            assertNull(userRepository.findByEmail(email = "invalid@example.com"))
         }
     }
 
     @Test
-    fun createUser() {
+    fun `create user should insert new user`() {
         transaction(db = database) {
-            assertEquals(userRepository.getAll().size, 0)
-        }
+            val initialUsers = UserTable.selectAll().map(ResultRow::toUser)
+            assertEquals(initialUsers.size, 0)
 
-        transaction(db = database) {
-            userRepository.createUser(user = testUser)
+            userRepository.insert(user = testUser)
 
             val user = UserTable
-                .getAll()
-                .firstOrNull()
+                .selectAll()
+                .where { UserTable.email eq testUser.email }
+                .map(ResultRow::toUser)
+                .singleOrNull()
 
+            val allUsers = UserTable.selectAll().map(ResultRow::toUser)
             assertNotNull(user)
-            assertEquals(UserTable.getAll().size, 1)
-            assertEquals(user.email, testUser.email)
+            assertEquals(allUsers.size, 1)
         }
     }
 
@@ -118,11 +111,9 @@ class UserTests {
     fun `create user duplicate email should fail`() {
         transaction(db = database) {
             UserTable.insert(user = testUser)
-        }
 
-        transaction(db = database) {
             assertFailsWith<ExposedSQLException> {
-                userRepository.createUser(user = testUser)
+                userRepository.insert(user = testUser)
             }
         }
     }
@@ -131,7 +122,8 @@ class UserTests {
     fun `create user empty email address should fail`() {
         transaction(db = database) {
             assertFailsWith<ExposedSQLException> {
-                userRepository.createUser(user = testUser.copy(email = ""))
+                val invalidUser = testUser.copy(email = "")
+                userRepository.insert(user = invalidUser)
             }
         }
     }
@@ -140,24 +132,21 @@ class UserTests {
     fun `create user empty password should fail`() {
         transaction(db = database) {
             assertFailsWith<ExposedSQLException> {
-                userRepository.createUser(user = testUser.copy(password = ""))
+                val invalidUser = testUser.copy(password = "")
+                userRepository.insert(user = invalidUser)
             }
         }
     }
 
     @Test
-    fun updateUser() {
+    fun `updateUser should update record successfully`() {
         transaction(db = database) {
             UserTable.insert(testUser)
-        }
 
-        transaction(db = database) {
-            val savedUser = UserTable.getAll().first()
-            userRepository.updateUser(savedUser.copy(firstName = "Erik"))
-        }
+            val savedUser = UserTable.selectAll().first().toUser()
+            userRepository.update(savedUser.copy(firstName = "Erik"))
 
-        transaction(db = database) {
-            val updatedUser = UserTable.getAll().first()
+            val updatedUser = UserTable.selectAll().first().toUser()
             assertEquals(updatedUser.firstName, "Erik")
         }
     }
@@ -167,7 +156,7 @@ class UserTests {
         transaction(db = database) {
             val invalidUser = testUser.copy(id = UUID.randomUUID())
             assertFailsWith<IllegalStateException> {
-                userRepository.updateUser(invalidUser)
+                userRepository.update(invalidUser)
             }
         }
     }
@@ -176,9 +165,7 @@ class UserTests {
     fun `update user empty email address should fail`() {
         transaction(db = database) {
             UserTable.insert(testUser)
-        }
 
-        transaction(db = database) {
             val invalidUser = UserTable
                 .selectAll()
                 .first()
@@ -186,7 +173,7 @@ class UserTests {
                 .copy(email = "")
 
             assertFailsWith<ExposedSQLException> {
-                userRepository.updateUser(invalidUser)
+                userRepository.update(invalidUser)
             }
         }
     }
@@ -195,9 +182,7 @@ class UserTests {
     fun `update user empty password should fail`() {
         transaction(db = database) {
             UserTable.insert(testUser)
-        }
 
-        transaction(db = database) {
             val invalidUser = UserTable
                 .selectAll()
                 .first()
@@ -205,22 +190,23 @@ class UserTests {
                 .copy(password = "")
 
             assertFailsWith<ExposedSQLException> {
-                userRepository.updateUser(invalidUser)
+                userRepository.update(invalidUser)
             }
         }
     }
 
     @Test
-    fun deleteUser() {
+    fun `delete should remove user from db`() {
         transaction(db = database) {
             UserTable.insert(testUser)
-        }
 
-        transaction(db = database) {
-            val userId = UserTable.getAll().first().id
+            val userId = UserTable.selectAll().first().toUser().id!!
             assertNotNull(userId)
-            userRepository.deleteUser(userId)
-            assertEquals(UserTable.getAll().size, 0)
+
+            userRepository.delete(userId)
+
+            val allUsers = UserTable.selectAll().map(ResultRow::toUser)
+            assertEquals(allUsers.size, 0)
         }
     }
 
@@ -229,7 +215,7 @@ class UserTests {
         transaction(db = database) {
             val invalidId = UUID.randomUUID()
             assertFailsWith<IllegalStateException> {
-                userRepository.deleteUser(invalidId)
+                userRepository.delete(invalidId)
             }
         }
     }

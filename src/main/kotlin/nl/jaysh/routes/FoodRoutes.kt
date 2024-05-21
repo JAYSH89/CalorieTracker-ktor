@@ -6,6 +6,7 @@ import io.ktor.server.auth.*
 import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
+import nl.jaysh.core.utils.principalId
 import nl.jaysh.models.Food
 import nl.jaysh.services.FoodService
 import org.koin.ktor.ext.inject
@@ -18,52 +19,66 @@ fun Route.food() {
     route("/api/food") {
         authenticate {
             get {
-                val foods = foodService.getAllFood();
-                call.respond(HttpStatusCode.OK, foods)
+                call.principalId()?.let { userId ->
+                    val foods = foodService.getAllFood(userId = userId);
+                    call.respond(HttpStatusCode.OK, foods)
+                } ?: call.respond(HttpStatusCode.Unauthorized)
             }
         }
 
         authenticate {
             get("/{id}") {
-                val id = call.parameters["id"]
+                val requestParam = call.parameters["id"]
                     ?.toString()
                     ?: return@get call.respond(HttpStatusCode.BadRequest)
 
-                val uuid = UUID.fromString(id)
-                val food = foodService.findById(id = uuid)
+                val foodId = UUID.fromString(requestParam)
+                call.principalId()?.let { userId ->
+                    val food = foodService.findById(foodId = foodId, userId = userId)
 
-                if (food == null)
-                    call.respond(HttpStatusCode.NotFound)
-                else
-                    call.respond(HttpStatusCode.OK, food)
+                    if (food == null)
+                        call.respond(HttpStatusCode.NotFound)
+                    else
+                        call.respond(HttpStatusCode.OK, food)
+
+                } ?: call.respond(HttpStatusCode.Unauthorized)
             }
         }
 
         authenticate {
             post {
-                val food = call.receive<Food>()
-                val createdFood = foodService.createFood(food = food)
-                call.respond(HttpStatusCode.Created, createdFood)
+                val createFood = call.receive<Food>()
+
+                call.principalId()?.let { userId ->
+                    val createdFood = foodService.createFood(food = createFood, userId = userId)
+                    call.respond(HttpStatusCode.Created, createdFood)
+                } ?: call.respond(HttpStatusCode.Unauthorized)
             }
         }
 
         authenticate {
             put {
-                val food = call.receive<Food>()
-                val updatedFood = foodService.updateFood(food = food)
-                call.respond(HttpStatusCode.OK, updatedFood)
+                val updateFood = call.receive<Food>()
+
+                call.principalId()?.let { userId ->
+                    val updatedFood = foodService.updateFood(food = updateFood, userId = userId)
+                    call.respond(HttpStatusCode.OK, updatedFood)
+                } ?: call.respond(HttpStatusCode.Unauthorized)
             }
         }
 
         authenticate {
             delete("/{id}") {
-                val id = call.parameters["id"]
+                val requestParam = call.parameters["id"]
                     ?.toString()
                     ?: return@delete call.respond(HttpStatusCode.BadRequest)
 
-                val uuid = UUID.fromString(id)
-                foodService.deleteFood(id = uuid)
-                call.respond(HttpStatusCode.NoContent)
+                val foodId = UUID.fromString(requestParam)
+
+                call.principalId()?.let { userId ->
+                    foodService.deleteFood(foodId = foodId, userId = userId)
+                    call.respond(HttpStatusCode.NoContent)
+                } ?: call.respond(HttpStatusCode.Unauthorized)
             }
         }
     }
