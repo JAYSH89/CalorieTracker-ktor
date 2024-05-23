@@ -65,8 +65,6 @@ fun UserTable.insert(email: String, password: String): User {
 }
 
 fun UserTable.update(user: User): User {
-    requireNotNull(user.id)
-
     val rowsChanged = update({ UserTable.id eq user.id }) {
         it[email] = user.email
         it[password] = user.password
