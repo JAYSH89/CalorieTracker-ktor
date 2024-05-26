@@ -46,12 +46,6 @@ fun TokenTable.insert(token: RefreshToken, userId: UUID): RefreshToken {
         it[TokenTable.expiresAt] = token.expiresAt
         it[TokenTable.user] = userId
     }
-//    val result = insert {
-//        it[TokenTable.token] = token.token
-//        it[TokenTable.issuedAt] = token.issuedAt
-//        it[TokenTable.expiresAt] = token.expiresAt
-//        it[TokenTable.user] = userId
-//    }
     check(result.insertedCount == 1)
     return token
 }
