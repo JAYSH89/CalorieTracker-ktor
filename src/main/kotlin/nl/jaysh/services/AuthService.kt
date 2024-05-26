@@ -4,9 +4,12 @@ import nl.jaysh.core.utils.Constants
 import nl.jaysh.core.utils.Constants.ACCESS_TOKEN_EXPIRATION
 import nl.jaysh.data.repositories.TokenRepository
 import nl.jaysh.data.repositories.UserRepository
+import nl.jaysh.models.RefreshToken
+import nl.jaysh.models.User
 import nl.jaysh.models.authentication.AuthRequest
 import nl.jaysh.models.authentication.AuthResponse
 import org.mindrot.jbcrypt.BCrypt
+import java.time.LocalDateTime
 
 class AuthService(
     private val userRepository: UserRepository,
@@ -18,49 +21,55 @@ class AuthService(
 
         val user = userRepository.insert(email = request.email, password = hashedPassword)
         val accessToken = jwtService.createAccessToken(user = user)
-        val refreshToken = jwtService.createRefreshToken(user = user)
-
-        tokenRepository.save(refreshToken, user)
+        val refreshToken = saveRefreshToken(user = user)
 
         return AuthResponse(
             tokenType = "Bearer",
             accessToken = accessToken,
-            refreshToken = refreshToken,
+            refreshToken = refreshToken.token,
             expiresIn = ACCESS_TOKEN_EXPIRATION,
         )
     }
 
-    // TODO encryption + proper error handling
     fun login(request: AuthRequest): AuthResponse? {
         val user = userRepository.findByEmail(email = request.email) ?: return null
         if (!BCrypt.checkpw(request.password, user.password)) return null
 
         val accessToken = jwtService.createAccessToken(user = user)
-        val refreshToken = jwtService.createRefreshToken(user = user)
-
-        tokenRepository.save(refreshToken, user)
+        val refreshToken = saveRefreshToken(user = user)
 
         return AuthResponse(
             tokenType = "Bearer",
             accessToken = accessToken,
-            refreshToken = refreshToken,
+            refreshToken = refreshToken.token,
             expiresIn = Constants.ACCESS_TOKEN_EXPIRATION,
         )
     }
 
     fun refresh(refreshToken: String): String? {
         val decodedRefreshToken = jwtService.verifyRefreshToken(refreshToken)
-        val user = tokenRepository.findUserByToken(refreshToken)
+        val token = tokenRepository.findToken(refreshToken)
 
-        if (decodedRefreshToken != null && user != null) {
+        if (decodedRefreshToken != null && token != null) {
             val id = decodedRefreshToken.getClaim(JwtService.ID_CLAIM).asString()
 
-            if (id == user.id.toString())
-                return jwtService.createAccessToken(user)
+            if (id == token.user.id.toString())
+                return jwtService.createAccessToken(token.user)
 
             return null
         }
 
         return null
+    }
+
+    private fun saveRefreshToken(user: User): RefreshToken {
+        val refreshToken = RefreshToken(
+            token = jwtService.createRefreshToken(user = user),
+            issuedAt = LocalDateTime.now(),
+            expiresAt = LocalDateTime.now().plusSeconds(Constants.REFRESH_TOKEN_EXPIRATION / 1_000),
+            user = user,
+        )
+
+        return tokenRepository.save(refreshToken, user)
     }
 }
