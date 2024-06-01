@@ -1,19 +1,30 @@
 # CalorieTracker-ktor
 
-This project is a simple calorie tracker to play around with Ktor :)
+This project is a simple calorie tracker to learn  Ktor on server side :)
 
 ## Features
 
 |   | Features                  |
 |---|---------------------------|
 | ✅ | Food                      |
-| ❎ | Food Journal              |
+| ✅ | Food Journal              |
 | ❎ | Overview                  |
 | ✅ | Users                     |
 | ✅ | Security                  |
 | ❎ | Profile                   |
 | ❎ | Weight Journal            |
 | ❎ | Caloric intake management |
+
+## Improvements
+
+|   | Name                             |
+|---|----------------------------------|
+| ❎ | CI/CD (Github Actions)           |
+| ❎ | DB Migrations (Flyway?)          |
+| ❎ | Constructor Inject Tables (KOIN) |
+| ❎ | Error handling (Arrow?)          |
+| ❎ | Migrate to Kotest(?)             |
+| ❎ | Add Integration Tests            |
 
 ## Commands
 
