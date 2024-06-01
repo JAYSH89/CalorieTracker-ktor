@@ -43,31 +43,43 @@ class TokenTests {
 
     @Test
     fun `findToken successful should return RefreshToken`() {
+        transaction(db = database) {
 
+        }
     }
 
     @Test
     fun `findToken not found should return null`() {
+        transaction(db = database) {
 
+        }
     }
 
     @Test
     fun `save should persist token and user to db`() {
+        transaction(db = database) {
 
+        }
     }
 
     @Test
     fun `save should overwrite current token for user`() {
+        transaction(db = database) {
 
+        }
     }
 
     @Test
     fun `save with userId not found should throw IllegalStateException`() {
+        transaction(db = database) {
 
+        }
     }
 
     @Test
     fun `delete with valid userId should remove record from db`() {
+        transaction(db = database) {
 
+        }
     }
 }

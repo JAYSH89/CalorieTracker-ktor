@@ -88,7 +88,7 @@ class FoodTests {
     }
 
     @Test
-    fun `create food should insert food in db`() {
+    fun `insert should persist food in db`() {
         transaction(db = database) {
             assertEquals(foodRepository.getAll(userId = user.id).size, 0)
 

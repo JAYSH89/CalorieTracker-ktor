@@ -3,6 +3,7 @@ package nl.jaysh.data.db
 import nl.jaysh.models.Food
 import nl.jaysh.models.JournalEntry
 import nl.jaysh.models.User
+import nl.jaysh.models.UserResponse
 import org.jetbrains.exposed.dao.id.EntityID
 import org.jetbrains.exposed.dao.id.UUIDTable
 import org.jetbrains.exposed.sql.Column
@@ -37,16 +38,17 @@ object JournalTable : UUIDTable(name = "journal") {
     )
 }
 
+fun JournalTable.getAll(userId: UUID): List<JournalEntry> = (JournalTable innerJoin UserTable innerJoin FoodTable)
+    .selectAll()
+    .where { JournalTable.user eq userId }
+    .mapNotNull { row -> row.toJournalEntry() }
+
 fun JournalTable.findById(journalEntryId: UUID, userId: UUID): JournalEntry? {
     return (JournalTable innerJoin UserTable innerJoin FoodTable)
         .selectAll()
         .where { JournalTable.user eq userId }
         .andWhere { JournalTable.id eq journalEntryId }
-        .mapNotNull { row ->
-            val user = row.toUser()
-            val food = row.toFood()
-            row.toJournalEntry(food = food, user = user)
-        }
+        .mapNotNull { row -> row.toJournalEntry() }
         .singleOrNull()
 }
 
@@ -61,28 +63,22 @@ fun JournalTable.getBetween(
         .selectAll()
         .where { JournalTable.user eq userId }
         .andWhere { JournalTable.date.between(startDate, endDate) }
-        .mapNotNull { row ->
-            val user = row.toUser()
-            val food = row.toFood()
-            row.toJournalEntry(food, user)
-        }
+        .mapNotNull { row -> row.toJournalEntry() }
 }
 
-fun JournalTable.insert(
-    journalEntry: JournalEntry,
-    foodId: UUID,
-    userId: UUID,
-): JournalEntry {
+fun JournalTable.insert(journalEntry: JournalEntry): JournalEntry {
+    requireNotNull(journalEntry.food.id)
+
     val id = insertAndGetId {
         it[date] = journalEntry.date
         it[amount] = journalEntry.amount
         it[createdAt] = LocalDateTime.now()
         it[updatedAt] = LocalDateTime.now()
-        it[food] = foodId
-        it[user] = userId
+        it[food] = journalEntry.food.id
+        it[user] = journalEntry.user.id
     }.value
 
-    val newJournalEntry = findById(journalEntryId = id, userId = userId)
+    val newJournalEntry = findById(journalEntryId = id, userId = journalEntry.user.id)
     requireNotNull(newJournalEntry)
 
     return newJournalEntry
@@ -93,9 +89,10 @@ fun JournalTable.delete(journalEntryId: UUID, userId: UUID) {
     check(rowsChanged == 1)
 }
 
-fun ResultRow.toJournalEntry(food: Food, user: User): JournalEntry = JournalEntry(
+fun ResultRow.toJournalEntry(): JournalEntry = JournalEntry(
+    id = this[JournalTable.id].value,
     date = this[JournalTable.date],
     amount = this[JournalTable.amount],
-    food = food,
-    user = user,
+    food = this.toFood(),
+    user = UserResponse.fromUser(user = this.toUser()),
 )
