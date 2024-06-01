@@ -9,7 +9,7 @@ class FoodService(private val foodRepository: FoodRepository) {
 
     fun findById(foodId: UUID, userId: UUID): Food? = foodRepository.findById(foodId = foodId, userId = userId)
 
-    fun createFood(food: Food, userId: UUID): Food = foodRepository.insert(food = food, userId = userId)
+    fun save(food: Food, userId: UUID): Food = foodRepository.insert(food = food, userId = userId)
 
     fun updateFood(food: Food, userId: UUID): Food = foodRepository.update(food = food, userId = userId)
 

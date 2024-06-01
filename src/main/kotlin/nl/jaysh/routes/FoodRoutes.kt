@@ -50,7 +50,7 @@ fun Route.food() {
                 val createFood = call.receive<Food>()
 
                 call.principalId()?.let { userId ->
-                    val createdFood = foodService.createFood(food = createFood, userId = userId)
+                    val createdFood = foodService.save(food = createFood, userId = userId)
                     call.respond(HttpStatusCode.Created, createdFood)
                 } ?: call.respond(HttpStatusCode.Unauthorized)
             }

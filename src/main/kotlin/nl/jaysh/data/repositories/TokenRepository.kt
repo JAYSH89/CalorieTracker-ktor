@@ -2,10 +2,9 @@ package nl.jaysh.data.repositories
 
 import nl.jaysh.data.db.TokenTable
 import nl.jaysh.data.db.delete
-import nl.jaysh.data.db.findUserByToken
+import nl.jaysh.data.db.getRefreshToken
 import nl.jaysh.data.db.insert
 import nl.jaysh.models.RefreshToken
-import nl.jaysh.models.User
 import org.jetbrains.exposed.sql.SchemaUtils
 import org.jetbrains.exposed.sql.transactions.transaction
 import java.util.UUID
@@ -17,11 +16,11 @@ class TokenRepository {
     }
 
     fun findToken(token: String): RefreshToken? = transaction {
-        TokenTable.findUserByToken(token = token)
+        TokenTable.getRefreshToken(token = token)
     }
 
-    fun save(token: RefreshToken, user: User) = transaction {
-        TokenTable.insert(token = token, userId = user.id)
+    fun save(token: RefreshToken, userId: UUID): RefreshToken = transaction {
+        TokenTable.insert(token = token, userId = userId)
     }
 
     fun delete(userId: UUID) = transaction {
