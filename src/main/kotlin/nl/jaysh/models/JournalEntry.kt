@@ -12,5 +12,4 @@ data class JournalEntry(
     @Serializable(with = LocalDateTimeSerializer::class) val date: LocalDateTime,
     val amount: Double,
     val food: Food,
-    val user: UserResponse,
 )

@@ -10,7 +10,6 @@ import nl.jaysh.helpers.objects.testFood
 import nl.jaysh.helpers.objects.testUser
 import nl.jaysh.models.Food
 import nl.jaysh.models.User
-import nl.jaysh.models.UserResponse
 import org.jetbrains.exposed.exceptions.ExposedSQLException
 import org.jetbrains.exposed.sql.Database
 import org.jetbrains.exposed.sql.SchemaUtils
@@ -28,7 +27,6 @@ import kotlin.test.assertNull
 class JournalTests {
 
     private lateinit var user: User
-    private lateinit var userResponse: UserResponse
     private lateinit var food: Food
     private lateinit var journalRepository: JournalRepository
     private lateinit var database: Database
@@ -45,7 +43,6 @@ class JournalTests {
         transaction(database) {
             SchemaUtils.create(JournalTable, UserTable, FoodTable)
             user = UserTable.insert(email = testUser.email, password = testUser.password)
-            userResponse = UserResponse.fromUser(user = user)
             food = FoodTable.insert(food = testFood, userId = user.id)
         }
 
@@ -64,9 +61,9 @@ class JournalTests {
         transaction(db = database) {
             assertEquals(JournalTable.getAll(userId = user.id).size, 0)
 
-            val journalEntry = TestJournalEntry.default(food = food, user = userResponse)
-            JournalTable.insert(journalEntry = journalEntry)
-            JournalTable.insert(journalEntry = journalEntry)
+            val journalEntry = TestJournalEntry.default(food = food)
+            JournalTable.insert(journalEntry = journalEntry, userId = user.id)
+            JournalTable.insert(journalEntry = journalEntry, userId = user.id)
 
             val result = journalRepository.getAll(userId = user.id)
             assertEquals(result.size, 2)
@@ -84,8 +81,8 @@ class JournalTests {
     @Test
     fun `getAll should return empty list of JournalEntry if not for this user`() {
         transaction(db = database) {
-            val journalEntry = TestJournalEntry.default(food = food, user = userResponse)
-            JournalTable.insert(journalEntry = journalEntry)
+            val journalEntry = TestJournalEntry.default(food = food)
+            JournalTable.insert(journalEntry = journalEntry, userId = user.id)
             assertEquals(JournalTable.getAll(userId = user.id).size, 1)
 
             val additionalUser = UserTable.insert(email = "test@example.com", password = "testPass123")
@@ -97,8 +94,8 @@ class JournalTests {
     @Test
     fun `findById successful should return JournalEntry`() {
         transaction(db = database) {
-            val journalEntry = TestJournalEntry.default(food = food, user = userResponse)
-            val newEntry = JournalTable.insert(journalEntry = journalEntry)
+            val journalEntry = TestJournalEntry.default(food = food)
+            val newEntry = JournalTable.insert(journalEntry = journalEntry, userId = user.id)
 
             val result = journalRepository.findById(newEntry.id!!, userId = user.id)
             assertNotNull(result)
@@ -117,8 +114,8 @@ class JournalTests {
     @Test
     fun `findById with userId not matches should return null`() {
         transaction(db = database) {
-            val journalEntry = TestJournalEntry.default(food = food, user = userResponse)
-            val newEntry = JournalTable.insert(journalEntry = journalEntry)
+            val journalEntry = TestJournalEntry.default(food = food)
+            val newEntry = JournalTable.insert(journalEntry = journalEntry, userId = user.id)
 
             val invalidUser = user.copy(id = UUID.randomUUID())
             val result = journalRepository.findById(newEntry.id!!, userId = invalidUser.id)
@@ -130,11 +127,11 @@ class JournalTests {
     @Test
     fun `getBetween should return list of journalEntries between startDate and endDate`() {
         transaction(db = database) {
-            val journalEntry = TestJournalEntry.default(food = food, user = userResponse)
-            JournalTable.insert(journalEntry = journalEntry)
+            val journalEntry = TestJournalEntry.default(food = food)
+            JournalTable.insert(journalEntry = journalEntry, userId = user.id)
 
             val differentDate = LocalDateTime.of(2024, 6, 1, 0, 0, 0, 0)
-            val newEntry = JournalTable.insert(journalEntry = journalEntry.copy(date = differentDate))
+            val newEntry = JournalTable.insert(journalEntry = journalEntry.copy(date = differentDate), userId = user.id)
 
             val end = differentDate.plusDays(1)
             val result = journalRepository.getBetween(
@@ -151,8 +148,8 @@ class JournalTests {
     @Test
     fun `getBetween should return empty list if no journalEntries between startDate and endDate`() {
         transaction(db = database) {
-            val journalEntry = TestJournalEntry.default(food = food, user = userResponse)
-            JournalTable.insert(journalEntry = journalEntry)
+            val journalEntry = TestJournalEntry.default(food = food)
+            JournalTable.insert(journalEntry = journalEntry, userId = user.id)
 
             val result = journalRepository.getBetween(
                 startDate = journalEntry.date.plusYears(1),
@@ -167,8 +164,8 @@ class JournalTests {
     @Test
     fun `getBetween should return empty list userId not matches`() {
         transaction(db = database) {
-            val journalEntry = TestJournalEntry.default(food = food, user = userResponse)
-            JournalTable.insert(journalEntry = journalEntry)
+            val journalEntry = TestJournalEntry.default(food = food)
+            JournalTable.insert(journalEntry = journalEntry, userId = user.id)
 
             val invalidUser = user.copy(id = UUID.randomUUID())
             val result = journalRepository.getBetween(
@@ -184,8 +181,8 @@ class JournalTests {
     @Test
     fun `insert should persist journalEntry in db`() {
         transaction(db = database) {
-            val journalEntry = TestJournalEntry.default(food = food, user = userResponse)
-            JournalTable.insert(journalEntry = journalEntry)
+            val journalEntry = TestJournalEntry.default(food = food)
+            JournalTable.insert(journalEntry = journalEntry, userId = user.id)
 
             assertEquals(journalRepository.getAll(userId = user.id).size, 1)
         }
@@ -196,13 +193,9 @@ class JournalTests {
         transaction(db = database) {
             val invalidUser = user.copy(id = UUID.randomUUID())
 
-            val journalEntry = TestJournalEntry.default(
-                food = food,
-                user = UserResponse.fromUser(invalidUser),
-            )
-
+            val journalEntry = TestJournalEntry.default(food = food)
             assertFailsWith<ExposedSQLException> {
-                journalRepository.insert(journalEntry = journalEntry)
+                journalRepository.insert(journalEntry = journalEntry, userId = invalidUser.id)
             }
         }
     }
@@ -211,8 +204,8 @@ class JournalTests {
     fun `delete should remove journalEntry`() {
         transaction(db = database) {
             assertEquals(JournalTable.getAll(userId = user.id).size, 0)
-            val journalEntry = TestJournalEntry.default(food = food, user = userResponse)
-            val newJournalEntryId = JournalTable.insert(journalEntry = journalEntry).id
+            val journalEntry = TestJournalEntry.default(food = food)
+            val newJournalEntryId = JournalTable.insert(journalEntry = journalEntry, userId = user.id).id
 
             assertEquals(JournalTable.getAll(userId = user.id).size, 1)
 
@@ -227,8 +220,8 @@ class JournalTests {
         transaction(db = database) {
             assertEquals(JournalTable.getAll(userId = user.id).size, 0)
 
-            val journalEntry = TestJournalEntry.default(food = food, user = userResponse)
-            val newJournalEntryId = JournalTable.insert(journalEntry = journalEntry).id
+            val journalEntry = TestJournalEntry.default(food = food)
+            val newJournalEntryId = JournalTable.insert(journalEntry = journalEntry, userId = user.id).id
             assertEquals(JournalTable.getAll(userId = user.id).size, 1)
 
             assertFailsWith<IllegalStateException> {

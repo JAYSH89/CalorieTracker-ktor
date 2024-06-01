@@ -16,7 +16,7 @@ class JournalService(private val journalRepository: JournalRepository) {
     }
 
     fun insert(journalEntry: JournalEntry, foodId: UUID, userId: UUID): JournalEntry {
-        return journalRepository.insert(journalEntry = journalEntry)
+        return journalRepository.insert(journalEntry = journalEntry, userId = userId)
     }
 
     fun delete(journalEntryId: UUID, userId: UUID) {

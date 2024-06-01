@@ -34,8 +34,8 @@ class JournalRepository {
         )
     }
 
-    fun insert(journalEntry: JournalEntry): JournalEntry = transaction {
-        JournalTable.insert(journalEntry = journalEntry)
+    fun insert(journalEntry: JournalEntry, userId: UUID): JournalEntry = transaction {
+        JournalTable.insert(journalEntry = journalEntry, userId = userId)
     }
 
     fun delete(journalEntryId: UUID, userId: UUID) = transaction {

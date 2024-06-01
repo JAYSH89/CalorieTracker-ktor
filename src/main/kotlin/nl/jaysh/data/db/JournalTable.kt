@@ -66,7 +66,7 @@ fun JournalTable.getBetween(
         .mapNotNull { row -> row.toJournalEntry() }
 }
 
-fun JournalTable.insert(journalEntry: JournalEntry): JournalEntry {
+fun JournalTable.insert(journalEntry: JournalEntry, userId: UUID): JournalEntry {
     requireNotNull(journalEntry.food.id)
 
     val id = insertAndGetId {
@@ -75,10 +75,10 @@ fun JournalTable.insert(journalEntry: JournalEntry): JournalEntry {
         it[createdAt] = LocalDateTime.now()
         it[updatedAt] = LocalDateTime.now()
         it[food] = journalEntry.food.id
-        it[user] = journalEntry.user.id
+        it[user] = userId
     }.value
 
-    val newJournalEntry = findById(journalEntryId = id, userId = journalEntry.user.id)
+    val newJournalEntry = findById(journalEntryId = id, userId = userId)
     requireNotNull(newJournalEntry)
 
     return newJournalEntry
@@ -94,5 +94,4 @@ fun ResultRow.toJournalEntry(): JournalEntry = JournalEntry(
     date = this[JournalTable.date],
     amount = this[JournalTable.amount],
     food = this.toFood(),
-    user = UserResponse.fromUser(user = this.toUser()),
 )
