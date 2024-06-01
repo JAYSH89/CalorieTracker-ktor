@@ -7,6 +7,10 @@ import java.util.*
 
 class JournalService(private val journalRepository: JournalRepository) {
 
+    fun getAllJournalEntries(userId: UUID): List<JournalEntry> {
+        return journalRepository.getAll(userId = userId)
+    }
+
     fun findById(journalEntryId: UUID, userId: UUID): JournalEntry? {
         return journalRepository.findById(journalEntryId = journalEntryId, userId = userId)
     }
@@ -15,7 +19,7 @@ class JournalService(private val journalRepository: JournalRepository) {
         return journalRepository.getBetween(startDate = startDate, endDate = endDate, userId = userId)
     }
 
-    fun insert(journalEntry: JournalEntry, foodId: UUID, userId: UUID): JournalEntry {
+    fun save(journalEntry: JournalEntry, userId: UUID): JournalEntry {
         return journalRepository.insert(journalEntry = journalEntry, userId = userId)
     }
 
