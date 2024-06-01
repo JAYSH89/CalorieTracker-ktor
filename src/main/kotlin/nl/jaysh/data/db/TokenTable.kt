@@ -29,7 +29,7 @@ object TokenTable : Table(name = "refresh_token") {
     override val primaryKey = super.primaryKey ?: PrimaryKey(user)
 }
 
-fun TokenTable.findUserByToken(token: String): RefreshToken? = (TokenTable innerJoin UserTable)
+fun TokenTable.getRefreshToken(token: String): RefreshToken? = (TokenTable innerJoin UserTable)
     .selectAll()
     .where { TokenTable.token eq token }
     .mapNotNull { row ->
@@ -46,7 +46,11 @@ fun TokenTable.insert(token: RefreshToken, userId: UUID): RefreshToken {
         it[TokenTable.user] = userId
     }
     check(result.insertedCount == 1)
-    return token
+
+    val savedToken = getRefreshToken(token = token.token)
+    requireNotNull(savedToken)
+
+    return savedToken
 }
 
 fun TokenTable.delete(userId: UUID) {

@@ -70,6 +70,6 @@ class AuthService(
             user = user,
         )
 
-        return tokenRepository.save(refreshToken, user)
+        return tokenRepository.save(refreshToken, user.id)
     }
 }
