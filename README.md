@@ -1,6 +1,6 @@
 # CalorieTracker-ktor
 
-This project is a simple calorie tracker to learn  Ktor on server side :)
+This project is a simple calorie tracker to learn Ktor on server side :)
 
 ## Features
 
@@ -12,7 +12,7 @@ This project is a simple calorie tracker to learn  Ktor on server side :)
 | ✅ | Users                     |
 | ✅ | Security                  |
 | ❎ | Profile                   |
-| ❎ | Weight Journal            |
+| ✅ | Weight                    |
 | ❎ | Caloric intake management |
 
 ## Improvements
