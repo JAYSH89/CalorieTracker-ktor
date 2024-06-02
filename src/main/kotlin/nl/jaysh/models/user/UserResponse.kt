@@ -13,6 +13,9 @@ data class UserResponse(
 
     @SerialName("email")
     val email: String,
+
+    @SerialName("profile")
+    val profile: Profile? = null,
 ) {
     companion object {
         fun fromUser(user: User): UserResponse = UserResponse(

@@ -12,7 +12,6 @@ class JournalService(
     private val journalRepository: JournalRepository,
     private val foodRepository: FoodRepository,
 ) {
-
     fun getAllJournalEntries(userId: UUID): List<JournalEntry> {
         return journalRepository.getAll(userId = userId)
     }

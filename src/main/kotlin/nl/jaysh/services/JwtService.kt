@@ -17,7 +17,6 @@ class JwtService(
     private val userRepository: UserRepository,
     private val jwtConfig: JwtConfig,
 ) {
-
     val jwtVerifier: JWTVerifier = JWT
         .require(Algorithm.HMAC256(jwtConfig.secret))
         .withAudience(jwtConfig.audience)

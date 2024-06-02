@@ -4,6 +4,7 @@ import nl.jaysh.data.db.UserTable
 import nl.jaysh.data.db.delete
 import nl.jaysh.data.db.findByEmail
 import nl.jaysh.data.db.findById
+import nl.jaysh.data.db.getAll
 import nl.jaysh.data.db.insert
 import nl.jaysh.data.db.update
 import nl.jaysh.models.user.User
@@ -15,6 +16,10 @@ class UserRepository {
 
     init {
         transaction { SchemaUtils.create(UserTable) }
+    }
+
+    fun getAll(): List<User> = transaction {
+        UserTable.getAll()
     }
 
     fun findById(userId: UUID): User? = transaction {

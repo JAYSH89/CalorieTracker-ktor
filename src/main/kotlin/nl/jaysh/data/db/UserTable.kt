@@ -29,6 +29,8 @@ object UserTable : UUIDTable() {
     }
 }
 
+fun UserTable.getAll(): List<User> = selectAll().map(ResultRow::toUser)
+
 fun UserTable.findById(userId: UUID): User? = selectAll()
     .where { UserTable.id eq userId }
     .map(ResultRow::toUser)
