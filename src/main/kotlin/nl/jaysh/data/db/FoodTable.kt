@@ -35,11 +35,11 @@ object FoodTable : UUIDTable() {
 }
 
 fun FoodTable.getAll(userId: UUID): List<Food> = selectAll()
-    .where { FoodTable.user eq userId }
+    .where { user eq userId }
     .map(ResultRow::toFood)
 
 fun FoodTable.findById(foodId: UUID, userId: UUID): Food? = selectAll()
-    .where { (FoodTable.id eq foodId) and (FoodTable.user eq userId) }
+    .where { (id eq foodId) and (user eq userId) }
     .map(ResultRow::toFood)
     .singleOrNull()
 
@@ -83,7 +83,7 @@ fun FoodTable.update(food: Food, userId: UUID): Food {
 }
 
 fun FoodTable.delete(foodId: UUID, userId: UUID) {
-    val rowsChanged = deleteWhere { (FoodTable.id eq foodId) and (FoodTable.user eq userId) }
+    val rowsChanged = deleteWhere { (id eq foodId) and (user eq userId) }
     check(rowsChanged == 1)
 }
 

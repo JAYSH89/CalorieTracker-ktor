@@ -13,7 +13,6 @@ import org.koin.ktor.ext.inject
 import java.util.*
 
 fun Route.food() {
-
     val foodService by inject<FoodService>()
 
     route("/api/food") {

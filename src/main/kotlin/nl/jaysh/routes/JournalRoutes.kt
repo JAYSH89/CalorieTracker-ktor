@@ -15,7 +15,6 @@ import java.time.format.DateTimeFormatter
 import java.util.*
 
 fun Route.journal() {
-
     val journalService by inject<JournalService>()
 
     route("/api/journal") {

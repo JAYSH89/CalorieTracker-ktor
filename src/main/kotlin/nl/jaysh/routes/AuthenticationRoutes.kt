@@ -11,7 +11,6 @@ import nl.jaysh.services.AuthService
 import org.koin.ktor.ext.inject
 
 fun Route.authentication() {
-
     val authService by inject<AuthService>()
 
     route("/api/auth") {
