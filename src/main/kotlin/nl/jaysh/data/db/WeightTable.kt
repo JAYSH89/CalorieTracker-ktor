@@ -14,6 +14,7 @@ import org.jetbrains.exposed.sql.javatime.datetime
 import org.jetbrains.exposed.sql.selectAll
 import org.jetbrains.exposed.sql.update
 import java.time.LocalDateTime
+import java.time.LocalTime
 import java.util.*
 
 object WeightTable : UUIDTable() {
@@ -41,7 +42,7 @@ fun WeightTable.findById(weightId: UUID, userId: UUID): Weight? = selectAll()
 fun WeightTable.insert(weightEntry: Weight, userId: UUID): Weight {
     val id = insertAndGetId {
         it[weight] = weightEntry.weight
-        it[measuredAt] = weightEntry.measuredAt
+        it[measuredAt] = LocalDateTime.of(weightEntry.measuredAt, LocalTime.MIN)
         it[createdAt] = LocalDateTime.now()
         it[updatedAt] = LocalDateTime.now()
         it[user] = userId
@@ -58,7 +59,7 @@ fun WeightTable.update(weightEntry: Weight, userId: UUID): Weight {
 
     val rowsChanged = update({ (id eq weightEntry.id) and (user eq userId) }) {
         it[weight] = weightEntry.weight
-        it[measuredAt] = weightEntry.measuredAt
+        it[measuredAt] = LocalDateTime.of(weightEntry.measuredAt, LocalTime.MIN)
         it[updatedAt] = LocalDateTime.now()
     }
     check(rowsChanged == 1)
@@ -77,5 +78,5 @@ fun WeightTable.delete(weightId: UUID, userId: UUID) {
 fun ResultRow.toWeight(): Weight = Weight(
     id = this[WeightTable.id].value,
     weight = this[WeightTable.weight],
-    measuredAt = this[WeightTable.measuredAt],
+    measuredAt = this[WeightTable.measuredAt].toLocalDate(),
 )

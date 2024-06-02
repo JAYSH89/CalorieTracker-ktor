@@ -7,10 +7,12 @@ import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import nl.jaysh.core.utils.principalId
-import nl.jaysh.models.JournalEntry
+import nl.jaysh.models.JournalEntryRequest
 import nl.jaysh.services.JournalService
 import org.koin.ktor.ext.inject
+import java.time.LocalDate
 import java.time.LocalDateTime
+import java.time.LocalTime
 import java.time.format.DateTimeFormatter
 import java.util.*
 
@@ -45,12 +47,12 @@ fun Route.journal() {
                     val endDateParam = call.request.queryParameters["endDate"]
 
                     if (startDateParam != null && endDateParam != null) {
-                        val startDate = LocalDateTime.parse(startDateParam, DateTimeFormatter.ISO_DATE_TIME)
-                        val endDate = LocalDateTime.parse(endDateParam, DateTimeFormatter.ISO_DATE_TIME)
+                        val startDate = LocalDate.parse(startDateParam, DateTimeFormatter.ISO_DATE)
+                        val endDate = LocalDate.parse(endDateParam, DateTimeFormatter.ISO_DATE)
 
                         val result = journalService.getBetween(
-                            startDate = startDate,
-                            endDate = endDate,
+                            startDate = LocalDateTime.of(startDate, LocalTime.MIN),
+                            endDate = LocalDateTime.of(endDate, LocalTime.MIN),
                             userId = userId,
                         )
                         call.respond(result)
@@ -66,10 +68,10 @@ fun Route.journal() {
 
         authenticate {
             post {
-                val createJournalEntry = call.receive<JournalEntry>()
+                val createJournalEntry = call.receive<JournalEntryRequest>()
 
                 call.principalId()?.let { userId ->
-                    val createdFood = journalService.save(createJournalEntry, userId = userId)
+                    val createdFood = journalService.save(request = createJournalEntry, userId = userId)
                     call.respond(HttpStatusCode.Created, createdFood)
                 } ?: call.respond(HttpStatusCode.Unauthorized)
             }

@@ -1,14 +1,20 @@
 package nl.jaysh.models
 
+import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-import nl.jaysh.core.utils.LocalDateTimeSerializer
+import nl.jaysh.core.utils.LocalDateSerializer
 import nl.jaysh.core.utils.UUIDSerializer
-import java.time.LocalDateTime
+import java.time.LocalDate
 import java.util.UUID
 
 @Serializable
 data class Weight(
-    @Serializable(with = UUIDSerializer::class) val id: UUID? = null,
+    @Serializable(with = UUIDSerializer::class)
+    val id: UUID? = null,
+
     val weight: Double,
-    @Serializable(with = LocalDateTimeSerializer::class) val measuredAt: LocalDateTime,
+
+    @Serializable(with = LocalDateSerializer::class)
+    @SerialName("measured_at")
+    val measuredAt: LocalDate,
 )
