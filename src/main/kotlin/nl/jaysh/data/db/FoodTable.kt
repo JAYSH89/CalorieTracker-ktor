@@ -77,7 +77,7 @@ fun FoodTable.insert(food: Food, userId: UUID): Food {
 fun FoodTable.update(food: Food, userId: UUID): Food {
     requireNotNull(food.id)
 
-    val rowsChanged = update({ (FoodTable.id eq food.id) and (FoodTable.user eq userId) }) {
+    val rowsChanged = update({ (FoodTable.id eq food.id) and (user eq userId) }) {
         it[name] = food.name
         it[carbs] = food.carbs
         it[proteins] = food.proteins

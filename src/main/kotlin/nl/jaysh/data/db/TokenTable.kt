@@ -1,5 +1,6 @@
 package nl.jaysh.data.db
 
+import nl.jaysh.data.db.TokenTable.token
 import nl.jaysh.models.authentication.RefreshToken
 import nl.jaysh.models.user.User
 import org.jetbrains.exposed.dao.id.EntityID
@@ -16,8 +17,11 @@ import java.time.LocalDateTime
 import java.util.*
 
 object TokenTable : Table(name = "refresh_token") {
+
     val token: Column<String> = text(name = "token").uniqueIndex()
+
     val issuedAt: Column<LocalDateTime> = datetime(name = "issued_at")
+
     val expiresAt: Column<LocalDateTime> = datetime(name = "expires_at")
 
     val user: Column<EntityID<UUID>> = reference(
@@ -29,7 +33,7 @@ object TokenTable : Table(name = "refresh_token") {
     override val primaryKey = super.primaryKey ?: PrimaryKey(user)
 }
 
-fun TokenTable.getRefreshToken(token: String): RefreshToken? = (TokenTable innerJoin UserTable)
+fun TokenTable.getRefreshToken(token: String): RefreshToken? = innerJoin(UserTable)
     .selectAll()
     .where { TokenTable.token eq token }
     .mapNotNull { row ->
@@ -40,10 +44,10 @@ fun TokenTable.getRefreshToken(token: String): RefreshToken? = (TokenTable inner
 
 fun TokenTable.insert(token: RefreshToken, userId: UUID): RefreshToken {
     val result = upsert {
+        it[TokenTable.user] = userId
         it[TokenTable.token] = token.token
         it[TokenTable.issuedAt] = token.issuedAt
         it[TokenTable.expiresAt] = token.expiresAt
-        it[TokenTable.user] = userId
     }
     check(result.insertedCount == 1)
 
@@ -59,7 +63,7 @@ fun TokenTable.delete(userId: UUID) {
 }
 
 fun ResultRow.toRefreshToken(user: User): RefreshToken = RefreshToken(
-    token = this[TokenTable.token],
+    token = this[token],
     issuedAt = this[TokenTable.issuedAt],
     expiresAt = this[TokenTable.expiresAt],
     user = user,
