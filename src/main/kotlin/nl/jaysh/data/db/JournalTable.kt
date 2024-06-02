@@ -1,9 +1,6 @@
 package nl.jaysh.data.db
 
-import nl.jaysh.models.Food
 import nl.jaysh.models.JournalEntry
-import nl.jaysh.models.User
-import nl.jaysh.models.UserResponse
 import org.jetbrains.exposed.dao.id.EntityID
 import org.jetbrains.exposed.dao.id.UUIDTable
 import org.jetbrains.exposed.sql.Column
@@ -11,7 +8,6 @@ import org.jetbrains.exposed.sql.ReferenceOption
 import org.jetbrains.exposed.sql.ResultRow
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 import org.jetbrains.exposed.sql.and
-import org.jetbrains.exposed.sql.andWhere
 import org.jetbrains.exposed.sql.deleteWhere
 import org.jetbrains.exposed.sql.insertAndGetId
 import org.jetbrains.exposed.sql.javatime.datetime
@@ -38,16 +34,17 @@ object JournalTable : UUIDTable(name = "journal") {
     )
 }
 
-fun JournalTable.getAll(userId: UUID): List<JournalEntry> = (JournalTable innerJoin UserTable innerJoin FoodTable)
+fun JournalTable.getAll(userId: UUID): List<JournalEntry> = JournalTable
+    .innerJoin(FoodTable)
     .selectAll()
     .where { JournalTable.user eq userId }
     .mapNotNull { row -> row.toJournalEntry() }
 
 fun JournalTable.findById(journalEntryId: UUID, userId: UUID): JournalEntry? {
-    return (JournalTable innerJoin UserTable innerJoin FoodTable)
+    return JournalTable
+        .innerJoin(FoodTable)
         .selectAll()
-        .where { JournalTable.user eq userId }
-        .andWhere { JournalTable.id eq journalEntryId }
+        .where { (JournalTable.id eq journalEntryId) and (JournalTable.user eq userId) }
         .mapNotNull { row -> row.toJournalEntry() }
         .singleOrNull()
 }
@@ -59,10 +56,10 @@ fun JournalTable.getBetween(
 ): List<JournalEntry> {
     require(startDate <= endDate)
 
-    return (JournalTable innerJoin UserTable innerJoin FoodTable)
+    return JournalTable
+        .innerJoin(FoodTable)
         .selectAll()
-        .where { JournalTable.user eq userId }
-        .andWhere { JournalTable.date.between(startDate, endDate) }
+        .where { (JournalTable.user eq userId) and (JournalTable.date.between(startDate, endDate)) }
         .mapNotNull { row -> row.toJournalEntry() }
 }
 

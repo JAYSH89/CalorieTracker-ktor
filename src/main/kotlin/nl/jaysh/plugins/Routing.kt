@@ -7,7 +7,9 @@ import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import nl.jaysh.routes.authentication
 import nl.jaysh.routes.food
+import nl.jaysh.routes.journal
 import nl.jaysh.routes.user
+import nl.jaysh.routes.weight
 
 fun Application.configureRouting() {
     install(StatusPages) {
@@ -23,5 +25,7 @@ fun Application.configureRouting() {
         authentication()
         user()
         food()
+        journal()
+        weight()
     }
 }
