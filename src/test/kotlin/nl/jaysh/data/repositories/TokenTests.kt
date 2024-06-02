@@ -6,7 +6,7 @@ import nl.jaysh.data.db.getRefreshToken
 import nl.jaysh.data.db.insert
 import nl.jaysh.helpers.objects.testRefreshToken
 import nl.jaysh.helpers.objects.testUser
-import nl.jaysh.models.User
+import nl.jaysh.models.user.User
 import org.jetbrains.exposed.exceptions.ExposedSQLException
 import org.jetbrains.exposed.sql.Database
 import org.jetbrains.exposed.sql.SchemaUtils

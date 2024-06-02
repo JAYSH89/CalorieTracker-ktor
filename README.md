@@ -8,7 +8,7 @@ This project is a simple calorie tracker to learn Ktor on server side :)
 |---|---------------------------|
 | ✅ | Food                      |
 | ✅ | Food Journal              |
-| ❎ | Overview                  |
+| ✅ | Overview                  |
 | ✅ | Users                     |
 | ✅ | Security                  |
 | ❎ | Profile                   |

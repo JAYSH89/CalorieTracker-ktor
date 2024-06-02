@@ -1,7 +1,7 @@
 package nl.jaysh.services
 
 import nl.jaysh.data.repositories.FoodRepository
-import nl.jaysh.models.Food
+import nl.jaysh.models.food.Food
 import java.util.*
 
 class FoodService(private val foodRepository: FoodRepository) {

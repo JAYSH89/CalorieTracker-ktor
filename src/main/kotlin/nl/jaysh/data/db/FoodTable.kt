@@ -1,7 +1,7 @@
 package nl.jaysh.data.db
 
-import nl.jaysh.models.AmountType
-import nl.jaysh.models.Food
+import nl.jaysh.models.food.AmountType
+import nl.jaysh.models.food.Food
 import org.jetbrains.exposed.dao.id.EntityID
 import org.jetbrains.exposed.dao.id.UUIDTable
 import org.jetbrains.exposed.sql.Column
@@ -19,12 +19,24 @@ import java.util.*
 
 object FoodTable : UUIDTable() {
     val name: Column<String> = varchar(name = "name", length = 100)
+
     val carbs: Column<Double> = double(name = "carbs")
+
     val proteins: Column<Double> = double(name = "proteins")
+
     val fats: Column<Double> = double(name = "fats")
+
     val amount: Column<Double> = double(name = "amount")
-    val amountType: Column<String> = varchar(name = "amount_type", length = 50)
+
+    val amountType: Column<AmountType> = customEnumeration(
+        name = "amount_type",
+        sql = "ENUM('UNIT', 'METRIC')",
+        fromDb = { value -> AmountType.valueOf(value as String) },
+        toDb = { it.name }
+    )
+
     val createdAt: Column<LocalDateTime?> = datetime(name = "created_at").nullable()
+
     val updatedAt: Column<LocalDateTime?> = datetime(name = "updated_at").nullable()
 
     val user: Column<EntityID<UUID>> = reference(
@@ -50,7 +62,7 @@ fun FoodTable.insert(food: Food, userId: UUID): Food {
         it[proteins] = food.proteins
         it[fats] = food.fats
         it[amount] = food.amount
-        it[amountType] = food.amountType.toString()
+        it[amountType] = food.amountType
         it[createdAt] = LocalDateTime.now()
         it[updatedAt] = LocalDateTime.now()
         it[user] = userId
@@ -71,7 +83,7 @@ fun FoodTable.update(food: Food, userId: UUID): Food {
         it[proteins] = food.proteins
         it[fats] = food.fats
         it[amount] = food.amount
-        it[amountType] = food.amountType.toString()
+        it[amountType] = food.amountType
         it[updatedAt] = LocalDateTime.now()
     }
     check(rowsChanged == 1)
@@ -94,5 +106,5 @@ fun ResultRow.toFood() = Food(
     proteins = this[FoodTable.proteins],
     fats = this[FoodTable.fats],
     amount = this[FoodTable.amount],
-    amountType = AmountType.fromString(this[FoodTable.amountType]),
+    amountType = this[FoodTable.amountType],
 )

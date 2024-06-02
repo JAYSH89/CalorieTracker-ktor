@@ -6,7 +6,7 @@ import nl.jaysh.data.db.findById
 import nl.jaysh.data.db.getAll
 import nl.jaysh.data.db.getBetween
 import nl.jaysh.data.db.insert
-import nl.jaysh.models.JournalEntry
+import nl.jaysh.models.journal.JournalEntry
 import org.jetbrains.exposed.sql.SchemaUtils
 import org.jetbrains.exposed.sql.transactions.transaction
 import java.time.LocalDateTime

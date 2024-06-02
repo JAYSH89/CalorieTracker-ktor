@@ -1,9 +1,10 @@
-package nl.jaysh.models
+package nl.jaysh.models.user
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import nl.jaysh.core.utils.LocalDateTimeSerializer
 import nl.jaysh.core.utils.UUIDSerializer
+import nl.jaysh.models.Gender
 import java.time.LocalDateTime
 import java.util.UUID
 

@@ -6,7 +6,7 @@ import nl.jaysh.data.db.findByEmail
 import nl.jaysh.data.db.findById
 import nl.jaysh.data.db.insert
 import nl.jaysh.data.db.update
-import nl.jaysh.models.User
+import nl.jaysh.models.user.User
 import org.jetbrains.exposed.sql.SchemaUtils
 import org.jetbrains.exposed.sql.transactions.transaction
 import java.util.UUID

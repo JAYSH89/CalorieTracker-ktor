@@ -8,7 +8,7 @@ import nl.jaysh.data.db.insert
 import nl.jaysh.data.db.toFood
 import nl.jaysh.helpers.objects.testFood
 import nl.jaysh.helpers.objects.testUser
-import nl.jaysh.models.User
+import nl.jaysh.models.user.User
 import org.jetbrains.exposed.sql.Database
 import org.jetbrains.exposed.sql.SchemaUtils
 import org.jetbrains.exposed.sql.selectAll

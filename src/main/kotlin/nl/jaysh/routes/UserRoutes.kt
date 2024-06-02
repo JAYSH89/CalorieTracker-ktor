@@ -7,9 +7,9 @@ import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import nl.jaysh.core.utils.principalId
-import nl.jaysh.models.UserRequest
-import nl.jaysh.models.UserResponse
-import nl.jaysh.models.toUser
+import nl.jaysh.models.user.UserRequest
+import nl.jaysh.models.user.UserResponse
+import nl.jaysh.models.user.toUser
 import nl.jaysh.services.UserService
 import org.koin.ktor.ext.inject
 

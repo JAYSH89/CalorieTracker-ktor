@@ -1,4 +1,4 @@
-package nl.jaysh.models
+package nl.jaysh.models.weight
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable

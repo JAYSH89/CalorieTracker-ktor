@@ -1,7 +1,7 @@
 package nl.jaysh.services
 
 import nl.jaysh.data.repositories.UserRepository
-import nl.jaysh.models.User
+import nl.jaysh.models.user.User
 import java.util.UUID
 
 class UserService(private val userRepository: UserRepository) {

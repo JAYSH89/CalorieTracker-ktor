@@ -1,7 +1,7 @@
 package nl.jaysh.helpers.objects
 
-import nl.jaysh.models.Food
-import nl.jaysh.models.JournalEntry
+import nl.jaysh.models.food.Food
+import nl.jaysh.models.journal.JournalEntry
 import java.time.LocalDateTime
 
 object TestJournalEntry {

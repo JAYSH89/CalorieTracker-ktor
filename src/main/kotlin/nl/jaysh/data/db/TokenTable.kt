@@ -1,7 +1,7 @@
 package nl.jaysh.data.db
 
-import nl.jaysh.models.RefreshToken
-import nl.jaysh.models.User
+import nl.jaysh.models.authentication.RefreshToken
+import nl.jaysh.models.user.User
 import org.jetbrains.exposed.dao.id.EntityID
 import org.jetbrains.exposed.sql.Column
 import org.jetbrains.exposed.sql.ReferenceOption

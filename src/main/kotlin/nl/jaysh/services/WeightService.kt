@@ -1,7 +1,7 @@
 package nl.jaysh.services
 
 import nl.jaysh.data.repositories.WeightRepository
-import nl.jaysh.models.Weight
+import nl.jaysh.models.weight.Weight
 import java.util.UUID
 
 class WeightService(private val weightRepository: WeightRepository) {

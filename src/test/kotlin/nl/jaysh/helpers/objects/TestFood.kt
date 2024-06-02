@@ -1,7 +1,7 @@
 package nl.jaysh.helpers.objects
 
-import nl.jaysh.models.AmountType
-import nl.jaysh.models.Food
+import nl.jaysh.models.food.AmountType
+import nl.jaysh.models.food.Food
 
 val testFood = Food(
     name = "Egg",

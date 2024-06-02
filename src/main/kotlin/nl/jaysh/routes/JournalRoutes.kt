@@ -7,7 +7,7 @@ import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import nl.jaysh.core.utils.principalId
-import nl.jaysh.models.JournalEntryRequest
+import nl.jaysh.models.journal.JournalEntryRequest
 import nl.jaysh.services.JournalService
 import org.koin.ktor.ext.inject
 import java.time.LocalDate
@@ -62,6 +62,29 @@ fun Route.journal() {
 
                     val result = journalService.getAllJournalEntries(userId = userId)
                     call.respond(result)
+                } ?: call.respond(HttpStatusCode.Unauthorized)
+            }
+        }
+
+        authenticate {
+            get("/summary") {
+                call.principalId()?.let { userId ->
+                    val startDateParam = call.request.queryParameters["startDate"]
+                    val endDateParam = call.request.queryParameters["endDate"]
+
+                    if (startDateParam != null && endDateParam != null) {
+                        val startDate = LocalDateTime.parse(startDateParam, DateTimeFormatter.ISO_DATE_TIME)
+                        val endDate = LocalDateTime.parse(endDateParam, DateTimeFormatter.ISO_DATE_TIME)
+
+                        val overview = journalService.getSummaryBetween(
+                            startDate = startDate,
+                            endDate = endDate,
+                            userId = userId,
+                        )
+                        call.respond(HttpStatusCode.OK, overview)
+                    } else {
+                        call.respond(HttpStatusCode.BadRequest)
+                    }
                 } ?: call.respond(HttpStatusCode.Unauthorized)
             }
         }

@@ -24,6 +24,7 @@ fun appModule(jwtConfig: JwtConfig) = module {
     singleOf(::JournalRepository)
     singleOf(::WeightRepository)
 
+
     singleOf(::JwtService)
     singleOf(::AuthService)
     singleOf(::UserService)

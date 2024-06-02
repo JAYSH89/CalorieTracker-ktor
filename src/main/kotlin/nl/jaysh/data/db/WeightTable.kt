@@ -1,6 +1,6 @@
 package nl.jaysh.data.db
 
-import nl.jaysh.models.Weight
+import nl.jaysh.models.weight.Weight
 import org.jetbrains.exposed.dao.id.EntityID
 import org.jetbrains.exposed.dao.id.UUIDTable
 import org.jetbrains.exposed.sql.Column

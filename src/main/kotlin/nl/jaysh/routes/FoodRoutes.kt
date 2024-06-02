@@ -7,7 +7,7 @@ import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import nl.jaysh.core.utils.principalId
-import nl.jaysh.models.Food
+import nl.jaysh.models.food.Food
 import nl.jaysh.services.FoodService
 import org.koin.ktor.ext.inject
 import java.util.*

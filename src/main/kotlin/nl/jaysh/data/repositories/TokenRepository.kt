@@ -4,7 +4,7 @@ import nl.jaysh.data.db.TokenTable
 import nl.jaysh.data.db.delete
 import nl.jaysh.data.db.getRefreshToken
 import nl.jaysh.data.db.insert
-import nl.jaysh.models.RefreshToken
+import nl.jaysh.models.authentication.RefreshToken
 import org.jetbrains.exposed.sql.SchemaUtils
 import org.jetbrains.exposed.sql.transactions.transaction
 import java.util.UUID

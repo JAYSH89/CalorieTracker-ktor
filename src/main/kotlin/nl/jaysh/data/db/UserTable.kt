@@ -1,7 +1,7 @@
 package nl.jaysh.data.db
 
 import nl.jaysh.models.Gender
-import nl.jaysh.models.User
+import nl.jaysh.models.user.User
 import org.jetbrains.exposed.dao.id.UUIDTable
 import org.jetbrains.exposed.sql.Column
 import org.jetbrains.exposed.sql.ResultRow
@@ -16,12 +16,24 @@ import java.util.*
 
 object UserTable : UUIDTable() {
     val email: Column<String> = varchar(name = "email", length = 100).uniqueIndex()
+
     val password: Column<String> = varchar(name = "password", length = 60)
+
     val firstName: Column<String?> = varchar(name = "first_name", length = 50).nullable()
+
     val lastName: Column<String?> = varchar(name = "last_name", length = 50).nullable()
+
     val birthday: Column<LocalDateTime?> = datetime(name = "birthday").nullable()
-    val gender: Column<String?> = varchar(name = "gender", length = 50).nullable()
+
+    val gender: Column<Gender?> = customEnumeration(
+        name = "gender",
+        sql = "ENUM('MALE', 'FEMALE', 'UNKNOWN')",
+        fromDb = { value -> Gender.valueOf(value as String) },
+        toDb = { it.name }
+    ).nullable()
+
     val createdAt: Column<LocalDateTime?> = datetime(name = "created_at").nullable()
+
     val updatedAt: Column<LocalDateTime?> = datetime(name = "updated_at").nullable()
 
     init {
@@ -37,9 +49,7 @@ fun ResultRow.toUser() = User(
     firstName = this[UserTable.firstName],
     lastName = this[UserTable.lastName],
     birthday = this[UserTable.birthday],
-    gender = this[UserTable.gender]
-        ?.let { Gender.fromString(it) }
-        ?: Gender.UNKNOWN,
+    gender = this[UserTable.gender] ?: Gender.UNKNOWN,
 )
 
 fun UserTable.findById(userId: UUID): User? = selectAll()
@@ -71,7 +81,7 @@ fun UserTable.update(user: User): User {
         it[firstName] = user.firstName
         it[lastName] = user.lastName
         it[birthday] = user.birthday
-        it[gender] = user.gender.toString()
+        it[gender] = user.gender
         it[updatedAt] = LocalDateTime.now()
     }
     check(rowsChanged == 1)

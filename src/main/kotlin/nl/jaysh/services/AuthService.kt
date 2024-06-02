@@ -4,8 +4,8 @@ import nl.jaysh.core.utils.Constants
 import nl.jaysh.core.utils.Constants.ACCESS_TOKEN_EXPIRATION
 import nl.jaysh.data.repositories.TokenRepository
 import nl.jaysh.data.repositories.UserRepository
-import nl.jaysh.models.RefreshToken
-import nl.jaysh.models.User
+import nl.jaysh.models.authentication.RefreshToken
+import nl.jaysh.models.user.User
 import nl.jaysh.models.authentication.AuthRequest
 import nl.jaysh.models.authentication.AuthResponse
 import org.mindrot.jbcrypt.BCrypt
