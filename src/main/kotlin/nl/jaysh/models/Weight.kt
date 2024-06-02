@@ -8,7 +8,7 @@ import java.util.UUID
 
 @Serializable
 data class Weight(
-    @Serializable(with = UUIDSerializer::class) val id: UUID?,
+    @Serializable(with = UUIDSerializer::class) val id: UUID? = null,
     val weight: Double,
     @Serializable(with = LocalDateTimeSerializer::class) val measuredAt: LocalDateTime,
 )
