@@ -12,6 +12,7 @@ hikari = "5.1.0"
 bcrypt = "0.4"
 mockk = "1.13.11"
 h2 = "2.2.224"
+flyway = "10.13.0"
 
 [libraries]
 
@@ -52,8 +53,11 @@ exposed-core = { group = "org.jetbrains.exposed", name = "exposed-core", version
 exposed-jdbc = { group = "org.jetbrains.exposed", name = "exposed-jdbc", version.ref = "exposed" }
 exposed-java-time = { group = "org.jetbrains.exposed", name = "exposed-java-time", version.ref = "exposed" }
 postgresql = { group = "org.postgresql", name = "postgresql", version.ref = "postgresql" }
-hikari = { group = "com.zaxxer", name = "HikariCP", version.ref = "hikari" }
 h2 = { group = "com.h2database", name = "h2", version.ref = "h2" }
+
+# MIGRATIONS
+flyway = { group = "org.flywaydb", name = "flyway-core", version.ref = "flyway" }
+flyway-postgresql = { group = "org.flywaydb", name = "flyway-database-postgresql", version.ref = "flyway" }
 
 # CRYPTOGRAPHY
 bcrypt = { group = "org.mindrot", name = "jbcrypt", version.ref = "bcrypt" }
@@ -83,7 +87,8 @@ persistence = [
     "exposed-jdbc",
     "exposed-java-time",
     "postgresql",
-    "hikari",
+    "flyway",
+    "flyway-postgresql",
 ]
 
 [plugins]
@@ -91,3 +96,4 @@ kotlinJvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
 ktor = { id = "io.ktor.plugin", version.ref = "ktor" }
 serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }
+flyway = { id = "org.flywaydb.flyway", version.ref = "flyway"}

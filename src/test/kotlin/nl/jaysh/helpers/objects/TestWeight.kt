@@ -1,6 +1,6 @@
 package nl.jaysh.helpers.objects
 
-import nl.jaysh.models.Weight
+import nl.jaysh.models.weight.Weight
 import java.time.LocalDate
 
 val testWeight = Weight(

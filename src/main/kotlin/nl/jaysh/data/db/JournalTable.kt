@@ -1,6 +1,6 @@
 package nl.jaysh.data.db
 
-import nl.jaysh.models.JournalEntry
+import nl.jaysh.models.journal.JournalEntry
 import org.jetbrains.exposed.dao.id.EntityID
 import org.jetbrains.exposed.dao.id.UUIDTable
 import org.jetbrains.exposed.sql.Column
@@ -28,26 +28,22 @@ object JournalTable : UUIDTable(name = "journal") {
     )
 
     val user: Column<EntityID<UUID>> = reference(
-        name = "user",
+        name = "user_id",
         refColumn = UserTable.id,
         onDelete = ReferenceOption.CASCADE,
     )
 }
 
-fun JournalTable.getAll(userId: UUID): List<JournalEntry> = JournalTable
-    .innerJoin(FoodTable)
+fun JournalTable.getAll(userId: UUID): List<JournalEntry> = innerJoin(FoodTable)
     .selectAll()
-    .where { JournalTable.user eq userId }
+    .where { user eq userId }
     .mapNotNull { row -> row.toJournalEntry() }
 
-fun JournalTable.findById(journalEntryId: UUID, userId: UUID): JournalEntry? {
-    return JournalTable
-        .innerJoin(FoodTable)
-        .selectAll()
-        .where { (JournalTable.id eq journalEntryId) and (JournalTable.user eq userId) }
-        .mapNotNull { row -> row.toJournalEntry() }
-        .singleOrNull()
-}
+fun JournalTable.findById(journalEntryId: UUID, userId: UUID): JournalEntry? = innerJoin(FoodTable)
+    .selectAll()
+    .where { (JournalTable.id eq journalEntryId) and (user eq userId) }
+    .mapNotNull { row -> row.toJournalEntry() }
+    .singleOrNull()
 
 fun JournalTable.getBetween(
     startDate: LocalDateTime,
@@ -56,10 +52,9 @@ fun JournalTable.getBetween(
 ): List<JournalEntry> {
     require(startDate <= endDate)
 
-    return JournalTable
-        .innerJoin(FoodTable)
+    return innerJoin(FoodTable)
         .selectAll()
-        .where { (JournalTable.user eq userId) and (JournalTable.date.between(startDate, endDate)) }
+        .where { (user eq userId) and (date.between(startDate, endDate)) }
         .mapNotNull { row -> row.toJournalEntry() }
 }
 
@@ -82,7 +77,7 @@ fun JournalTable.insert(journalEntry: JournalEntry, userId: UUID): JournalEntry 
 }
 
 fun JournalTable.delete(journalEntryId: UUID, userId: UUID) {
-    val rowsChanged = deleteWhere { (JournalTable.id eq journalEntryId) and (JournalTable.user eq userId) }
+    val rowsChanged = deleteWhere { (JournalTable.id eq journalEntryId) and (user eq userId) }
     check(rowsChanged == 1)
 }
 

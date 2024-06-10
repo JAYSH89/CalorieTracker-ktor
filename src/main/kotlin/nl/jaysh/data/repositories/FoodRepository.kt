@@ -6,7 +6,7 @@ import nl.jaysh.data.db.findById
 import nl.jaysh.data.db.getAll
 import nl.jaysh.data.db.insert
 import nl.jaysh.data.db.update
-import nl.jaysh.models.Food
+import nl.jaysh.models.food.Food
 import org.jetbrains.exposed.sql.SchemaUtils
 import org.jetbrains.exposed.sql.transactions.transaction
 import java.util.*

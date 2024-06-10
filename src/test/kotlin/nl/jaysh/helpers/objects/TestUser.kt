@@ -1,7 +1,7 @@
 package nl.jaysh.helpers.objects
 
 import nl.jaysh.models.Gender
-import nl.jaysh.models.User
+import nl.jaysh.models.user.User
 import java.time.LocalDateTime
 import java.util.*
 

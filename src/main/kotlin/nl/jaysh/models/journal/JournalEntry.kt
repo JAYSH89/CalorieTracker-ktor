@@ -1,8 +1,9 @@
-package nl.jaysh.models
+package nl.jaysh.models.journal
 
 import kotlinx.serialization.Serializable
 import nl.jaysh.core.utils.LocalDateTimeSerializer
 import nl.jaysh.core.utils.UUIDSerializer
+import nl.jaysh.models.food.Food
 import java.time.LocalDateTime
 import java.util.*
 

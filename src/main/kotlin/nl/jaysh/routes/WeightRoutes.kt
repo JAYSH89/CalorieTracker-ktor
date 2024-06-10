@@ -7,7 +7,7 @@ import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import nl.jaysh.core.utils.principalId
-import nl.jaysh.models.Weight
+import nl.jaysh.models.weight.Weight
 import nl.jaysh.services.WeightService
 import org.koin.ktor.ext.inject
 import java.util.*

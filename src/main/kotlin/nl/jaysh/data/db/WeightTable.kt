@@ -1,6 +1,6 @@
 package nl.jaysh.data.db
 
-import nl.jaysh.models.Weight
+import nl.jaysh.models.weight.Weight
 import org.jetbrains.exposed.dao.id.EntityID
 import org.jetbrains.exposed.dao.id.UUIDTable
 import org.jetbrains.exposed.sql.Column
@@ -17,14 +17,14 @@ import java.time.LocalDateTime
 import java.time.LocalTime
 import java.util.*
 
-object WeightTable : UUIDTable() {
-    val weight: Column<Double> = double(name = "carbs")
+object WeightTable : UUIDTable(name = "weight") {
+    val weight: Column<Double> = double(name = "weight")
     val measuredAt: Column<LocalDateTime> = datetime(name = "measured_at")
     val createdAt: Column<LocalDateTime?> = datetime(name = "created_at").nullable()
     val updatedAt: Column<LocalDateTime?> = datetime(name = "updated_at").nullable()
 
     val user: Column<EntityID<UUID>> = reference(
-        name = "user",
+        name = "user_id",
         refColumn = UserTable.id,
         onDelete = ReferenceOption.CASCADE,
     )

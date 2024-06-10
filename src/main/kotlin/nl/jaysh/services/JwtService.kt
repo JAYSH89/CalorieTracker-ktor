@@ -9,7 +9,7 @@ import io.ktor.server.auth.jwt.*
 import nl.jaysh.core.utils.Constants.ACCESS_TOKEN_EXPIRATION
 import nl.jaysh.core.utils.Constants.REFRESH_TOKEN_EXPIRATION
 import nl.jaysh.data.repositories.UserRepository
-import nl.jaysh.models.User
+import nl.jaysh.models.user.User
 import nl.jaysh.models.authentication.JwtConfig
 import java.util.*
 
@@ -17,7 +17,6 @@ class JwtService(
     private val userRepository: UserRepository,
     private val jwtConfig: JwtConfig,
 ) {
-
     val jwtVerifier: JWTVerifier = JWT
         .require(Algorithm.HMAC256(jwtConfig.secret))
         .withAudience(jwtConfig.audience)

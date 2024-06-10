@@ -7,7 +7,7 @@ enum class Gender {
 
     companion object {
         fun fromString(value: String): Gender = entries
-            .find { it.toString().uppercase() == value.uppercase() }
+            .firstOrNull { gender -> value == gender.toString() }
             ?: UNKNOWN
     }
 }

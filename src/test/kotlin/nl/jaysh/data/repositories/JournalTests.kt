@@ -8,8 +8,8 @@ import nl.jaysh.data.db.insert
 import nl.jaysh.helpers.objects.TestJournalEntry
 import nl.jaysh.helpers.objects.testFood
 import nl.jaysh.helpers.objects.testUser
-import nl.jaysh.models.Food
-import nl.jaysh.models.User
+import nl.jaysh.models.food.Food
+import nl.jaysh.models.user.User
 import org.jetbrains.exposed.exceptions.ExposedSQLException
 import org.jetbrains.exposed.sql.Database
 import org.jetbrains.exposed.sql.SchemaUtils

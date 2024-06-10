@@ -1,6 +1,6 @@
 package nl.jaysh.helpers.objects
 
-import nl.jaysh.models.RefreshToken
+import nl.jaysh.models.authentication.RefreshToken
 import java.time.LocalDateTime
 
 val testRefreshToken = RefreshToken(
