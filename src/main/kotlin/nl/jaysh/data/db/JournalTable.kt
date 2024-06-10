@@ -28,7 +28,7 @@ object JournalTable : UUIDTable(name = "journal") {
     )
 
     val user: Column<EntityID<UUID>> = reference(
-        name = "user",
+        name = "user_id",
         refColumn = UserTable.id,
         onDelete = ReferenceOption.CASCADE,
     )

@@ -17,14 +17,14 @@ import java.time.LocalDateTime
 import java.time.LocalTime
 import java.util.*
 
-object WeightTable : UUIDTable() {
+object WeightTable : UUIDTable(name = "weight") {
     val weight: Column<Double> = double(name = "carbs")
     val measuredAt: Column<LocalDateTime> = datetime(name = "measured_at")
     val createdAt: Column<LocalDateTime?> = datetime(name = "created_at").nullable()
     val updatedAt: Column<LocalDateTime?> = datetime(name = "updated_at").nullable()
 
     val user: Column<EntityID<UUID>> = reference(
-        name = "user",
+        name = "user_id",
         refColumn = UserTable.id,
         onDelete = ReferenceOption.CASCADE,
     )

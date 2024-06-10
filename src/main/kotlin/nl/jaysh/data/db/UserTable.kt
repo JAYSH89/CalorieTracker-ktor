@@ -14,7 +14,7 @@ import org.jetbrains.exposed.sql.update
 import java.time.LocalDateTime
 import java.util.*
 
-object UserTable : UUIDTable() {
+object UserTable : UUIDTable(name = "_user") {
     val email: Column<String> = varchar(name = "email", length = 100).uniqueIndex()
 
     val password: Column<String> = varchar(name = "password", length = 60)

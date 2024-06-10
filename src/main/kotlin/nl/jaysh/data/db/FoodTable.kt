@@ -17,7 +17,7 @@ import org.jetbrains.exposed.sql.update
 import java.time.LocalDateTime
 import java.util.*
 
-object FoodTable : UUIDTable() {
+object FoodTable : UUIDTable(name = "food") {
     val name: Column<String> = varchar(name = "name", length = 100)
 
     val carbs: Column<Double> = double(name = "carbs")
@@ -40,7 +40,7 @@ object FoodTable : UUIDTable() {
     val updatedAt: Column<LocalDateTime?> = datetime(name = "updated_at").nullable()
 
     val user: Column<EntityID<UUID>> = reference(
-        name = "user",
+        name = "user_id",
         refColumn = UserTable.id,
         onDelete = ReferenceOption.CASCADE,
     )

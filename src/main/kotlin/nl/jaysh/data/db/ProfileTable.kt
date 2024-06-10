@@ -19,32 +19,22 @@ import java.util.*
 object ProfileTable : Table(name = "profile") {
 
     val user: Column<EntityID<UUID>> = reference(
-        name = "user",
+        name = "user_id",
         refColumn = UserTable.id,
         onDelete = ReferenceOption.CASCADE,
     ).uniqueIndex()
 
-    val firstName: Column<String?> = UserTable.varchar(name = "first_name", length = 50).nullable()
+    val firstName: Column<String?> = varchar(name = "first_name", length = 50).nullable()
 
-    val lastName: Column<String?> = UserTable.varchar(name = "last_name", length = 50).nullable()
+    val lastName: Column<String?> = varchar(name = "last_name", length = 50).nullable()
 
     val dateOfBirth: Column<LocalDateTime> = datetime(name = "date_of_birth")
 
     val height: Column<Double> = double(name = "height")
 
-    val gender: Column<Gender> = customEnumeration(
-        name = "gender",
-        sql = "ENUM('MALE', 'FEMALE', 'UNKNOWN')",
-        fromDb = { value -> Gender.valueOf(value as String) },
-        toDb = { it.name }
-    )
+    val gender: Column<String> = varchar(name = "gender", length = 50)
 
-    val activityFactor: Column<ActivityFactor> = customEnumeration(
-        name = "activity_factor",
-        sql = "ENUM('SEDENTARY', 'LIGHT_ACTIVITY', 'MODERATE_ACTIVITY', 'VIGOROUS_ACTIVITY')",
-        fromDb = { value -> ActivityFactor.valueOf(value as String) },
-        toDb = { it.name }
-    )
+    val activityFactor: Column<String> = varchar(name = "gender", length = 50)
 
     override val primaryKey = super.primaryKey ?: PrimaryKey(user)
 }
@@ -61,8 +51,8 @@ fun ProfileTable.insert(profile: Profile, userId: UUID): Profile {
         it[lastName] = profile.lastName
         it[dateOfBirth] = profile.dateOfBirth
         it[height] = profile.height
-        it[gender] = profile.gender
-        it[activityFactor] = profile.activityFactor
+        it[gender] = profile.gender.toString()
+        it[activityFactor] = profile.activityFactor.toString()
     }
     check(result.insertedCount == 1)
 
@@ -82,6 +72,6 @@ fun ResultRow.toProfile(): Profile = Profile(
     lastName = this[ProfileTable.lastName],
     dateOfBirth = this[ProfileTable.dateOfBirth],
     height = this[ProfileTable.height],
-    gender = this[ProfileTable.gender],
-    activityFactor = this[ProfileTable.activityFactor],
+    gender = Gender.fromString(this[ProfileTable.gender]),
+    activityFactor = ActivityFactor.fromString(this[ProfileTable.activityFactor]),
 )

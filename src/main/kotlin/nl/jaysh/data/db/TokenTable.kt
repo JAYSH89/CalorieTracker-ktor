@@ -25,7 +25,7 @@ object TokenTable : Table(name = "refresh_token") {
     val expiresAt: Column<LocalDateTime> = datetime(name = "expires_at")
 
     val user: Column<EntityID<UUID>> = reference(
-        name = "user",
+        name = "user_id",
         refColumn = UserTable.id,
         onDelete = ReferenceOption.CASCADE,
     ).uniqueIndex()
